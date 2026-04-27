@@ -2504,7 +2504,7 @@ FOOTER FINAL CLEAN
 }
 
 /* =========================
-   LOKASI PREMIUM
+   LOKASI 
 ========================= */
 
 /* MAP HERO */
@@ -2653,7 +2653,62 @@ FOOTER FINAL CLEAN
   transform: translateX(5px);
 }
 
+/* ===== ICON FIX: LOKASI & KONTAK — samakan dengan referensi ===== */
 
+/* LOKASI - icon jadi bulat */
+.lokasi-icon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: #ecfdf5 !important;
+  color: #16a34a !important;
+  font-size: 1rem !important;
+}
+
+.lokasi-icon.success {
+  background: #ecfdf5 !important;
+  color: #16a34a !important;
+}
+
+/* LOKASI - border-bottom antar item, hapus gap */
+.lokasi-list {
+  gap: 0 !important;
+}
+
+.lokasi-item {
+  padding: 14px 0 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  align-items: center !important;
+}
+
+.lokasi-item:last-child {
+  border-bottom: none !important;
+}
+
+/* KONTAK - icon jadi bulat */
+.kontak-icon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: #ecfdf5 !important;
+  color: #16a34a !important;
+  font-size: 1rem !important;
+}
+
+.kontak-icon.instagram {
+  background: rgba(225,48,108,0.1) !important;
+  color: #e1306c !important;
+}
+
+.kontak-icon.facebook {
+  background: rgba(59,89,152,0.1) !important;
+  color: #3b5998 !important;
+}
+
+/* KONTAK - border-bottom antar row */
+.kontak-row {
+  align-items: center !important;
+}
 
 /* ============================================================
    GALLERY FIX — TARUH DI PALING BAWAH
