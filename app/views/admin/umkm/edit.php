@@ -10,7 +10,10 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 
                 <h6 class="fw-bold mb-4">Edit UMKM</h6>
 
-                <form action="<?= BASE_URL ?>/admin/umkm/update" method="POST" enctype="multipart/form-data" onclick="return submitForm(event)">
+                <form action="<?= BASE_URL ?>/admin/umkm/update"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    onsubmit="return submitForm(event)">
 
                     <input type="hidden" name="id" value="<?= $umkm['id'] ?>" />
 
@@ -78,7 +81,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         <button type="submit" class="btn btn-kk">
                             <i class="bi bi-save me-1"></i>Perbarui
                         </button>
-                        <a href="<?= BASE_URL ?>/admin/umkm" class="btn btn-outline-secondary">
+                        <a href="<?= BASE_URL ?>/admin/umkm" class="btn btn-outline-kk">
                             Batal
                         </a>
                     </div>

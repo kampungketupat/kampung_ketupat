@@ -21,6 +21,9 @@
 
     <!-- CUSTOM -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/admin.css" />
+
+    <!-- CHART JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
 
 <body class="admin-page">
@@ -61,7 +64,7 @@
                 <a class="nav-link <?= ($menu_aktif ?? '') === 'event' ? 'active' : '' ?>"
                     href="/admin/event">
                     <i class="bi bi-calendar-event"></i>
-                    <span>Event / Kalender</span>
+                    <span>Event</span>
                 </a>
             </li>
 

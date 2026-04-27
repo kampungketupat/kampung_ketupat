@@ -71,7 +71,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         <button type="submit" class="btn btn-kk">
                             <i class="bi bi-save me-1"></i>Perbarui
                         </button>
-                        <a href="<?= BASE_URL ?>/admin/galeri" class="btn btn-outline-secondary">
+                        <a href="<?= BASE_URL ?>/admin/galeri" class="btn btn-outline-kk">
                             Batal
                         </a>
                     </div>

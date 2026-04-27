@@ -75,35 +75,43 @@
                         <i class="bi bi-info-circle me-2"></i> Informasi Kunjungan
                     </h5>
 
-                    <div class="info-box">
+                    <div class="info-box modern">
 
                         <div class="info-item">
-                            <i class="bi bi-geo-alt-fill"></i>
-                            <div>
+                            <div class="icon">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <div class="text">
                                 <span>Alamat</span>
                                 <p>Jl. Mangkupalas, Samarinda Seberang</p>
                             </div>
                         </div>
 
                         <div class="info-item">
-                            <i class="bi bi-clock-fill"></i>
-                            <div>
+                            <div class="icon">
+                                <i class="bi bi-clock-fill"></i>
+                            </div>
+                            <div class="text">
                                 <span>Jam Buka</span>
                                 <p>08.30 – 17.30 WITA</p>
                             </div>
                         </div>
 
                         <div class="info-item">
-                            <i class="bi bi-ticket-perforated-fill"></i>
-                            <div>
+                            <div class="icon">
+                                <i class="bi bi-ticket-perforated-fill"></i>
+                            </div>
+                            <div class="text">
                                 <span>Tiket</span>
-                                <p><strong class="text-success">Gratis</strong></p>
+                                <p class="highlight">Gratis</p>
                             </div>
                         </div>
 
                         <div class="info-item">
-                            <i class="bi bi-car-front-fill"></i>
-                            <div>
+                            <div class="icon">
+                                <i class="bi bi-car-front-fill"></i>
+                            </div>
+                            <div class="text">
                                 <span>Jarak</span>
                                 <p>±26 menit</p>
                             </div>

@@ -86,5 +86,9 @@ $router->get('/admin/umkm/delete', 'AdminUMKMController@delete');
 // =========================
 // ADMIN KRITIK SARAN
 // =========================
-$router->get('/admin/kritik-saran', 'AdminKritikController@index');
-$router->get('/admin/kritik-saran/delete', 'AdminKritikController@delete');
+$router->get('/admin/kritik-saran',            'AdminKritikController@index');
+$router->get('/admin/kritik-saran/arsip',      'AdminKritikController@arsip');
+$router->get('/admin/kritik-saran/terima',     'AdminKritikController@terima');
+$router->get('/admin/kritik-saran/kembalikan', 'AdminKritikController@kembalikan');
+$router->get('/admin/kritik-saran/tampilkan',  'AdminKritikController@tampilkan');
+$router->get('/admin/kritik-saran/sembunyikan', 'AdminKritikController@sembunyikan');

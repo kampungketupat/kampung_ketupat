@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// AdminKritikController (FINAL - MVC CLEAN)
+// AdminKritikController
 // ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
@@ -8,61 +8,155 @@ require_once BASE_PATH . '/app/models/KritikSaranModel.php';
 
 class AdminKritikController extends Controller
 {
-    private $kritikModel;
+    private $model;
 
     public function __construct()
     {
-        // PROTEKSI ADMIN
         if (!isset($_SESSION['admin'])) {
             header('Location: ' . BASE_URL . '/admin/login');
             exit;
         }
-
         global $koneksi;
-        $this->kritikModel = new KritikSaranModel($koneksi);
+        $this->model = new KritikSaranModel($koneksi);
     }
 
     // =========================
-    // INDEX (LIST PESAN)
+    // KOTAK MASUK (PENDING)
     // =========================
     public function index()
     {
-        $pesan = $this->kritikModel->getAll();
+        // Auto-expire pesan publik yang sudah lewat tanggal
+        $this->model->expireOtomatis();
+
+        $pesan = $this->model->getPending();
 
         foreach ($pesan as $p) {
-            if (!$p['sudah_dibaca']) {
-                $this->kritikModel->tandaiDibaca($p['id']);
-            }
+            if (!$p['sudah_dibaca']) $this->model->tandaiDibaca($p['id']);
         }
 
-        $data['semua_pesan'] = $pesan;
-        $data['judul_halaman'] = 'Kelola Kritik & Saran';
-        $data['menu_aktif'] = 'kritik';
+        $data = $this->_hitungStat($pesan);
+        $data['semua_pesan']   = $pesan;
+        $data['jumlah_arsip']  = $this->model->countArsip();
+        $data['judul_halaman'] = 'Kotak Masuk — Kritik & Saran';
+        $data['menu_aktif']    = 'kritik';
+        $data['tab_aktif']     = 'pending';
 
+        $this->_flashMessage($data);
         $this->view('admin/kritik_saran/index', $data);
     }
 
     // =========================
-    // DELETE
+    // ARSIP (DITERIMA + PUBLIK)
     // =========================
-    public function delete()
+    public function arsip()
+    {
+        $this->model->expireOtomatis();
+
+        $pesan = $this->model->getArsip();
+
+        $data = $this->_hitungStat($pesan);
+        $data['semua_pesan']   = $pesan;
+        $data['jumlah_arsip']  = count($pesan);
+        $data['judul_halaman'] = 'Arsip — Kritik & Saran';
+        $data['menu_aktif']    = 'kritik';
+        $data['tab_aktif']     = 'arsip';
+
+        $this->_flashMessage($data);
+        $this->view('admin/kritik_saran/index', $data);
+    }
+
+    // =========================
+    // TERIMA (pending → arsip)
+    // =========================
+    public function terima()
     {
         $id = $_GET['id'] ?? null;
-
         if (!$id) {
-            $_SESSION['error'] = 'ID tidak valid!';
-            header('Location: ' . BASE_URL . '/admin/kritik-saran');
-            exit;
+            $this->_redirect('/admin/kritik-saran', 'ID tidak valid!', 'error');
+            return;
         }
 
-        try {
-            $this->kritikModel->hapus($id);
-            $_SESSION['success'] = 'Pesan berhasil dihapus!';
-        } catch (Exception $e) {
-            $_SESSION['error'] = 'Gagal menghapus pesan!';
+        $this->model->terima($id);
+        $this->_redirect('/admin/kritik-saran', 'Pesan diterima dan dipindahkan ke arsip.');
+    }
+
+    // =========================
+    // KEMBALIKAN KE PENDING
+    // =========================
+    public function kembalikan()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            $this->_redirect('/admin/kritik-saran/arsip', 'ID tidak valid!', 'error');
+            return;
         }
 
-        header('Location: ' . BASE_URL . '/admin/kritik-saran');
+        $this->model->kembalikanPending($id);
+        $this->_redirect('/admin/kritik-saran/arsip', 'Pesan dikembalikan ke kotak masuk.');
+    }
+
+    // =========================
+    // TAMPILKAN KE PUBLIK
+    // =========================
+    public function tampilkan()
+    {
+        $id      = $_GET['id']     ?? null;
+        $mulai   = $_GET['mulai']  ?? null;
+        $selesai = $_GET['selesai'] ?? null;
+
+        if (!$id || !$mulai || !$selesai) {
+            $this->_redirect('/admin/kritik-saran/arsip', 'Data tidak lengkap!', 'error');
+            return;
+        }
+
+        $this->model->tampilkan($id, $mulai, $selesai);
+        $this->_redirect('/admin/kritik-saran/arsip', 'Pesan berhasil ditampilkan ke publik.');
+    }
+
+    // =========================
+    // SEMBUNYIKAN
+    // =========================
+    public function sembunyikan()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            $this->_redirect('/admin/kritik-saran/arsip', 'ID tidak valid!', 'error');
+            return;
+        }
+
+        $this->model->sembunyikan($id);
+        $this->_redirect('/admin/kritik-saran/arsip', 'Pesan disembunyikan dari publik.');
+    }
+
+    // =========================
+    // HELPERS PRIVATE
+    // =========================
+    private function _hitungStat(array $pesan): array
+    {
+        return [
+            'total_kritik'     => count(array_filter($pesan, fn($p) => $p['jenis'] === 'kritik')),
+            'total_saran'      => count(array_filter($pesan, fn($p) => $p['jenis'] === 'saran')),
+            'total_pertanyaan' => count(array_filter($pesan, fn($p) => $p['jenis'] === 'pertanyaan')),
+            'total_apresiasi'  => count(array_filter($pesan, fn($p) => $p['jenis'] === 'apresiasi')),
+        ];
+    }
+
+    private function _flashMessage(array &$data): void
+    {
+        if (!empty($_SESSION['success'])) {
+            $data['pesan_sukses'] = $_SESSION['success'];
+            unset($_SESSION['success']);
+        }
+        if (!empty($_SESSION['error'])) {
+            $data['pesan_error'] = $_SESSION['error'];
+            unset($_SESSION['error']);
+        }
+    }
+
+    private function _redirect(string $path, string $msg, string $type = 'success'): void
+    {
+        $_SESSION[$type === 'error' ? 'error' : 'success'] = $msg;
+        header('Location: ' . BASE_URL . $path);
         exit;
     }
 }

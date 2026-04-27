@@ -3,12 +3,17 @@ $menu_aktif = 'event';
 require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 ?>
 
+<?php if (!empty($pesan_error)): ?>
+    <div class="alert-kk-error mb-3"><?= htmlspecialchars($pesan_error) ?></div>
+<?php endif; ?>
+
 <div class="row justify-content-center">
     <div class="col-lg-7">
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
 
-                <h6 class="fw-bold mb-4">Tambah Event</h6>
+                <h6 class="fw-bold mb-1">Tambah Event</h6>
+                <p class="text-muted small mb-4">Isi detail event yang akan ditampilkan ke pengunjung.</p>
 
                 <form action="<?= BASE_URL ?>/admin/event/store"
                     method="POST"
@@ -20,13 +25,15 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         <label class="form-label fw-500">
                             Nama Event <span class="text-danger">*</span>
                         </label>
-                        <input type="text" name="nama_event" class="form-control" required />
+                        <input type="text" name="nama_event" class="form-control"
+                            placeholder="Contoh: Festival Ketupat 2025" required />
                     </div>
 
                     <!-- DESKRIPSI -->
                     <div class="mb-3">
                         <label class="form-label fw-500">Deskripsi</label>
-                        <textarea name="deskripsi" class="form-control" rows="3"></textarea>
+                        <textarea name="deskripsi" class="form-control" rows="3"
+                            placeholder="Deskripsi singkat tentang event..."></textarea>
                     </div>
 
                     <!-- TANGGAL -->
@@ -60,6 +67,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         <label class="form-label fw-500">Link Info</label>
                         <input type="text" name="link_info" class="form-control"
                             placeholder="https://instagram.com/..." />
+                        <small class="text-muted">Link media sosial atau info lebih lanjut (opsional)</small>
                     </div>
 
                     <!-- LOKASI -->
@@ -82,7 +90,9 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                     <!-- FOTO -->
                     <div class="mb-4">
                         <label class="form-label fw-500">Foto Event</label>
-                        <input type="file" name="foto" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+                        <input type="file" name="foto" class="form-control"
+                            accept=".jpg,.jpeg,.png,.webp" />
+                        <small class="text-muted">Format: JPG, PNG, WEBP. Maks 5MB. (Opsional)</small>
                     </div>
 
                     <!-- BUTTON -->
@@ -90,7 +100,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         <button type="submit" class="btn btn-kk">
                             <i class="bi bi-save me-1"></i>Simpan
                         </button>
-                        <a href="<?= BASE_URL ?>/admin/event" class="btn btn-outline-secondary">
+                        <a href="<?= BASE_URL ?>/admin/event" class="btn btn-outline-kk">
                             Batal
                         </a>
                     </div>

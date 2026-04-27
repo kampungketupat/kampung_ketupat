@@ -71,7 +71,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                             <i class="bi bi-save me-1"></i>Simpan
                         </button>
 
-                        <a href="<?= BASE_URL ?>/admin/umkm" class="btn btn-outline-secondary">
+                        <a href="<?= BASE_URL ?>/admin/umkm" class="btn btn-outline-kk">
                             Batal
                         </a>
                     </div>

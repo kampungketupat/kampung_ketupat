@@ -13,6 +13,7 @@ require_once BASE_PATH . '/app/models/KritikSaranModel.php';
 
 class AdminController extends Controller
 {
+    private $db;
     private $adminModel;
     private $galeriModel;
     private $eventModel;
@@ -22,6 +23,8 @@ class AdminController extends Controller
     public function __construct()
     {
         global $koneksi;
+
+        $this->db = $koneksi;
 
         $this->adminModel  = new AdminModel($koneksi);
         $this->galeriModel = new GaleriModel($koneksi);
@@ -88,7 +91,6 @@ class AdminController extends Controller
     // =========================
     public function dashboard()
     {
-        // proteksi login
         if (!isset($_SESSION['admin'])) {
             header('Location: /admin/login');
             exit;
@@ -102,11 +104,47 @@ class AdminController extends Controller
         ];
 
         $data['pesan_terbaru'] = array_slice(
-            $this->kritikModel->getAll(),
+            $this->kritikModel->getPending(),
             0,
             5
         );
 
+        $labelBulan = [];
+        $dataBulanan = [];
+
+
+        $query = "
+        SELECT 
+            MONTH(created_at) AS bulan,
+            COUNT(*) AS total
+        FROM galeri
+        GROUP BY MONTH(created_at)
+        ORDER BY MONTH(created_at)
+        ";
+
+        $result = mysqli_query($this->db, $query);
+
+        $labelBulan = [];
+        $dataBulanan = [];
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $namaBulan = date('M', mktime(0, 0, 0, $row['bulan'], 10));
+
+            $labelBulan[] = $namaBulan;
+            $dataBulanan[] = (int)$row['total'];
+        }
+
+        $data['labelBulan'] = $labelBulan;
+        $data['dataBulanan'] = $dataBulanan;
+
+        $nama = $_SESSION['admin']['nama'] ?? 'Admin';
+
+        $initials = strtoupper(
+            implode('', array_map(fn($w) => $w[0], explode(' ', $nama)))
+        );
+
+        $data['admin_nama'] = $nama;
+        $data['initials'] = $initials;
         $data['judul_halaman'] = 'Dashboard Admin — Kampung Ketupat';
 
         $this->view('admin/dashboard', $data);

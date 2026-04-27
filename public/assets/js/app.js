@@ -92,6 +92,7 @@ if (document.getElementById("app-galeri")) {
         kategoriAktif: "semua",
         galeri: window.__GALERI_DATA__ || [],
         selectedImage: null,
+        selectedIndex: 0,
       };
     },
 
@@ -105,6 +106,17 @@ if (document.getElementById("app-galeri")) {
     methods: {
       setKategori(kat) {
         this.kategoriAktif = kat;
+
+        this.$nextTick(() => {
+          document.querySelectorAll(".gallery-wrap").forEach((el) => {
+            el.classList.remove("active");
+          });
+          setTimeout(() => {
+            document.querySelectorAll(".gallery-wrap").forEach((el, i) => {
+              setTimeout(() => el.classList.add("active"), i * 80);
+            });
+          }, 50);
+        });
       },
 
       imgUrl(foto) {
@@ -116,12 +128,27 @@ if (document.getElementById("app-galeri")) {
 
       openImage(item) {
         this.selectedImage = item;
+        this.selectedIndex = this.galeriFiltered.indexOf(item);
         document.body.style.overflow = "hidden";
       },
 
       closeImage() {
         this.selectedImage = null;
         document.body.style.overflow = "";
+      },
+
+      prevImage() {
+        if (this.selectedIndex > 0) {
+          this.selectedIndex--;
+          this.selectedImage = this.galeriFiltered[this.selectedIndex];
+        }
+      },
+
+      nextImage() {
+        if (this.selectedIndex < this.galeriFiltered.length - 1) {
+          this.selectedIndex++;
+          this.selectedImage = this.galeriFiltered[this.selectedIndex];
+        }
       },
 
       truncate(text, length = 80) {
@@ -139,9 +166,10 @@ if (document.getElementById("app-galeri")) {
         }, 200);
       });
 
-      // tutup lightbox dengan ESC
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") this.closeImage();
+        if (e.key === "ArrowLeft") this.prevImage();
+        if (e.key === "ArrowRight") this.nextImage();
       });
     },
 
@@ -207,12 +235,31 @@ if (document.getElementById("app-galeri")) {
               <i class="bi bi-x-lg"></i>
             </button>
 
+            <!-- ARROW PREV -->
+            <button class="lightbox-arrow lightbox-prev"
+              @click="prevImage"
+              :disabled="selectedIndex === 0"
+              :class="{ 'arrow-disabled': selectedIndex === 0 }">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+
             <!-- IMAGE -->
             <img :src="imgUrl(selectedImage.foto)" :alt="selectedImage.judul" class="lightbox-img" />
 
+            <!-- ARROW NEXT -->
+            <button class="lightbox-arrow lightbox-next"
+              @click="nextImage"
+              :disabled="selectedIndex === galeriFiltered.length - 1"
+              :class="{ 'arrow-disabled': selectedIndex === galeriFiltered.length - 1 }">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+
             <!-- CAPTION -->
             <div class="lightbox-caption">
-              <span class="lightbox-badge">{{ selectedImage.kategori }}</span>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="lightbox-badge">{{ selectedImage.kategori }}</span>
+                <span class="lightbox-counter">{{ selectedIndex + 1 }} / {{ galeriFiltered.length }}</span>
+              </div>
               <h5 class="lightbox-judul">{{ selectedImage.judul }}</h5>
               <p class="lightbox-desc" v-if="selectedImage.deskripsi">
                 {{ selectedImage.deskripsi }}
@@ -427,41 +474,29 @@ if (document.getElementById("app-event")) {
     computed: {
       filteredEvents() {
         const keyword = (this.search || "").trim().toLowerCase();
-
         return this.events.filter((ev) => {
           const name = (ev.nama_event || "").toLowerCase();
-
-          const matchFilter =
-            this.filter === "all" || ev.status === this.filter;
-
+          const matchFilter = this.filter === "all" || ev.status === this.filter;
           if (!keyword) return matchFilter;
-
           return matchFilter && name.includes(keyword);
         });
-        2;
       },
     },
 
     methods: {
       setFilter(s) {
         this.filter = s;
-
         this.$nextTick(() => {
           const reveals = document.querySelectorAll(".reveal");
-
           reveals.forEach((el) => el.classList.remove("active"));
-
           const observer = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("active");
-                }
+                if (entry.isIntersecting) entry.target.classList.add("active");
               });
             },
-            { threshold: 0.15 },
+            { threshold: 0.15 }
           );
-
           reveals.forEach((el) => observer.observe(el));
         });
       },
@@ -481,13 +516,20 @@ if (document.getElementById("app-event")) {
       formatDate(date) {
         return new Date(date).toLocaleDateString("id-ID", {
           day: "numeric",
-          month: "short",
+          month: "long",
           year: "numeric",
         });
       },
 
       formatTime(time) {
         return time ? time.substring(0, 5) : "";
+      },
+
+      fotoUrl(foto) {
+        if (!foto) return "";
+        return foto.startsWith("http")
+          ? foto
+          : BASE_URL + "/assets/uploads/event/" + foto;
       },
 
       statusClass(status) {
@@ -498,62 +540,42 @@ if (document.getElementById("app-event")) {
 
       getIcon(link) {
         if (!link) return "bi bi-link-45deg";
-
         const l = link.toLowerCase();
-        if (l.includes("instagram") || l.includes("ig"))
-          return "bi bi-instagram";
+        if (l.includes("instagram") || l.includes("ig")) return "bi bi-instagram";
         if (l.includes("facebook") || l.includes("fb")) return "bi bi-facebook";
         if (l.includes("wa") || l.includes("whatsapp")) return "bi bi-whatsapp";
         if (l.includes("tiktok")) return "bi bi-tiktok";
         return "bi bi-link-45deg";
       },
 
-      openModal(ev) {
+      openDetail(ev) {
         this.selectedEvent = ev;
+        document.body.style.overflow = "hidden";
+      },
 
-        const modal = new bootstrap.Modal(
-          document.getElementById("eventModal"),
-        );
-
-        document.getElementById("modalTitle").innerText = ev.nama_event;
-        document.getElementById("modalDesc").innerText = ev.deskripsi;
-
-        document.getElementById("modalTime").innerText =
-          (ev.jam_mulai ? this.formatTime(ev.jam_mulai) : "") +
-          (ev.jam_selesai ? " - " + this.formatTime(ev.jam_selesai) : "") +
-          " WITA";
-
-        document.getElementById("modalLocation").innerText = ev.lokasi;
-
-        const linkBox = document.getElementById("modalLinkBox");
-
-        if (ev.link_info) {
-          linkBox.classList.remove("d-none");
-          document.getElementById("modalLink").href = ev.link_info;
-        } else {
-          linkBox.classList.add("d-none");
-        }
-
-        modal.show();
+      closeDetail() {
+        this.selectedEvent = null;
+        document.body.style.overflow = "";
       },
     },
 
     mounted() {
       this.$nextTick(() => {
         const reveals = document.querySelectorAll(".reveal");
-
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-              }
+              if (entry.isIntersecting) entry.target.classList.add("active");
             });
           },
-          { threshold: 0.15 },
+          { threshold: 0.15 }
         );
-
         reveals.forEach((el) => observer.observe(el));
+      });
+
+      // Tutup modal dengan ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") this.closeDetail();
       });
     },
 
@@ -574,37 +596,42 @@ if (document.getElementById("app-event")) {
             :key="s"
             @click="setFilter(s)"
             :class="['btn btn-kk-outline btn-sm filter-btn', filter === s ? 'active' : '']">
-
             {{ s === 'all' ? 'Semua' : formatStatus(s) }}
-
           </button>
         </div>
 
       </div>
 
-      <!-- LIST -->
+      <!-- GRID -->
       <div class="row g-4">
 
+        <!-- EMPTY -->
         <div v-if="filteredEvents.length === 0"
           class="col-12 text-center py-5 text-muted">
-
           <i class="bi bi-calendar-x fs-1 d-block mb-3"></i>
-
           <h6 class="fw-bold">Event tidak ditemukan</h6>
-
           <p class="small mb-0">
             Tidak ada event untuk pencarian "<b>{{ search }}</b>"
           </p>
-
         </div>
 
+        <!-- CARD -->
         <div v-else
           v-for="ev in filteredEvents"
           :key="ev.id"
           class="col-lg-4 col-md-6 reveal event-item"
-          @click="openModal(ev)">
+          @click="openDetail(ev)">
 
           <div class="kk-event-card h-100">
+
+            <!-- FOTO -->
+            <div v-if="ev.foto" class="ev-foto-wrap">
+              <img :src="fotoUrl(ev.foto)" :alt="ev.nama_event" />
+              <span :class="['ev-foto-badge', statusClass(ev.status)]">
+                {{ formatStatus(ev.status) }}
+              </span>
+            </div>
+
             <div class="card-body d-flex gap-3">
 
               <div class="event-date-box flex-shrink-0">
@@ -614,16 +641,14 @@ if (document.getElementById("app-event")) {
 
               <div class="event-content">
 
-                <span :class="['badge mb-2', statusClass(ev.status)]">
+                <span v-if="!ev.foto" :class="['badge mb-2', statusClass(ev.status)]">
                   {{ formatStatus(ev.status) }}
                 </span>
 
-                <h6 class="fw-bold mb-2 mt-1">
-                  {{ ev.nama_event }}
-                </h6>
+                <h6 class="fw-bold mb-2 mt-1">{{ ev.nama_event }}</h6>
 
                 <p class="text-muted small mb-2">
-                  {{ ev.deskripsi.substring(0,80) }}...
+                  {{ ev.deskripsi ? ev.deskripsi.substring(0, 80) + '...' : '' }}
                 </p>
 
                 <div class="small text-muted mb-1">
@@ -634,9 +659,8 @@ if (document.getElementById("app-event")) {
                 <div v-if="ev.jam_mulai" class="small text-muted mb-1">
                   <i class="bi bi-clock me-1"></i>
                   {{ formatTime(ev.jam_mulai) }}
-                  <span v-if="ev.jam_selesai">
-                    - {{ formatTime(ev.jam_selesai) }}
-                  </span> WITA
+                  <span v-if="ev.jam_selesai">- {{ formatTime(ev.jam_selesai) }}</span>
+                  WITA
                 </div>
 
                 <div class="small text-muted mb-1">
@@ -644,14 +668,123 @@ if (document.getElementById("app-event")) {
                   {{ ev.lokasi }}
                 </div>
 
+                <div class="ev-detail-hint">
+                  <i class="bi bi-eye me-1"></i>Lihat Detail
+                </div>
+
               </div>
-
             </div>
-          </div>
 
+          </div>
         </div>
 
       </div>
+
+      <!-- ══════════════════════════════════
+           POPUP / MODAL DETAIL EVENT
+      ══════════════════════════════════ -->
+      <transition name="ev-modal-fade">
+        <div v-if="selectedEvent"
+          class="ev-modal-overlay"
+          @click.self="closeDetail">
+
+          <div class="ev-modal-box">
+
+            <!-- CLOSE -->
+            <button class="ev-modal-close" @click="closeDetail">
+              <i class="bi bi-x-lg"></i>
+            </button>
+
+            <!-- FOTO -->
+            <div v-if="selectedEvent.foto" class="ev-modal-img">
+              <img :src="fotoUrl(selectedEvent.foto)" :alt="selectedEvent.nama_event" />
+              <span :class="['ev-modal-status', statusClass(selectedEvent.status)]">
+                {{ formatStatus(selectedEvent.status) }}
+              </span>
+            </div>
+
+            <!-- HEADER (jika tidak ada foto) -->
+            <div v-else class="ev-modal-header-nofoto">
+              <span :class="['ev-modal-status-inline', statusClass(selectedEvent.status)]">
+                {{ formatStatus(selectedEvent.status) }}
+              </span>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="ev-modal-content">
+
+              <!-- TANGGAL BOX -->
+              <div class="ev-modal-datebox">
+                <div class="ev-modal-day">{{ getDay(selectedEvent.tanggal_mulai) }}</div>
+                <div class="ev-modal-month">{{ getMonth(selectedEvent.tanggal_mulai) }}</div>
+              </div>
+
+              <h4 class="ev-modal-title">{{ selectedEvent.nama_event }}</h4>
+
+              <!-- INFO LIST -->
+              <div class="ev-modal-info">
+
+                <div class="ev-modal-info-item">
+                  <div class="ev-modal-info-icon">
+                    <i class="bi bi-calendar3"></i>
+                  </div>
+                  <div>
+                    <span class="ev-modal-info-label">Tanggal</span>
+                    <p class="ev-modal-info-val">
+                      {{ formatDate(selectedEvent.tanggal_mulai) }}
+                      <template v-if="selectedEvent.tanggal_selesai && selectedEvent.tanggal_selesai !== selectedEvent.tanggal_mulai">
+                        &ndash; {{ formatDate(selectedEvent.tanggal_selesai) }}
+                      </template>
+                    </p>
+                  </div>
+                </div>
+
+                <div v-if="selectedEvent.jam_mulai" class="ev-modal-info-item">
+                  <div class="ev-modal-info-icon">
+                    <i class="bi bi-clock"></i>
+                  </div>
+                  <div>
+                    <span class="ev-modal-info-label">Waktu</span>
+                    <p class="ev-modal-info-val">
+                      {{ formatTime(selectedEvent.jam_mulai) }}
+                      <span v-if="selectedEvent.jam_selesai">&ndash; {{ formatTime(selectedEvent.jam_selesai) }}</span>
+                      WITA
+                    </p>
+                  </div>
+                </div>
+
+                <div class="ev-modal-info-item">
+                  <div class="ev-modal-info-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div>
+                    <span class="ev-modal-info-label">Lokasi</span>
+                    <p class="ev-modal-info-val">{{ selectedEvent.lokasi }}</p>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- DESKRIPSI FULL -->
+              <div v-if="selectedEvent.deskripsi" class="ev-modal-desc">
+                <h6 class="ev-modal-desc-label">Tentang Event</h6>
+                <p>{{ selectedEvent.deskripsi }}</p>
+              </div>
+
+              <!-- TOMBOL LINK INFO -->
+              <a v-if="selectedEvent.link_info"
+                :href="selectedEvent.link_info"
+                target="_blank"
+                class="ev-modal-link-btn"
+                @click.stop>
+                <i :class="getIcon(selectedEvent.link_info)"></i>
+                Info Selengkapnya
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </transition>
 
     </div>
     `,
@@ -670,21 +803,18 @@ if (document.getElementById("app-umkm")) {
         cari: "",
         kategori: "semua",
         umkm: window.__UMKM_DATA__ || [],
+        selectedUmkm: null,
       };
     },
 
     computed: {
       umkmFiltered() {
         const keyword = (this.cari || "").trim().toLowerCase();
-
         return this.umkm.filter((u) => {
           const nama = (u.nama_umkm || "").toLowerCase();
-
           const cocokKat =
             this.kategori === "semua" || u.kategori === this.kategori;
-
           if (!keyword) return cocokKat;
-
           return cocokKat && nama.includes(keyword);
         });
       },
@@ -692,32 +822,44 @@ if (document.getElementById("app-umkm")) {
 
     methods: {
       imgUrl(foto) {
-        if (!foto) return `/assets/img/umkm-default.jpg`;
-        return `/assets/uploads/umkm/${foto}`;
+        if (!foto) return `${BASE_URL}/assets/img/umkm-default.jpg`;
+        return `${BASE_URL}/assets/uploads/umkm/${foto}`;
       },
+
       resetAnimasi() {
         this.$nextTick(() => {
           const reveals = document.querySelectorAll(".reveal");
-
           reveals.forEach((el) => el.classList.remove("active"));
-
           const observer = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("active");
-                }
+                if (entry.isIntersecting) entry.target.classList.add("active");
               });
             },
             { threshold: 0.15 },
           );
-
           reveals.forEach((el) => observer.observe(el));
         });
       },
+
+      openDetail(u) {
+        this.selectedUmkm = u;
+        document.body.style.overflow = "hidden";
+      },
+
+      closeDetail() {
+        this.selectedUmkm = null;
+        document.body.style.overflow = "";
+      },
     },
+
     mounted() {
       this.resetAnimasi();
+
+      // Tutup modal dengan tombol ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") this.closeDetail();
+      });
     },
 
     template: `
@@ -748,59 +890,150 @@ if (document.getElementById("app-umkm")) {
         <!-- EMPTY -->
         <div v-if="umkmFiltered.length === 0"
           class="col-12 text-center py-5 text-muted">
-
           <i class="bi bi-shop fs-1 d-block mb-3"></i>
-
           <h6 class="fw-bold">UMKM tidak ditemukan</h6>
-
-          <p class="small mb-0">
-            Tidak ada hasil untuk "<b>{{ cari }}</b>"
-          </p>
-
+          <p class="small mb-0">Tidak ada hasil untuk "<b>{{ cari }}</b>"</p>
         </div>
 
-        <!-- DATA -->
+        <!-- CARD -->
         <div v-else
           v-for="(u, i) in umkmFiltered"
           :key="u.id"
           class="col-sm-6 col-lg-3 reveal"
           :style="{ transitionDelay: (i * 0.08) + 's' }">
 
-          <div class="umkm-card card-kk h-100">
+          <div class="umkm-card-v2" @click="openDetail(u)">
 
-            <div class="umkm-img">
+            <!-- FOTO -->
+            <div class="umkm-v2-img">
               <img :src="imgUrl(u.foto)" :alt="u.nama_umkm" />
+              <span class="umkm-v2-kategori-badge">{{ u.kategori }}</span>
             </div>
 
-            <div class="card-body">
+            <!-- BODY -->
+            <div class="umkm-v2-body">
 
-              <span class="umkm-badge">{{ u.kategori }}</span>
+              <h6 class="umkm-v2-title">{{ u.nama_umkm }}</h6>
 
-              <h6 class="umkm-title">{{ u.nama_umkm }}</h6>
-
-              <div class="umkm-meta">
-                <span class="umkm-owner">
-                  <i class="bi bi-people me-1"></i> {{ u.pemilik }}
-                </span>
+              <div v-if="u.pemilik" class="umkm-v2-meta">
+                <i class="bi bi-person"></i>
+                <span>{{ u.pemilik }}</span>
               </div>
 
-              <p class="umkm-desc">
-                {{ u.produk_unggulan }}
+              <div v-if="u.alamat" class="umkm-v2-meta">
+                <i class="bi bi-geo-alt"></i>
+                <span>{{ u.alamat }}</span>
+              </div>
+
+              <p v-if="u.produk_unggulan" class="umkm-v2-produk">
+                <i class="bi bi-stars me-1"></i>{{ u.produk_unggulan }}
               </p>
 
-              <a v-if="u.kontak"
-                :href="'tel:' + u.kontak"
-                class="btn btn-kk-outline btn-sm w-100">
-                <i class="bi bi-telephone me-1"></i>Hubungi
-              </a>
+              <p v-if="u.deskripsi" class="umkm-v2-desc">
+                {{ u.deskripsi.length > 80 ? u.deskripsi.substring(0,80) + '...' : u.deskripsi }}
+              </p>
+
+              <div class="umkm-v2-detail-hint">
+                <i class="bi bi-eye me-1"></i>Lihat Detail
+              </div>
 
             </div>
-
           </div>
-
         </div>
 
       </div>
+
+      <!-- ══════════════════════════════════
+           POPUP / MODAL DETAIL UMKM
+      ══════════════════════════════════ -->
+      <transition name="umkm-fade">
+        <div v-if="selectedUmkm"
+          class="umkm-modal-overlay"
+          @click.self="closeDetail">
+
+          <div class="umkm-modal-box">
+
+            <!-- CLOSE -->
+            <button class="umkm-modal-close" @click="closeDetail">
+              <i class="bi bi-x-lg"></i>
+            </button>
+
+            <!-- FOTO -->
+            <div class="umkm-modal-img">
+              <img :src="imgUrl(selectedUmkm.foto)" :alt="selectedUmkm.nama_umkm" />
+              <span class="umkm-modal-kategori">{{ selectedUmkm.kategori }}</span>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="umkm-modal-content">
+
+              <h4 class="umkm-modal-title">{{ selectedUmkm.nama_umkm }}</h4>
+
+              <!-- INFO LIST -->
+              <div class="umkm-modal-info">
+
+                <div v-if="selectedUmkm.pemilik" class="umkm-modal-info-item">
+                  <div class="umkm-modal-info-icon">
+                    <i class="bi bi-person-fill"></i>
+                  </div>
+                  <div>
+                    <span class="umkm-modal-info-label">Pemilik</span>
+                    <p class="umkm-modal-info-val">{{ selectedUmkm.pemilik }}</p>
+                  </div>
+                </div>
+
+                <div v-if="selectedUmkm.alamat" class="umkm-modal-info-item">
+                  <div class="umkm-modal-info-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div>
+                    <span class="umkm-modal-info-label">Alamat</span>
+                    <p class="umkm-modal-info-val">{{ selectedUmkm.alamat }}</p>
+                  </div>
+                </div>
+
+                <div v-if="selectedUmkm.produk_unggulan" class="umkm-modal-info-item">
+                  <div class="umkm-modal-info-icon">
+                    <i class="bi bi-stars"></i>
+                  </div>
+                  <div>
+                    <span class="umkm-modal-info-label">Produk Unggulan</span>
+                    <p class="umkm-modal-info-val">{{ selectedUmkm.produk_unggulan }}</p>
+                  </div>
+                </div>
+
+                <div v-if="selectedUmkm.kontak" class="umkm-modal-info-item">
+                  <div class="umkm-modal-info-icon">
+                    <i class="bi bi-telephone-fill"></i>
+                  </div>
+                  <div>
+                    <span class="umkm-modal-info-label">Kontak</span>
+                    <p class="umkm-modal-info-val">{{ selectedUmkm.kontak }}</p>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- DESKRIPSI FULL -->
+              <div v-if="selectedUmkm.deskripsi" class="umkm-modal-desc">
+                <h6 class="umkm-modal-desc-label">Tentang Usaha</h6>
+                <p>{{ selectedUmkm.deskripsi }}</p>
+              </div>
+
+              <!-- TOMBOL HUBUNGI -->
+              <a v-if="selectedUmkm.kontak"
+                :href="'https://wa.me/' + selectedUmkm.kontak.replace(/[^0-9]/g,'')"
+                target="_blank"
+                class="umkm-modal-wa-btn"
+                @click.stop>
+                <i class="bi bi-whatsapp"></i>
+                Hubungi via WhatsApp
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </transition>
 
     </div>
     `,
