@@ -1,9 +1,6 @@
 <?php
 
-// ============================================================
-// ROUTES WEB (FINAL - CLEAN MVC)
-// ============================================================
-
+// buat ngasih tau jalan apa aja yang bisa diakses di website kita, dan nanti akan dihubungkan ke controller mana
 
 // =========================
 // USER

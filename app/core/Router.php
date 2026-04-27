@@ -1,5 +1,7 @@
 <?php
 
+// buat nunjukkin jalan dan ngejaga user dari akses yang gak diinginkan, misalnya user gak bisa akses halaman admin, dan sebaliknya
+
 class Router
 {
     private $routes = [];
