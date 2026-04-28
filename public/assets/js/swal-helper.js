@@ -3,7 +3,31 @@
 // ===============================
 
 const SwalHelper = {
-  confirmDelete(url) {
+  _csrfToken() {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    return meta ? meta.getAttribute("content") || "" : "";
+  },
+
+  _post(url, payload = {}) {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = url;
+    form.style.display = "none";
+
+    const withToken = { ...payload, _token: this._csrfToken() };
+    Object.keys(withToken).forEach((key) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = withToken[key] ?? "";
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+  },
+
+  confirmDelete(url, id) {
     Swal.fire({
       title: "Yakin hapus data?",
       text: "Data tidak bisa dikembalikan!",
@@ -14,11 +38,11 @@ const SwalHelper = {
       confirmButtonText: "Ya, hapus!",
       cancelButtonText: "Batal",
     }).then((result) => {
-      if (result.isConfirmed) window.location.href = url;
+      if (result.isConfirmed) this._post(url, { id });
     });
   },
 
-  confirm(title, text, url, confirmColor = "#f97316") {
+  confirm(title, text, url, payload = {}, confirmColor = "#f97316") {
     Swal.fire({
       title: title,
       text: text,
@@ -29,12 +53,12 @@ const SwalHelper = {
       confirmButtonText: "Ya, lanjutkan",
       cancelButtonText: "Batal",
     }).then((result) => {
-      if (result.isConfirmed) window.location.href = url;
+      if (result.isConfirmed) this._post(url, payload);
     });
   },
 
   // Konfirmasi dengan input tanggal selesai untuk publikasi
-  confirmPublish(url) {
+  confirmPublish(url, id) {
     Swal.fire({
       title: "Tampilkan ke Publik",
       html: `
@@ -88,12 +112,11 @@ const SwalHelper = {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href =
-          url +
-          "&mulai=" +
-          result.value.mulai +
-          "&selesai=" +
-          result.value.selesai;
+        this._post(url, {
+          id,
+          mulai: result.value.mulai,
+          selesai: result.value.selesai,
+        });
       }
     });
   },
@@ -152,7 +175,7 @@ const SwalHelper = {
       confirmButtonText: "Ya, logout",
       cancelButtonText: "Batal",
     }).then((result) => {
-      if (result.isConfirmed) window.location.href = url;
+      if (result.isConfirmed) this._post(url);
     });
   },
 };

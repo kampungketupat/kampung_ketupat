@@ -70,7 +70,13 @@ class AdminKritikController extends Controller
     // =========================
     public function terima()
     {
-        $id = $_GET['id'] ?? null;
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            $this->_redirect('/admin/kritik-saran', 'Method tidak diizinkan.', 'error');
+            return;
+        }
+        csrf_require('/admin/kritik-saran');
+
+        $id = $_POST['id'] ?? null;
         if (!$id) {
             $this->_redirect('/admin/kritik-saran', 'ID tidak valid!', 'error');
             return;
@@ -85,7 +91,13 @@ class AdminKritikController extends Controller
     // =========================
     public function kembalikan()
     {
-        $id = $_GET['id'] ?? null;
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            $this->_redirect('/admin/kritik-saran/arsip', 'Method tidak diizinkan.', 'error');
+            return;
+        }
+        csrf_require('/admin/kritik-saran/arsip');
+
+        $id = $_POST['id'] ?? null;
         if (!$id) {
             $this->_redirect('/admin/kritik-saran/arsip', 'ID tidak valid!', 'error');
             return;
@@ -100,9 +112,15 @@ class AdminKritikController extends Controller
     // =========================
     public function tampilkan()
     {
-        $id      = $_GET['id']     ?? null;
-        $mulai   = $_GET['mulai']  ?? null;
-        $selesai = $_GET['selesai'] ?? null;
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            $this->_redirect('/admin/kritik-saran/arsip', 'Method tidak diizinkan.', 'error');
+            return;
+        }
+        csrf_require('/admin/kritik-saran/arsip');
+
+        $id      = $_POST['id']      ?? null;
+        $mulai   = $_POST['mulai']   ?? null;
+        $selesai = $_POST['selesai'] ?? null;
 
         if (!$id || !$mulai || !$selesai) {
             $this->_redirect('/admin/kritik-saran/arsip', 'Data tidak lengkap!', 'error');
@@ -118,7 +136,13 @@ class AdminKritikController extends Controller
     // =========================
     public function sembunyikan()
     {
-        $id = $_GET['id'] ?? null;
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            $this->_redirect('/admin/kritik-saran/arsip', 'Method tidak diizinkan.', 'error');
+            return;
+        }
+        csrf_require('/admin/kritik-saran/arsip');
+
+        $id = $_POST['id'] ?? null;
         if (!$id) {
             $this->_redirect('/admin/kritik-saran/arsip', 'ID tidak valid!', 'error');
             return;

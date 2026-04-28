@@ -11,6 +11,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                 <h6 class="fw-bold mb-4">Tambah UMKM Lokal</h6>
 
                 <form action="<?= BASE_URL ?>/admin/umkm/store" method="POST" enctype="multipart/form-data" onsubmit="return submitForm(event)">
+                    <?= csrf_field() ?>
 
                     <div class="row mb-3">
                         <div class="col-md-6">

@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id` int NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -48,6 +49,7 @@ INSERT INTO `admin` (`id`, `username`, `password`, `nama_lengkap`, `created_at`)
 -- Table structure for table `event`
 --
 
+DROP TABLE IF EXISTS `event`;
 CREATE TABLE `event` (
   `id` int NOT NULL,
   `nama_event` varchar(200) NOT NULL,
@@ -79,6 +81,7 @@ INSERT INTO `event` (`id`, `nama_event`, `deskripsi`, `tanggal_mulai`, `tanggal_
 -- Table structure for table `galeri`
 --
 
+DROP TABLE IF EXISTS `galeri`;
 CREATE TABLE `galeri` (
   `id` int NOT NULL,
   `judul` varchar(200) NOT NULL,
@@ -108,6 +111,7 @@ INSERT INTO `galeri` (`id`, `judul`, `deskripsi`, `foto`, `kategori`, `created_a
 -- Table structure for table `kritik_saran`
 --
 
+DROP TABLE IF EXISTS `kritik_saran`;
 CREATE TABLE `kritik_saran` (
   `id` int NOT NULL,
   `nama_pengunjung` varchar(150) NOT NULL,
@@ -147,6 +151,7 @@ INSERT INTO `kritik_saran` (`id`, `nama_pengunjung`, `email`, `jenis`, `pesan`, 
 -- Table structure for table `umkm`
 --
 
+DROP TABLE IF EXISTS `umkm`;
 CREATE TABLE `umkm` (
   `id` int NOT NULL,
   `nama_umkm` varchar(200) NOT NULL,

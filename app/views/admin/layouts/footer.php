@@ -39,8 +39,8 @@ endif; ?>
         SwalHelper.logout("<?= BASE_URL ?>/admin/logout");
     }
 
-    window.hapus = function(url) {
-        SwalHelper.confirmDelete(url);
+    window.hapus = function(url, id) {
+        SwalHelper.confirmDelete(url, id);
     }
 
     window.submitForm = function(e) {

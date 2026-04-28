@@ -61,6 +61,7 @@ class AdminEventController extends Controller
             header('Location: ' . BASE_URL . '/admin/event');
             exit;
         }
+        csrf_require('/admin/event');
 
         // UPLOAD FOTO
         $foto = null;
@@ -74,7 +75,7 @@ class AdminEventController extends Controller
         }
 
         try {
-            $this->eventModel->tambah(
+            $ok = $this->eventModel->tambah(
                 $_POST['nama_event']    ?? '',
                 $_POST['deskripsi']     ?? '',
                 $_POST['tanggal_mulai'] ?? '',
@@ -87,9 +88,13 @@ class AdminEventController extends Controller
                 $_POST['jam_selesai']   ?? null
             );
 
+            if (!$ok) {
+                throw new RuntimeException('Gagal menambahkan event ke database.');
+            }
+
             $_SESSION['success'] = 'Event berhasil ditambahkan!';
-        } catch (Exception $e) {
-            $_SESSION['error'] = 'Gagal menambahkan event!';
+        } catch (Throwable $e) {
+            $_SESSION['error'] = $e->getMessage();
         }
 
         header('Location: ' . BASE_URL . '/admin/event');
@@ -131,6 +136,7 @@ class AdminEventController extends Controller
             header('Location: ' . BASE_URL . '/admin/event');
             exit;
         }
+        csrf_require('/admin/event');
 
         $id = $_POST['id'] ?? null;
 
@@ -146,7 +152,7 @@ class AdminEventController extends Controller
         }
 
         try {
-            $this->eventModel->update(
+            $ok = $this->eventModel->update(
                 $id,
                 $_POST['nama_event']      ?? '',
                 $_POST['deskripsi']       ?? '',
@@ -160,9 +166,13 @@ class AdminEventController extends Controller
                 $foto  // null = tidak ganti foto lama
             );
 
+            if (!$ok) {
+                throw new RuntimeException('Gagal memperbarui event.');
+            }
+
             $_SESSION['success'] = 'Event berhasil diperbarui!';
-        } catch (Exception $e) {
-            $_SESSION['error'] = 'Gagal memperbarui event!';
+        } catch (Throwable $e) {
+            $_SESSION['error'] = $e->getMessage();
         }
 
         header('Location: ' . BASE_URL . '/admin/event');
@@ -174,7 +184,13 @@ class AdminEventController extends Controller
     // =========================
     public function delete()
     {
-        $id = $_GET['id'] ?? null;
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: ' . BASE_URL . '/admin/event');
+            exit;
+        }
+        csrf_require('/admin/event');
+
+        $id = $_POST['id'] ?? null;
 
         if (!$id) {
             $_SESSION['error'] = 'ID tidak valid!';
@@ -183,10 +199,13 @@ class AdminEventController extends Controller
         }
 
         try {
-            $this->eventModel->hapus($id);
+            $ok = $this->eventModel->hapus($id);
+            if (!$ok) {
+                throw new RuntimeException('Gagal menghapus event.');
+            }
             $_SESSION['success'] = 'Event berhasil dihapus!';
-        } catch (Exception $e) {
-            $_SESSION['error'] = 'Gagal menghapus event!';
+        } catch (Throwable $e) {
+            $_SESSION['error'] = $e->getMessage();
         }
 
         header('Location: ' . BASE_URL . '/admin/event');
@@ -198,17 +217,56 @@ class AdminEventController extends Controller
     // =========================
     private function uploadFoto(array $file): ?string
     {
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        $allowedTypes = [
+            'image/jpeg' => ['jpg', 'jpeg'],
+            'image/png' => ['png'],
+            'image/webp' => ['webp'],
+        ];
         $maxSize      = 5 * 1024 * 1024; // 5MB
 
         // Validasi tipe & ukuran
-        if (!in_array($file['type'], $allowedTypes)) return null;
-        if ($file['size'] > $maxSize) return null;
-        if ($file['error'] !== UPLOAD_ERR_OK) return null;
+        if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+            SecurityLogger::log('upload.event.rejected', ['reason' => 'tmp_file_invalid']);
+            return null;
+        }
+
+        $detectedMime = '';
+        if (class_exists('finfo')) {
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $detectedMime = (string)$finfo->file($file['tmp_name']);
+        }
+        if ($detectedMime === '') {
+            $detectedMime = mime_content_type($file['tmp_name']) ?: '';
+        }
+        if (!isset($allowedTypes[$detectedMime])) {
+            SecurityLogger::log('upload.event.rejected', ['reason' => 'mime_invalid', 'mime' => $detectedMime]);
+            return null;
+        }
+        if ($file['size'] > $maxSize) {
+            SecurityLogger::log('upload.event.rejected', ['reason' => 'size_exceeded', 'size' => (int)$file['size']]);
+            return null;
+        }
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            SecurityLogger::log('upload.event.rejected', ['reason' => 'upload_error', 'code' => (int)$file['error']]);
+            return null;
+        }
+        if (@getimagesize($file['tmp_name']) === false) {
+            SecurityLogger::log('upload.event.rejected', ['reason' => 'not_image']);
+            return null;
+        }
 
         // Nama file unik
-        $ext      = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $namaFile = time() . '_' . bin2hex(random_bytes(6)) . '.' . $ext;
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, $allowedTypes[$detectedMime], true)) {
+            SecurityLogger::log('upload.event.rejected', ['reason' => 'extension_mismatch', 'ext' => $ext, 'mime' => $detectedMime]);
+            return null;
+        }
+        try {
+            $suffix = bin2hex(random_bytes(6));
+        } catch (Throwable $e) {
+            $suffix = uniqid();
+        }
+        $namaFile = time() . '_' . $suffix . '.' . $ext;
 
         // Folder tujuan
         $uploadDir = BASE_PATH . '/public/assets/uploads/event/';
@@ -220,9 +278,11 @@ class AdminEventController extends Controller
 
         // Pindahkan file
         if (move_uploaded_file($file['tmp_name'], $uploadDir . $namaFile)) {
+            SecurityLogger::log('upload.event.accepted', ['file' => $namaFile], 'info');
             return $namaFile;
         }
 
+        SecurityLogger::log('upload.event.rejected', ['reason' => 'move_failed']);
         return null;
     }
 }

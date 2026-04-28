@@ -249,7 +249,7 @@ $jasa      = count(array_filter($semua_umkm, fn($u) => $u['kategori'] === 'jasa'
     filterKategori?.addEventListener('change', filterTable);
 
     function hapusUmkm(id) {
-        SwalHelper.confirmDelete("<?= BASE_URL ?>/admin/umkm/delete?id=" + id);
+        SwalHelper.confirmDelete("<?= BASE_URL ?>/admin/umkm/delete", id);
     }
 </script>
 

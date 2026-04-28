@@ -22,6 +22,7 @@ class KritikSaranController extends Controller
         // HANDLE POST (SUBMIT FORM)
         // =========================
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            csrf_require('/kritik-saran');
 
             $nama   = trim($_POST['nama'] ?? '');
             $email  = trim($_POST['email'] ?? '');

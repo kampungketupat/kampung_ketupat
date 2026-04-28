@@ -263,7 +263,7 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
     filterStatus?.addEventListener('change', filterTable);
 
     function hapusEvent(id) {
-        SwalHelper.confirmDelete("<?= BASE_URL ?>/admin/event/delete?id=" + id);
+        SwalHelper.confirmDelete("<?= BASE_URL ?>/admin/event/delete", id);
     }
 </script>
 

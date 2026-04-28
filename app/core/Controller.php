@@ -1,5 +1,7 @@
 <?php
 
+require_once BASE_PATH . '/app/core/SecurityLogger.php';
+
 class Controller
 {
     public function view($view, $data = [], $useLayout = true)

@@ -1,8 +1,10 @@
 RewriteEngine On
+Options -Indexes
+
+# Jangan izinkan file PHP dieksekusi dari folder upload
+RewriteRule ^assets/uploads/.*\.(?:php[0-9]?|phtml|phar)$ - [F,L,NC]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^ index.php [L]
-
-#buat ngarahin ke tempat yg benar

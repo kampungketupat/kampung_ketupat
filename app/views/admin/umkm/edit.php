@@ -14,6 +14,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                     method="POST"
                     enctype="multipart/form-data"
                     onsubmit="return submitForm(event)">
+                    <?= csrf_field() ?>
 
                     <input type="hidden" name="id" value="<?= $umkm['id'] ?>" />
 

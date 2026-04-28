@@ -163,10 +163,18 @@ class GaleriModel
         $stmt->close();
 
         if ($result && $data && !empty($data['foto'])) {
-            $file = BASE_PATH . '/public/assets/uploads/galeri/' . $data['foto'];
+            $fileName = basename((string)$data['foto']);
+            $baseDir = realpath(BASE_PATH . '/public/assets/uploads/galeri');
+            $filePath = realpath(BASE_PATH . '/public/assets/uploads/galeri/' . $fileName);
 
-            if (file_exists($file) && strpos($data['foto'], 'http') !== 0) {
-                unlink($file);
+            if (
+                $baseDir &&
+                $filePath &&
+                strpos((string)$data['foto'], 'http') !== 0 &&
+                strpos($filePath, $baseDir . DIRECTORY_SEPARATOR) === 0 &&
+                is_file($filePath)
+            ) {
+                unlink($filePath);
             }
         }
 

@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 // ============================================================
-// AdminUMKMController (FINAL - MVC CLEAN)
+// AdminUMKMController (HARDENED)
 // ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
@@ -12,7 +12,6 @@ class AdminUMKMController extends Controller
 
     public function __construct()
     {
-        // PROTEKSI ADMIN
         if (!isset($_SESSION['admin'])) {
             header('Location: ' . BASE_URL . '/admin/login');
             exit;
@@ -22,12 +21,6 @@ class AdminUMKMController extends Controller
         $this->umkmModel = new UMKMModel($koneksi);
     }
 
-    // =========================
-    // INDEX
-    // =========================
-    // =========================
-    // INDEX
-    // =========================
     public function index()
     {
         $data['semua_umkm'] = $this->umkmModel->getAll();
@@ -37,9 +30,6 @@ class AdminUMKMController extends Controller
         $this->view('admin/umkm/index', $data);
     }
 
-    // =========================
-    // FORM CREATE
-    // =========================
     public function create()
     {
         $data['judul_halaman'] = 'Tambah UMKM';
@@ -48,34 +38,30 @@ class AdminUMKMController extends Controller
         $this->view('admin/umkm/create', $data);
     }
 
-    // =========================
-    // STORE
-    // =========================
     public function store()
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: ' . BASE_URL . '/admin/umkm');
             exit;
         }
+        csrf_require('/admin/umkm');
 
         try {
             $nama      = trim($_POST['nama_umkm'] ?? '');
             $pemilik   = trim($_POST['pemilik'] ?? '');
-            $kategori  = $_POST['kategori'] ?? '';
-            $deskripsi = $_POST['deskripsi'] ?? '';
-            $produk    = $_POST['produk_unggulan'] ?? '';
-            $kontak    = $_POST['kontak'] ?? '';
-            $alamat    = $_POST['alamat'] ?? '';
+            $kategori  = trim($_POST['kategori'] ?? 'lainnya');
+            $deskripsi = trim($_POST['deskripsi'] ?? '');
+            $produk    = trim($_POST['produk_unggulan'] ?? '');
+            $kontak    = trim($_POST['kontak'] ?? '');
+            $alamat    = trim($_POST['alamat'] ?? '');
 
-            if (!$nama) {
-                $_SESSION['error'] = 'Nama UMKM wajib diisi!';
-                header('Location: ' . BASE_URL . '/admin/umkm/create');
-                exit;
+            if ($nama === '') {
+                throw new RuntimeException('Nama UMKM wajib diisi!');
             }
 
             $foto = $this->uploadFoto();
 
-            $this->umkmModel->tambah(
+            $ok = $this->umkmModel->tambah(
                 $nama,
                 $pemilik,
                 $kategori,
@@ -86,23 +72,24 @@ class AdminUMKMController extends Controller
                 $foto
             );
 
+            if (!$ok) {
+                throw new RuntimeException('Gagal menambahkan UMKM.');
+            }
+
             $_SESSION['success'] = 'UMKM berhasil ditambahkan!';
-        } catch (Exception $e) {
-            $_SESSION['error'] = 'Gagal menambahkan UMKM!';
+        } catch (Throwable $e) {
+            $_SESSION['error'] = $e->getMessage();
         }
 
         header('Location: ' . BASE_URL . '/admin/umkm');
         exit;
     }
 
-    // =========================
-    // FORM EDIT
-    // =========================
     public function edit()
     {
-        $id = $_GET['id'] ?? null;
+        $id = (int)($_GET['id'] ?? 0);
 
-        if (!$id) {
+        if ($id <= 0) {
             header('Location: ' . BASE_URL . '/admin/umkm');
             exit;
         }
@@ -121,38 +108,37 @@ class AdminUMKMController extends Controller
         $this->view('admin/umkm/edit', $data);
     }
 
-    // =========================
-    // UPDATE
-    // =========================
     public function update()
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: ' . BASE_URL . '/admin/umkm');
             exit;
         }
+        csrf_require('/admin/umkm');
 
         try {
-            $id        = (int)$_POST['id'];
+            $id        = (int)($_POST['id'] ?? 0);
             $nama      = trim($_POST['nama_umkm'] ?? '');
             $pemilik   = trim($_POST['pemilik'] ?? '');
-            $kategori  = $_POST['kategori'] ?? '';
-            $deskripsi = $_POST['deskripsi'] ?? '';
-            $produk    = $_POST['produk_unggulan'] ?? '';
-            $kontak    = $_POST['kontak'] ?? '';
-            $alamat    = $_POST['alamat'] ?? '';
+            $kategori  = trim($_POST['kategori'] ?? 'lainnya');
+            $deskripsi = trim($_POST['deskripsi'] ?? '');
+            $produk    = trim($_POST['produk_unggulan'] ?? '');
+            $kontak    = trim($_POST['kontak'] ?? '');
+            $alamat    = trim($_POST['alamat'] ?? '');
 
-            if (!$nama) {
-                $_SESSION['error'] = 'Nama UMKM wajib diisi!';
-                header('Location: ' . BASE_URL . '/admin/umkm/edit?id=' . $id);
-                exit;
+            if ($id <= 0 || $nama === '') {
+                throw new RuntimeException('Data UMKM tidak valid.');
             }
 
             $foto = null;
-            if (!empty($_FILES['foto']['name'])) {
+            if (!empty($_FILES['foto']['name'] ?? '')) {
                 $foto = $this->uploadFoto();
+                if ($foto === null) {
+                    throw new RuntimeException('Format foto tidak valid atau ukuran terlalu besar.');
+                }
             }
 
-            $this->umkmModel->update(
+            $ok = $this->umkmModel->update(
                 $id,
                 $nama,
                 $pemilik,
@@ -164,58 +150,118 @@ class AdminUMKMController extends Controller
                 $foto
             );
 
+            if (!$ok) {
+                throw new RuntimeException('Gagal memperbarui UMKM.');
+            }
+
             $_SESSION['success'] = 'UMKM berhasil diperbarui!';
-        } catch (Exception $e) {
-            $_SESSION['error'] = 'Gagal memperbarui UMKM!';
+        } catch (Throwable $e) {
+            $_SESSION['error'] = $e->getMessage();
         }
 
         header('Location: ' . BASE_URL . '/admin/umkm');
         exit;
     }
 
-    // =========================
-    // DELETE
-    // =========================
     public function delete()
     {
-        $id = $_GET['id'] ?? null;
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: ' . BASE_URL . '/admin/umkm');
+            exit;
+        }
+        csrf_require('/admin/umkm');
 
-        if (!$id) {
+        $id = (int)($_POST['id'] ?? 0);
+
+        if ($id <= 0) {
             $_SESSION['error'] = 'ID tidak valid!';
             header('Location: ' . BASE_URL . '/admin/umkm');
             exit;
         }
 
         try {
-            $this->umkmModel->hapus($id);
+            $ok = $this->umkmModel->hapus($id);
+            if (!$ok) {
+                throw new RuntimeException('Gagal menghapus UMKM.');
+            }
             $_SESSION['success'] = 'UMKM berhasil dihapus!';
-        } catch (Exception $e) {
-            $_SESSION['error'] = 'Gagal menghapus UMKM!';
+        } catch (Throwable $e) {
+            $_SESSION['error'] = $e->getMessage();
         }
 
         header('Location: ' . BASE_URL . '/admin/umkm');
         exit;
     }
 
-    // =========================
-    // UPLOAD FOTO
-    // =========================
-    private function uploadFoto()
+    private function uploadFoto(): ?string
     {
-        if (empty($_FILES['foto']['name'])) return null;
+        if (empty($_FILES['foto']['name'] ?? '')) {
+            return null;
+        }
 
-        $ext  = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
-        $foto = time() . '_' . uniqid() . '.' . $ext;
+        $file = $_FILES['foto'];
 
-        $tmp    = $_FILES['foto']['tmp_name'];
+        if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+            SecurityLogger::log('upload.umkm.rejected', ['reason' => 'upload_error', 'code' => (int)($file['error'] ?? -1)]);
+            return null;
+        }
+
+        if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+            SecurityLogger::log('upload.umkm.rejected', ['reason' => 'tmp_file_invalid']);
+            return null;
+        }
+
+        $allowedMime = [
+            'image/jpeg' => ['jpg', 'jpeg'],
+            'image/png' => ['png'],
+            'image/webp' => ['webp'],
+        ];
+        $mime = '';
+        if (class_exists('finfo')) {
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mime = (string)$finfo->file($file['tmp_name']);
+        }
+        if ($mime === '') {
+            $mime = mime_content_type($file['tmp_name']) ?: '';
+        }
+        if (!isset($allowedMime[$mime])) {
+            SecurityLogger::log('upload.umkm.rejected', ['reason' => 'mime_invalid', 'mime' => $mime]);
+            return null;
+        }
+        if (@getimagesize($file['tmp_name']) === false) {
+            SecurityLogger::log('upload.umkm.rejected', ['reason' => 'not_image']);
+            return null;
+        }
+
+        if (($file['size'] ?? 0) > 5 * 1024 * 1024) {
+            SecurityLogger::log('upload.umkm.rejected', ['reason' => 'size_exceeded', 'size' => (int)($file['size'] ?? 0)]);
+            return null;
+        }
+
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, $allowedMime[$mime], true)) {
+            SecurityLogger::log('upload.umkm.rejected', ['reason' => 'extension_mismatch', 'ext' => $ext, 'mime' => $mime]);
+            return null;
+        }
+
+        try {
+            $suffix = bin2hex(random_bytes(6));
+        } catch (Throwable $e) {
+            $suffix = uniqid();
+        }
+        $foto = time() . '_' . $suffix . '.' . $ext;
         $folder = BASE_PATH . '/public/assets/uploads/umkm/';
 
         if (!is_dir($folder)) {
-            mkdir($folder, 0777, true);
+            mkdir($folder, 0755, true);
         }
 
-        move_uploaded_file($tmp, $folder . $foto);
+        if (!move_uploaded_file($file['tmp_name'], $folder . $foto)) {
+            SecurityLogger::log('upload.umkm.rejected', ['reason' => 'move_failed']);
+            return null;
+        }
 
+        SecurityLogger::log('upload.umkm.accepted', ['file' => $foto], 'info');
         return $foto;
     }
 }

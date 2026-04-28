@@ -1,6 +1,7 @@
 <?php
 
 // buat nunjukkin jalan dan ngejaga user dari akses yang gak diinginkan, misalnya user gak bisa akses halaman admin, dan sebaliknya
+require_once BASE_PATH . '/app/core/SecurityLogger.php';
 
 class Router
 {
@@ -47,19 +48,25 @@ class Router
         $file = BASE_PATH . "/app/controllers/$controllerName.php";
 
         if (!file_exists($file)) {
-            die("Controller tidak ditemukan: $controllerName");
+            SecurityLogger::log('router.controller_missing', ['controller' => $controllerName], 'error');
+            throw new RuntimeException('Terjadi kesalahan pada server.');
         }
 
         require_once $file;
 
         if (!class_exists($controllerName)) {
-            die("Class tidak ditemukan: $controllerName");
+            SecurityLogger::log('router.class_missing', ['controller' => $controllerName], 'error');
+            throw new RuntimeException('Terjadi kesalahan pada server.');
         }
 
         $controller = new $controllerName();
 
         if (!method_exists($controller, $methodAction)) {
-            die("Method tidak ditemukan: $methodAction");
+            SecurityLogger::log('router.method_missing', [
+                'controller' => $controllerName,
+                'method' => $methodAction
+            ], 'error');
+            throw new RuntimeException('Terjadi kesalahan pada server.');
         }
 
         $controller->$methodAction();

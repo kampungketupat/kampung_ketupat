@@ -49,6 +49,7 @@ $pesanPublik = $ksModel->getPublik();
                     <form id="form-kritik-saran"
                         action="<?= BASE_URL ?>/kritik-saran"
                         method="POST">
+                        <?= csrf_field() ?>
                         <div id="app-kritik-saran"></div>
                     </form>
                 </div>

@@ -1,6 +1,9 @@
 <?php
 
-// buat ngasih tau jalan apa aja yang bisa diakses di website kita, dan nanti akan dihubungkan ke controller mana
+// ============================================================
+// ROUTES WEB (FINAL - CLEAN MVC)
+// ============================================================
+
 
 // =========================
 // USER
@@ -14,7 +17,6 @@ $router->get('/event', 'EventController@index');
 $router->get('/galeri', 'GaleriController@index');
 
 $router->get('/umkm', 'UMKMController@index');
-$router->post('/umkm/store', 'UMKMController@store');
 
 $router->get('/lokasi', 'LokasiController@index');
 
@@ -29,7 +31,7 @@ $router->post('/kritik-saran', 'KritikSaranController@index');
 // =========================
 $router->get('/admin/login', 'AuthController@login');
 $router->post('/admin/login/proses', 'AuthController@proses');
-$router->get('/admin/logout', 'AuthController@logout');
+$router->post('/admin/logout', 'AuthController@logout');
 
 
 // =========================
@@ -48,10 +50,10 @@ $router->post('/admin/galeri/store', 'AdminGaleriController@store');
 $router->get('/admin/galeri/edit', 'AdminGaleriController@edit');
 $router->post('/admin/galeri/update', 'AdminGaleriController@update');
 
-$router->get('/admin/galeri/delete', 'AdminGaleriController@delete');
+$router->post('/admin/galeri/delete', 'AdminGaleriController@delete');
 
 $router->post('/admin/galeri/togglePublish', 'AdminGaleriController@togglePublish');
-$router->get('/admin/galeri/publishAll', 'AdminGaleriController@publishAll');
+$router->post('/admin/galeri/publishAll', 'AdminGaleriController@publishAll');
 
 
 // =========================
@@ -64,7 +66,7 @@ $router->post('/admin/event/store', 'AdminEventController@store');
 $router->get('/admin/event/edit', 'AdminEventController@edit');
 $router->post('/admin/event/update', 'AdminEventController@update');
 
-$router->get('/admin/event/delete', 'AdminEventController@delete');
+$router->post('/admin/event/delete', 'AdminEventController@delete');
 
 
 // =========================
@@ -77,7 +79,7 @@ $router->post('/admin/umkm/store', 'AdminUMKMController@store');
 $router->get('/admin/umkm/edit', 'AdminUMKMController@edit');
 $router->post('/admin/umkm/update', 'AdminUMKMController@update');
 
-$router->get('/admin/umkm/delete', 'AdminUMKMController@delete');
+$router->post('/admin/umkm/delete', 'AdminUMKMController@delete');
 
 
 // =========================
@@ -85,7 +87,7 @@ $router->get('/admin/umkm/delete', 'AdminUMKMController@delete');
 // =========================
 $router->get('/admin/kritik-saran',            'AdminKritikController@index');
 $router->get('/admin/kritik-saran/arsip',      'AdminKritikController@arsip');
-$router->get('/admin/kritik-saran/terima',     'AdminKritikController@terima');
-$router->get('/admin/kritik-saran/kembalikan', 'AdminKritikController@kembalikan');
-$router->get('/admin/kritik-saran/tampilkan',  'AdminKritikController@tampilkan');
-$router->get('/admin/kritik-saran/sembunyikan', 'AdminKritikController@sembunyikan');
+$router->post('/admin/kritik-saran/terima',     'AdminKritikController@terima');
+$router->post('/admin/kritik-saran/kembalikan', 'AdminKritikController@kembalikan');
+$router->post('/admin/kritik-saran/tampilkan',  'AdminKritikController@tampilkan');
+$router->post('/admin/kritik-saran/sembunyikan', 'AdminKritikController@sembunyikan');

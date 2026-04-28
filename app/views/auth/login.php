@@ -41,6 +41,7 @@
 
             <!-- FORM -->
             <form action="<?= BASE_URL ?>/admin/login/proses" method="POST">
+                <?= csrf_field() ?>
 
                 <div class="mb-3">
                     <label class="form-label fw-500">Username</label>

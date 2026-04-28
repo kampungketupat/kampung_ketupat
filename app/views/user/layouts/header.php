@@ -7,6 +7,7 @@ $halaman_aktif = $halaman_aktif ?? '';
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>" />
     <title><?= $judul_halaman ?? 'Kampung Ketupat Warna Warni Samarinda' ?></title>
     <meta name="description" content="Destinasi wisata budaya dan kuliner di tepi Sungai Mahakam, Samarinda, Kalimantan Timur." />
 

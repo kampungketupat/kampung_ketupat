@@ -139,14 +139,18 @@ class UMKMModel {
 
         // Hapus file fisik jika ada
         if ($result && $data && !empty($data['foto'])) {
-
-            $file = BASE_PATH . '/public/assets/uploads/umkm/' . $data['foto'];
+            $fileName = basename((string)$data['foto']);
+            $baseDir = realpath(BASE_PATH . '/public/assets/uploads/umkm');
+            $filePath = realpath(BASE_PATH . '/public/assets/uploads/umkm/' . $fileName);
 
             if (
-                file_exists($file) &&
-                strpos($data['foto'], 'http') !== 0
+                $baseDir &&
+                $filePath &&
+                strpos((string)$data['foto'], 'http') !== 0 &&
+                strpos($filePath, $baseDir . DIRECTORY_SEPARATOR) === 0 &&
+                is_file($filePath)
             ) {
-                unlink($file);
+                unlink($filePath);
             }
         }
 

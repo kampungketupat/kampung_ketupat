@@ -11,10 +11,10 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
         <p>Kelola &amp; atur tampilan foto website</p>
     </div>
     <div class="page-actions">
-        <a href="<?= BASE_URL ?>/admin/galeri/publishAll" class="btn-modern success">
+        <button type="button" onclick="publishAllGaleri()" class="btn-modern success">
             <i class="bi bi-check2-circle"></i>
             <span>Tampilkan Semua</span>
-        </a>
+        </button>
         <a href="<?= BASE_URL ?>/admin/galeri/create" class="btn-modern primary">
             <i class="bi bi-plus-circle"></i>
             <span>Tambah Foto</span>
@@ -149,11 +149,11 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                                 class="btn-edit" title="Edit">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a href="<?= BASE_URL ?>/admin/galeri/delete?id=<?= $g['id'] ?>"
+                            <button type="button"
                                 class="btn-delete" title="Hapus"
-                                onclick="return confirm('Hapus foto ini?')">
+                                onclick="hapusGaleri('<?= $g['id'] ?>')">
                                 <i class="bi bi-trash"></i>
-                            </a>
+                            </button>
                         </div>
 
                     </div>
@@ -260,6 +260,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
        - TIDAK pakai alert() sama sekali
     ════════════════════════════════ */
     var BASE = '<?= BASE_URL ?>';
+    var CSRF = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
     document.querySelectorAll('.toggle-publish').forEach(function(toggle) {
         toggle.addEventListener('change', function() {
@@ -273,9 +274,15 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 
             checkbox.disabled = true;
 
-            fetch(BASE + '/admin/galeri/toggle?id=' + id, {
-                    method: 'GET',
-                    credentials: 'same-origin'
+            fetch(BASE + '/admin/galeri/togglePublish', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                    },
+                    body: '_token=' + encodeURIComponent(CSRF) +
+                        '&id=' + encodeURIComponent(id) +
+                        '&status=' + encodeURIComponent(checkbox.checked ? 1 : 0)
                 })
                 .then(function(res) {
                     // Ambil sebagai text dulu — aman untuk semua format response
@@ -348,6 +355,20 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                 hidEl.textContent = hid + 1;
             }
         }
+    }
+
+    function hapusGaleri(id) {
+        SwalHelper.confirmDelete(BASE + '/admin/galeri/delete', id);
+    }
+
+    function publishAllGaleri() {
+        SwalHelper.confirm(
+            'Tampilkan semua foto?',
+            'Semua foto galeri akan ditampilkan ke publik.',
+            BASE + '/admin/galeri/publishAll',
+            {},
+            '#16a34a'
+        );
     }
 
     const _galeriAdmin = [

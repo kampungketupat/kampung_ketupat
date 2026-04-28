@@ -254,7 +254,10 @@ $tab_aktif = $tab_aktif ?? 'pending';
         SwalHelper.confirm(
             'Terima Pesan',
             'Pesan akan dipindahkan ke arsip. Kamu bisa tampilkan ke publik dari sana.',
-            BASE + '/admin/kritik-saran/terima?id=' + id,
+            BASE + '/admin/kritik-saran/terima',
+            {
+                id: id
+            },
             '#16a34a'
         );
     }
@@ -263,20 +266,26 @@ $tab_aktif = $tab_aktif ?? 'pending';
         SwalHelper.confirm(
             'Kembalikan ke Kotak Masuk',
             'Pesan akan dikembalikan ke status pending.',
-            BASE + '/admin/kritik-saran/kembalikan?id=' + id,
+            BASE + '/admin/kritik-saran/kembalikan',
+            {
+                id: id
+            },
             '#6b7280'
         );
     }
 
     function tampilkan(id) {
-        SwalHelper.confirmPublish(BASE + '/admin/kritik-saran/tampilkan?id=' + id);
+        SwalHelper.confirmPublish(BASE + '/admin/kritik-saran/tampilkan', id);
     }
 
     function sembunyikan(id) {
         SwalHelper.confirm(
             'Sembunyikan dari Publik',
             'Pesan tidak akan ditampilkan lagi ke pengunjung.',
-            BASE + '/admin/kritik-saran/sembunyikan?id=' + id,
+            BASE + '/admin/kritik-saran/sembunyikan',
+            {
+                id: id
+            },
             '#e11d48'
         );
     }

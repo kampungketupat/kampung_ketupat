@@ -18,6 +18,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                     method="POST"
                     enctype="multipart/form-data"
                     onsubmit="return submitForm(event)">
+                    <?= csrf_field() ?>
 
                     <!-- JUDUL -->
                     <div class="mb-3">

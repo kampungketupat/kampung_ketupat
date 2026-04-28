@@ -1,7 +1,6 @@
-<?php
+﻿<?php
 // ============================================================
 // FILE: controller/AdminController.php
-// Controller untuk login admin & dashboard admin
 // ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
@@ -33,66 +32,17 @@ class AdminController extends Controller
         $this->kritikModel = new KritikSaranModel($koneksi);
     }
 
-    // =========================
-    // LOGIN (GET + POST)
-    // =========================
     public function login()
     {
-        // kalau sudah login → dashboard
-        if (isset($_SESSION['admin'])) {
-            header('Location: /admin/dashboard');
-            exit;
-        }
-
-        // =========================
-        // HANDLE POST (LOGIN)
-        // =========================
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $username = trim($_POST['username'] ?? '');
-            $password = trim($_POST['password'] ?? '');
-
-            // validasi sederhana
-            if ($username === '' || $password === '') {
-                $_SESSION['login_error'] = 'Username dan password wajib diisi';
-                header('Location: /admin/login');
-                exit;
-            }
-
-            // cek ke database
-            $admin = $this->adminModel->login($username, $password);
-
-            if ($admin) {
-                // simpan session
-                $_SESSION['admin'] = $admin;
-
-                header('Location: /admin/dashboard');
-                exit;
-            } else {
-                $_SESSION['login_error'] = 'Username atau password salah';
-                header('Location: /admin/login');
-                exit;
-            }
-        }
-
-        // =========================
-        // TAMPILKAN LOGIN (GET)
-        // =========================
-        $data['pesan_error'] = $_SESSION['login_error'] ?? null;
-        unset($_SESSION['login_error']);
-
-        $data['judul_halaman'] = 'Login Admin — Kampung Ketupat';
-
-        $this->view('auth/login', $data);
+        // Rute auth dipusatkan di AuthController agar hardening tetap konsisten.
+        header('Location: ' . BASE_URL . '/admin/login');
+        exit;
     }
 
-    // =========================
-    // DASHBOARD
-    // =========================
     public function dashboard()
     {
         if (!isset($_SESSION['admin'])) {
-            header('Location: /admin/login');
+            header('Location: ' . BASE_URL . '/admin/login');
             exit;
         }
 
@@ -100,7 +50,7 @@ class AdminController extends Controller
             'galeri' => $this->galeriModel->countAll(),
             'event'  => $this->eventModel->countAll(),
             'umkm'   => $this->umkmModel->countAll(),
-            'kritik' => $this->kritikModel->countBelumDibaca()
+            'kritik' => $this->kritikModel->countBelumDibaca(),
         ];
 
         $data['pesan_terbaru'] = array_slice(
@@ -109,54 +59,50 @@ class AdminController extends Controller
             5
         );
 
-        $labelBulan = [];
-        $dataBulanan = [];
-
-
         $query = "
-        SELECT 
-            MONTH(created_at) AS bulan,
-            COUNT(*) AS total
-        FROM galeri
-        GROUP BY MONTH(created_at)
-        ORDER BY MONTH(created_at)
+            SELECT MONTH(created_at) AS bulan, COUNT(*) AS total
+            FROM galeri
+            GROUP BY MONTH(created_at)
+            ORDER BY MONTH(created_at)
         ";
 
-        $result = mysqli_query($this->db, $query);
-
         $labelBulan = [];
         $dataBulanan = [];
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $namaBulan = date('M', mktime(0, 0, 0, $row['bulan'], 10));
+        $result = $this->db->query($query);
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $bulan = (int)($row['bulan'] ?? 0);
+                if ($bulan < 1 || $bulan > 12) {
+                    continue;
+                }
 
-            $labelBulan[] = $namaBulan;
-            $dataBulanan[] = (int)$row['total'];
+                $namaBulan = date('M', mktime(0, 0, 0, $bulan, 10));
+                $labelBulan[] = $namaBulan;
+                $dataBulanan[] = (int)($row['total'] ?? 0);
+            }
         }
 
         $data['labelBulan'] = $labelBulan;
         $data['dataBulanan'] = $dataBulanan;
 
-        $nama = $_SESSION['admin']['nama'] ?? 'Admin';
-
-        $initials = strtoupper(
-            implode('', array_map(fn($w) => $w[0], explode(' ', $nama)))
-        );
+        $nama = trim($_SESSION['admin']['nama'] ?? $_SESSION['admin']['nama_lengkap'] ?? 'Admin');
+        $parts = array_values(array_filter(explode(' ', $nama)));
+        $initialChars = array_map(static fn($w) => strtoupper(substr($w, 0, 1)), $parts);
+        $initials = implode('', $initialChars);
 
         $data['admin_nama'] = $nama;
-        $data['initials'] = $initials;
-        $data['judul_halaman'] = 'Dashboard Admin — Kampung Ketupat';
+        $data['initials'] = $initials !== '' ? $initials : 'AD';
+        $data['judul_halaman'] = 'Dashboard Admin - Kampung Ketupat';
+        $data['menu_aktif'] = 'dashboard';
 
         $this->view('admin/dashboard', $data);
     }
 
-    // =========================
-    // LOGOUT
-    // =========================
     public function logout()
     {
-        session_destroy();
-        header('Location: /admin/login');
+        // Logout valid hanya melalui AuthController (POST + CSRF).
+        header('Location: ' . BASE_URL . '/admin/login');
         exit;
     }
 }

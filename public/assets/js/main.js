@@ -98,6 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ===== TOGGLE =====
+  const csrfToken =
+    document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
+    "";
   document.querySelectorAll(".toggle-publish").forEach((toggle) => {
     toggle.addEventListener("change", function () {
       const id = this.dataset.id;
@@ -109,7 +112,13 @@ document.addEventListener("DOMContentLoaded", function () {
       fetch(BASE_URL + "/admin/galeri/togglePublish", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "id=" + id + "&status=" + status,
+        body:
+          "_token=" +
+          encodeURIComponent(csrfToken) +
+          "&id=" +
+          encodeURIComponent(id) +
+          "&status=" +
+          encodeURIComponent(status),
       })
         .then((res) => res.json())
         .then((data) => {

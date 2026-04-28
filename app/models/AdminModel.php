@@ -38,6 +38,9 @@ class AdminModel {
             return $admin;
         }
 
+        // Mitigasi timing attack untuk username yang tidak ditemukan.
+        password_verify((string)$password, '$2y$10$A5qR0jSDR/X8Cg6XFkM8L.pdfjP9hOMFgdI2VCfWIA6vR4k9yN2dW');
+
         return false;
     }
 }
