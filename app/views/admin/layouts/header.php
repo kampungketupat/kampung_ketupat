@@ -29,6 +29,12 @@
 
 <body class="admin-page">
 
+    <button type="button" class="admin-mobile-toggle" id="adminMobileToggle" aria-label="Buka menu admin">
+        <i class="bi bi-list"></i>
+    </button>
+    <div class="admin-mobile-title">Menu Admin</div>
+    <div class="admin-sidebar-overlay" id="adminSidebarOverlay"></div>
+
     <!-- SIDEBAR -->
     <nav class="sidebar-admin">
         <div class="sidebar-brand">

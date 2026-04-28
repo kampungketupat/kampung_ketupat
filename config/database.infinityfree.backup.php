@@ -27,15 +27,13 @@ if (!function_exists('cfg_env_bool')) {
     }
 }
 
-$appEnv = cfg_env('APP_ENV', 'local');
+$appEnv = cfg_env('APP_ENV', 'production');
 $isProduction = strtolower($appEnv) === 'production';
 
-// Default LOCAL config (Laragon/XAMPP): localhost + root user.
-// For online hosting, set env vars DB_HOST/DB_USER/DB_PASS/DB_NAME.
-define('DB_HOST', cfg_env('DB_HOST', 'localhost'));
-define('DB_USER', cfg_env('DB_USER', 'root'));
-define('DB_PASS', cfg_env('DB_PASS', ''));
-define('DB_NAME', cfg_env('DB_NAME', 'kampung_ketupat'));
+define('DB_HOST', cfg_env('DB_HOST', 'sql309.infinityfree.com'));
+define('DB_USER', cfg_env('DB_USER', 'if0_41772900'));
+define('DB_PASS', cfg_env('DB_PASS', 'CHANGE_ME_IN_HOSTING_ENV'));
+define('DB_NAME', cfg_env('DB_NAME', 'if0_41772900_kampung_ketupat'));
 define('DB_CHARSET', cfg_env('DB_CHARSET', 'utf8mb4'));
 
 // In production/shared-hosting, this should stay OFF by default.

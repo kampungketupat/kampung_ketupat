@@ -35,6 +35,48 @@ endif; ?>
 
 
 <script>
+    (function() {
+        const body = document.body;
+        const sidebar = document.querySelector('.sidebar-admin');
+        const toggleBtn = document.getElementById('adminMobileToggle');
+        const overlay = document.getElementById('adminSidebarOverlay');
+
+        if (!sidebar || !toggleBtn || !overlay) return;
+
+        const setToggleState = function(isOpen) {
+            const icon = toggleBtn.querySelector('i');
+            toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            if (icon) {
+                icon.className = isOpen ? 'bi bi-x-lg' : 'bi bi-list';
+            }
+        };
+
+        const closeSidebar = function() {
+            body.classList.remove('sidebar-mobile-open');
+            setToggleState(false);
+        };
+
+        toggleBtn.addEventListener('click', function() {
+            const willOpen = !body.classList.contains('sidebar-mobile-open');
+            body.classList.toggle('sidebar-mobile-open');
+            setToggleState(willOpen);
+        });
+
+        overlay.addEventListener('click', closeSidebar);
+
+        sidebar.querySelectorAll('a, button').forEach(function(el) {
+            el.addEventListener('click', closeSidebar);
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 991) {
+                closeSidebar();
+            }
+        });
+
+        setToggleState(false);
+    })();
+
     window.logout = function() {
         SwalHelper.logout("<?= BASE_URL ?>/admin/logout");
     }

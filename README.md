@@ -1,4 +1,4 @@
-![Banner](https://capsule-render.vercel.app/api?type=waving&height=220&color=0:0f172a,100:0d9488&text=Kampung%20Ketupat%20Web&fontColor=ffffff&fontSize=42&fontAlignY=38&desc=PHP%20MVC%20-%20Admin%20Panel%20-%20Public%20Website&descAlignY=60)
+﻿![Banner](https://capsule-render.vercel.app/api?type=waving&height=220&color=0:0f172a,100:0d9488&text=Kampung%20Ketupat%20Web&fontColor=ffffff&fontSize=42&fontAlignY=38&desc=Public%20Website%20%C2%B7%20Admin%20Panel%20%C2%B7%20PHP%20MVC&descAlignY=60)
 
 # Kampung Ketupat Web
 
@@ -6,59 +6,61 @@
 [![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-Project ini adalah website Kampung Ketupat dengan arsitektur PHP MVC sederhana, terdiri dari:
-- halaman publik (beranda, galeri, event, UMKM, kritik saran),
-- panel admin untuk pengelolaan konten,
-- skema database MySQL siap import.
+Project ini adalah website Kampung Ketupat dengan arsitektur PHP MVC sederhana untuk kebutuhan publikasi informasi wisata dan pengelolaan konten admin.
 
-## Daftar Isi
+## 📑 Daftar Isi
 
-- [Ringkasan Proyek](#ringkasan-proyek)
-- [Fitur Utama](#fitur-utama)
-- [Stack Teknologi](#stack-teknologi)
-- [Struktur Folder](#struktur-folder)
-- [Quick Start](#quick-start)
-- [Halaman Utama](#halaman-utama)
-- [Keamanan](#keamanan)
-- [Testing](#testing)
-- [Catatan Pengembangan](#catatan-pengembangan)
+- [🎯 Ringkasan Proyek](#-ringkasan-proyek)
+- [✨ Fitur Utama](#-fitur-utama)
+- [🛠️ Stack Teknologi](#️-stack-teknologi)
+- [🗂️ Struktur Folder](#️-struktur-folder)
+- [🚀 Quick Start](#-quick-start)
+- [🧭 Halaman Website](#-halaman-website)
+- [🔐 Fitur Keamanan](#-fitur-keamanan)
+- [🧪 Testing](#-testing)
 
-## Ringkasan Proyek
+## 🎯 Ringkasan Proyek
 
-Aplikasi ini dibangun untuk kebutuhan website profil dan manajemen konten Kampung Ketupat Warna Warni.
-Fokus utamanya adalah:
-- tampilan informasi wisata untuk pengunjung,
-- dashboard admin untuk CRUD data,
-- pengelolaan kritik dan saran dari user.
+Website ini menyediakan:
+- Halaman publik (beranda, galeri, event, UMKM, kritik saran).
+- Dashboard admin untuk CRUD konten.
+- Integrasi database MySQL dengan skema siap import.
 
-## Fitur Utama
+Fokus project:
+- kemudahan pengelolaan konten wisata,
+- antarmuka sederhana,
+- hardening dasar untuk deployment publik.
 
-- Public pages:
-  - Beranda
-  - Galeri
-  - Event
-  - UMKM
-  - Kritik dan Saran
-- Admin pages:
-  - Login admin
-  - Dashboard statistik
-  - Kelola Galeri
-  - Kelola Event
-  - Kelola UMKM
-  - Kelola Kritik Saran
-- Upload gambar untuk konten admin.
-- Proteksi CSRF pada request POST.
-- Login throttle dasar untuk mengurangi brute-force.
+## ✨ Fitur Utama
 
-## Stack Teknologi
+- Landing page dan navigasi publik.
+- Halaman `Galeri`:
+  - Menampilkan foto publik.
+  - Kategori konten galeri.
+- Halaman `Event`:
+  - Menampilkan daftar event dan informasi detail.
+  - Dukungan jadwal serta link informasi tambahan.
+- Halaman `UMKM`:
+  - Menampilkan data UMKM lokal.
+  - Upload gambar dan pengelolaan data dari admin.
+- Halaman `Kritik & Saran`:
+  - Form masukan pengunjung.
+  - Moderasi dan publikasi dari panel admin.
+- Panel `Admin`:
+  - Login + dashboard statistik.
+  - CRUD Galeri, Event, UMKM, Kritik Saran.
 
-- Backend: PHP (native MVC)
-- Database: MySQL / MariaDB
+## 🛠️ Stack Teknologi
+
+- Language: PHP
+- Database: MySQL
+- Arsitektur: MVC sederhana (native PHP)
 - Frontend: HTML, CSS, JavaScript
-- UI helper: Bootstrap Icons + SweetAlert
-- Web server: Apache (Laragon / shared hosting)
+- UI Helper:
+  - `Bootstrap Icons`
+  - `SweetAlert`
 
-## Struktur Folder
+## 🗂️ Struktur Folder
 
 <details>
   <summary><strong>Click here to expand</strong></summary>
@@ -83,14 +85,16 @@ kampung_ketupat/
 </details>
 
 Folder yang bisa diklik:
-- [`app/`](app)
+
+- [`app/core/`](app/core)
+- [`app/controllers/`](app/controllers)
 - [`config/database.php`](config/database.php)
 - [`database/kampung_ketupat.sql`](database/kampung_ketupat.sql)
 - [`kampung_ketupat.sql`](kampung_ketupat.sql)
 - [`public/index.php`](public/index.php)
 - [`routes/web.php`](routes/web.php)
 
-## Quick Start
+## 🚀 Quick Start
 
 <details>
   <summary><strong>Click here to expand</strong></summary>
@@ -104,69 +108,61 @@ cd kampung_ketupat
 
 2. Import database
 
-- Opsi 1 (disarankan, data terbaru): import `kampung_ketupat.sql` (root)
-- Opsi 2 (template): import `database/kampung_ketupat.sql`
+- Untuk data terbaru: import file `kampung_ketupat.sql` (root).
+- Alternatif template: `database/kampung_ketupat.sql`.
 
-3. Jalankan lokal (Laragon PHP built-in)
+3. Jalankan aplikasi (local dev)
 
 ```bash
 C:\laragon\bin\php\php-8.2.30-nts-Win32-vs16-x64\php.exe -S 127.0.0.1:8088 -t public
 ```
 
-4. Buka browser
+4. Akses di browser
 
-- Public: `http://127.0.0.1:8088/`
-- Admin login: `http://127.0.0.1:8088/admin/login`
+```text
+http://127.0.0.1:8088/
+http://127.0.0.1:8088/admin/login
+```
 
 </details>
 
-## Halaman Utama
+## 🧭 Halaman Website
 
-| Halaman        | Fungsi Utama                          |
-| -------------- | ------------------------------------- |
-| Beranda        | Ringkasan konten utama                |
-| Galeri         | Menampilkan foto publik               |
-| Event          | Menampilkan daftar event              |
-| UMKM           | Menampilkan data UMKM                 |
-| Kritik Saran   | Form masukan user                     |
-| Admin Dashboard| Statistik dan pintasan manajemen      |
+| Halaman         | Data Utama                                | Fungsi |
+| --------------- | ----------------------------------------- | ------ |
+| `Beranda`       | Ringkasan konten utama                    | Landing informasi |
+| `Galeri`        | Data foto publik + kategori               | Showcase visual |
+| `Event`         | Jadwal event, status, jam, link info      | Informasi kegiatan |
+| `UMKM`          | Data UMKM lokal                           | Promosi usaha lokal |
+| `Kritik Saran`  | Input masukan pengunjung                  | Feedback pengguna |
+| `Admin Panel`   | CRUD konten + statistik dashboard         | Manajemen website |
 
-## Keamanan
+## 🔐 Fitur Keamanan
 
-Hardening yang sudah diterapkan:
-- CSRF token untuk aksi POST.
-- Session hardening + `session_regenerate_id` setelah login.
-- Login throttle berbasis IP/username.
-- Upload file validation (mime, image check, size limit).
-- Route destruktif admin menggunakan POST.
-- Logging keamanan ke `storage/logs`.
-- Blok akses langsung file sensitif via `.htaccess`.
+- CSRF protection pada endpoint POST.
+- Session hardening + `session_regenerate_id`.
+- Login throttle untuk mitigasi brute-force.
+- Validasi upload file (mime, size, image check).
+- Route destruktif admin memakai POST.
+- Security logging ke `storage/logs`.
+- Blok akses file/folder sensitif via `.htaccess`.
 
-Catatan production:
-- Gunakan kredensial database hosting (bukan default lokal).
-- Gunakan password admin kuat sebelum publish.
-- Pastikan `APP_ENV=production` saat deploy.
-
-## Testing
-
-Uji syntax PHP:
+## 🧪 Testing
 
 ```bash
 php -l public/index.php
 php -l config/database.php
 ```
 
-Uji endpoint utama:
-- `/`
-- `/admin/login`
-- `/admin/dashboard` (setelah login)
-- `/galeri`
-- `/event`
-- `/umkm`
-- `/kritik-saran`
+Smoke test endpoint:
 
-## Catatan Pengembangan
+```text
+/
+/admin/login
+/admin/dashboard
+/galeri
+/event
+/umkm
+/kritik-saran
+```
 
-- Root SQL (`kampung_ketupat.sql`) adalah dump data terbaru.
-- SQL root sudah disiapkan agar aman re-import (`DROP TABLE IF EXISTS`).
-- Project aktif dikembangkan di branch kerja sebelum push ke `main`.
