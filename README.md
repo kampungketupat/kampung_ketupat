@@ -1,4 +1,4 @@
-﻿![Banner](https://capsule-render.vercel.app/api?type=waving&height=220&color=0:0f172a,100:0d9488&text=Kampung%20Ketupat%20Web&fontColor=ffffff&fontSize=42&fontAlignY=38&desc=Public%20Website%20%C2%B7%20Admin%20Panel%20%C2%B7%20PHP%20MVC&descAlignY=60)
+![Banner](https://capsule-render.vercel.app/api?type=waving&height=220&color=0:0f172a,100:0d9488&text=Kampung%20Ketupat%20Web&fontColor=ffffff&fontSize=42&fontAlignY=38&desc=Public%20Website%20%C2%B7%20Admin%20Panel%20%C2%B7%20PHP%20MVC&descAlignY=60)
 
 # Kampung Ketupat Web
 
@@ -34,12 +34,14 @@ Fokus project:
 ## ✨ Fitur Utama
 
 - Landing page dan navigasi publik.
+- Favicon ikon ketupat untuk semua halaman.
 - Halaman `Galeri`:
   - Menampilkan foto publik.
   - Kategori konten galeri.
 - Halaman `Event`:
   - Menampilkan daftar event dan informasi detail.
   - Dukungan jadwal serta link informasi tambahan.
+  - Normalisasi jam otomatis: jika input `jam_mulai` dan `jam_selesai` terbalik, sistem akan menukar agar tampil benar.
 - Halaman `UMKM`:
   - Menampilkan data UMKM lokal.
   - Upload gambar dan pengelolaan data dari admin.
@@ -94,7 +96,7 @@ Folder yang bisa diklik:
 - [`public/index.php`](public/index.php)
 - [`routes/web.php`](routes/web.php)
 
-## 🚀 Quick Start
+## 🚀 Quick Start (Localhost)
 
 <details>
   <summary><strong>Click here to expand</strong></summary>
@@ -146,23 +148,3 @@ http://127.0.0.1:8088/admin/login
 - Route destruktif admin memakai POST.
 - Security logging ke `storage/logs`.
 - Blok akses file/folder sensitif via `.htaccess`.
-
-## 🧪 Testing
-
-```bash
-php -l public/index.php
-php -l config/database.php
-```
-
-Smoke test endpoint:
-
-```text
-/
-/admin/login
-/admin/dashboard
-/galeri
-/event
-/umkm
-/kritik-saran
-```
-
