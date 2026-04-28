@@ -39,7 +39,6 @@
                     <li><a href="<?= BASE_URL ?>/lokasi">Lokasi</a></li>
                     <li><a href="<?= BASE_URL ?>/kontak">Kontak</a></li>
                     <li><a href="<?= BASE_URL ?>/kritik-saran">Kritik & Saran</a></li>
-                    <li><a href="<?= BASE_URL ?>/admin/login">Admin</a></li>
                 </ul>
             </div>
 
