@@ -3,16 +3,12 @@
 $pesan_sukses = $pesan_sukses ?? null;
 $pesan_error  = $pesan_error  ?? null;
 
-// Ambil pesan publik yang sedang tayang
 require_once BASE_PATH . '/app/models/KritikSaranModel.php';
 global $koneksi;
 $ksModel     = new KritikSaranModel($koneksi);
 $pesanPublik = $ksModel->getPublik();
 ?>
 
-<!-- ═══════════════════════════════════════
-     SECTION JUDUL
-════════════════════════════════════════ -->
 <section class="section-kk" style="padding-top:50px; padding-bottom: 30px;">
     <div class="container">
 
@@ -22,7 +18,6 @@ $pesanPublik = $ksModel->getPublik();
             <p class="section-subtitle">Bantu kami meningkatkan kualitas wisata</p>
         </div>
 
-        <!-- ═══ FORM KIRIM ═══ -->
         <div class="row justify-content-center">
             <div class="col-lg-7 reveal">
 
@@ -60,9 +55,6 @@ $pesanPublik = $ksModel->getPublik();
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     SECTION SUARA PENGUNJUNG (PUBLIK)
-════════════════════════════════════════ -->
 <?php if (!empty($pesanPublik)): ?>
     <section class="section-kk" style="padding-top: 20px;">
         <div class="container">

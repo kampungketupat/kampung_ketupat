@@ -1,8 +1,4 @@
 <?php
-// ============================================================
-// FILE: app/models/UMKMModel.php
-// Model untuk data UMKM lokal Kampung Ketupat
-// ============================================================
 
 class UMKMModel {
     private $db;
@@ -11,13 +7,11 @@ class UMKMModel {
         $this->db = $koneksi;
     }
 
-    // ===== GET ALL =====
     public function getAll() {
         $result = $this->db->query("SELECT * FROM umkm ORDER BY created_at DESC");
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // ===== GET BY ID =====
     public function getById($id) {
         $stmt = $this->db->prepare("SELECT * FROM umkm WHERE id = ?");
 
@@ -34,7 +28,6 @@ class UMKMModel {
         return $data;
     }
 
-    // ===== COUNT =====
     public function countAll() {
         $result = $this->db->query("SELECT COUNT(*) as total FROM umkm");
         $data = $result ? $result->fetch_assoc() : ['total' => 0];
@@ -42,7 +35,6 @@ class UMKMModel {
         return $data['total'];
     }
 
-    // ===== TAMBAH =====
     public function tambah($nama, $pemilik, $kategori, $deskripsi, $produk, $kontak, $alamat, $foto) {
         $stmt = $this->db->prepare("
             INSERT INTO umkm 
@@ -60,7 +52,6 @@ class UMKMModel {
         return $result;
     }
 
-    // ===== UPDATE =====
     public function update($id, $nama, $pemilik, $kategori, $deskripsi, $produk, $kontak, $alamat, $foto = null) {
         if ($foto) {
             $stmt = $this->db->prepare("
@@ -124,7 +115,6 @@ class UMKMModel {
         return $result;
     }
 
-    // ===== DELETE =====
     public function hapus($id) {
         $data = $this->getById($id);
 
@@ -137,7 +127,6 @@ class UMKMModel {
         $result = $stmt->execute();
         $stmt->close();
 
-        // Hapus file fisik jika ada
         if ($result && $data && !empty($data['foto'])) {
             $fileName = basename((string)$data['foto']);
             $baseDir = realpath(BASE_PATH . '/public/assets/uploads/umkm');

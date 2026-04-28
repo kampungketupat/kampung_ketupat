@@ -1,6 +1,3 @@
-// ===============================
-// SWEETALERT HELPER GLOBAL
-// ===============================
 
 const SwalHelper = {
   _csrfToken() {
@@ -57,7 +54,6 @@ const SwalHelper = {
     });
   },
 
-  // Konfirmasi dengan input tanggal selesai untuk publikasi
   confirmPublish(url, id) {
     Swal.fire({
       title: "Tampilkan ke Publik",
@@ -87,7 +83,6 @@ const SwalHelper = {
       confirmButtonText: "Tampilkan",
       cancelButtonText: "Batal",
       didOpen: () => {
-        // Default: mulai hari ini, selesai seminggu lagi
         const today = new Date().toISOString().split("T")[0];
         const nextWeek = new Date(Date.now() + 7 * 86400000)
           .toISOString()

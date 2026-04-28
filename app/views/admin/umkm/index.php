@@ -11,9 +11,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
     <div class="alert-kk-error mb-3"><?= htmlspecialchars($pesan_error) ?></div>
 <?php endif; ?>
 
-<!-- ═══════════════════════════════════════
-     HEADER
-════════════════════════════════════════ -->
 <div class="page-header">
     <div class="page-title">
         <p>Kelola &amp; atur data UMKM Kampung Ketupat</p>
@@ -26,9 +23,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     SEARCH & FILTER
-════════════════════════════════════════ -->
 <div class="search-filter-bar mb-4">
 
     <div class="search-box">
@@ -50,9 +44,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 
 </div>
 
-<!-- ═══════════════════════════════════════
-     STAT CARDS
-════════════════════════════════════════ -->
 <?php
 $total     = count($semua_umkm);
 $kuliner   = count(array_filter($semua_umkm, fn($u) => $u['kategori'] === 'kuliner'));
@@ -104,9 +95,6 @@ $jasa      = count(array_filter($semua_umkm, fn($u) => $u['kategori'] === 'jasa'
 
 </div>
 
-<!-- ═══════════════════════════════════════
-     TABLE
-════════════════════════════════════════ -->
 <?php if (empty($semua_umkm)): ?>
 
     <div class="empty-state">
@@ -139,7 +127,6 @@ $jasa      = count(array_filter($semua_umkm, fn($u) => $u['kategori'] === 'jasa'
                         data-nama="<?= strtolower(htmlspecialchars($u['nama_umkm'])) ?>"
                         data-kategori="<?= $u['kategori'] ?>">
 
-                        <!-- NAMA + ALAMAT -->
                         <td>
                             <div class="event-nama">
                                 <?= htmlspecialchars($u['nama_umkm']) ?>
@@ -152,10 +139,8 @@ $jasa      = count(array_filter($semua_umkm, fn($u) => $u['kategori'] === 'jasa'
                             <?php endif; ?>
                         </td>
 
-                        <!-- PEMILIK -->
                         <td><?= htmlspecialchars($u['pemilik'] ?? '-') ?></td>
 
-                        <!-- KATEGORI -->
                         <td>
                             <?php
                             $kategoriMap = [
@@ -172,17 +157,14 @@ $jasa      = count(array_filter($semua_umkm, fn($u) => $u['kategori'] === 'jasa'
                             </span>
                         </td>
 
-                        <!-- PRODUK UNGGULAN -->
                         <td class="small">
                             <?= htmlspecialchars($u['produk_unggulan'] ?? '-') ?>
                         </td>
 
-                        <!-- KONTAK -->
                         <td class="small">
                             <?= htmlspecialchars($u['kontak'] ?? '-') ?>
                         </td>
 
-                        <!-- AKSI -->
                         <td>
                             <div class="action-btns">
                                 <a href="<?= BASE_URL ?>/admin/umkm/edit?id=<?= $u['id'] ?>"
@@ -204,7 +186,6 @@ $jasa      = count(array_filter($semua_umkm, fn($u) => $u['kategori'] === 'jasa'
 
         </table>
 
-        <!-- EMPTY FILTERED -->
         <div id="emptyFiltered" class="empty-state d-none" style="padding: 40px 16px;">
             <i class="bi bi-search"></i>
             <p>Tidak ada UMKM yang cocok dengan pencarian.</p>
@@ -213,10 +194,6 @@ $jasa      = count(array_filter($semua_umkm, fn($u) => $u['kategori'] === 'jasa'
     </div>
 
 <?php endif; ?>
-
-<!-- ═══════════════════════════════════════
-     SCRIPT
-════════════════════════════════════════ -->
 <script>
     const searchInput = document.getElementById('searchInput');
     const filterKategori = document.getElementById('filterKategori');

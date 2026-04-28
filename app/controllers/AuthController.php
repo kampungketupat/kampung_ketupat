@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// AuthController (FINAL - MVC CLEAN)
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/core/LoginThrottle.php';
@@ -19,12 +16,8 @@ class AuthController extends Controller
         $this->adminModel = new AdminModel($koneksi);
     }
 
-    // =========================
-    // LOGIN PAGE
-    // =========================
     public function login()
     {
-        // kalau sudah login → dashboard
         if (isset($_SESSION['admin'])) {
             header('Location: ' . BASE_URL . '/admin/dashboard');
             exit;
@@ -38,9 +31,6 @@ class AuthController extends Controller
         $this->view('auth/login', $data, false);
     }
 
-    // =========================
-    // PROSES LOGIN
-    // =========================
     public function proses()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -119,9 +109,6 @@ class AuthController extends Controller
         }
     }
 
-    // =========================
-    // LOGOUT
-    // =========================
     public function logout()
     {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {

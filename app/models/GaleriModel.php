@@ -9,9 +9,6 @@ class GaleriModel
         $this->db = $koneksi;
     }
 
-    // =========================
-    // ADMIN (SEMUA DATA)
-    // =========================
     public function getAll()
     {
         $result = $this->db->query("
@@ -35,9 +32,6 @@ class GaleriModel
 
         return $data['total'];
     }
-    // =========================
-    // USER (HANYA YANG DITAMPILKAN)
-    // =========================
     public function getAllPublished()
     {
         $result = $this->db->query("
@@ -49,9 +43,6 @@ class GaleriModel
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // =========================
-    // 🔥 LIMIT UNTUK BERANDA
-    // =========================
     public function getPublishedLimit($limit)
     {
         $stmt = $this->db->prepare("
@@ -74,9 +65,6 @@ class GaleriModel
         return $data;
     }
 
-    // =========================
-    // GET BY ID
-    // =========================
     public function getById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM galeri WHERE id = ?");
@@ -94,9 +82,6 @@ class GaleriModel
         return $data;
     }
 
-    // =========================
-    // TAMBAH
-    // =========================
     public function tambah($judul, $deskripsi, $foto, $kategori)
     {
         $stmt = $this->db->prepare("
@@ -114,9 +99,6 @@ class GaleriModel
         return $result;
     }
 
-    // =========================
-    // UPDATE
-    // =========================
     public function update($id, $judul, $deskripsi, $kategori, $foto = null)
     {
         if ($foto) {
@@ -147,9 +129,6 @@ class GaleriModel
         return $result;
     }
 
-    // =========================
-    // DELETE
-    // =========================
     public function hapus($id)
     {
         $data = $this->getById($id);
@@ -181,9 +160,6 @@ class GaleriModel
         return $result;
     }
 
-    // =========================
-    // TOGGLE PUBLISH
-    // =========================
     public function setPublish($id, $status)
     {
         $stmt = $this->db->prepare("UPDATE galeri SET is_publish=? WHERE id=?");
@@ -198,9 +174,6 @@ class GaleriModel
         return $result;
     }
 
-    // =========================
-    // PUBLISH ALL
-    // =========================
     public function publishAll()
     {
         return $this->db->query("UPDATE galeri SET is_publish=1");

@@ -20,7 +20,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                     onsubmit="return submitForm(event)">
                     <?= csrf_field() ?>
 
-                    <!-- JUDUL -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">
                             Judul Foto <span class="text-danger">*</span>
@@ -29,7 +29,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                             placeholder="Contoh: Monumen Ketupat Raksasa" required />
                     </div>
 
-                    <!-- KATEGORI -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">Kategori</label>
                         <select name="kategori" class="form-select">
@@ -41,14 +41,14 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         </select>
                     </div>
 
-                    <!-- DESKRIPSI -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">Deskripsi</label>
                         <textarea name="deskripsi" class="form-control" rows="3"
                             placeholder="Deskripsi singkat foto..."></textarea>
                     </div>
 
-                    <!-- FOTO -->
+                    
                     <div class="mb-4">
                         <label class="form-label fw-500">
                             Upload Foto <span class="text-danger">*</span>
@@ -60,7 +60,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         </small>
                     </div>
 
-                    <!-- BUTTON -->
+                    
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-kk">
                             <i class="bi bi-save me-1"></i>Simpan

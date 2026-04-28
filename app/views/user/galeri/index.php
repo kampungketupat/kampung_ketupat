@@ -7,7 +7,7 @@ $galeri_json  = json_encode($semua_galeri);
 <section class="section-kk" style="padding-top: 50px;">
     <div class="container">
 
-        <!-- TITLE -->
+        
         <div class="text-center mb-5 reveal">
             <span class="section-label">Foto</span>
             <h1 class="section-title">Galeri Wisata</h1>
@@ -16,7 +16,7 @@ $galeri_json  = json_encode($semua_galeri);
             </p>
         </div>
 
-        <!-- VUE APP -->
+        
         <div id="app-galeri"></div>
 
     </div>

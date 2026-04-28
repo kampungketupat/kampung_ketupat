@@ -1,13 +1,11 @@
 <?php
 
-// buat nunjukkin jalan dan ngejaga user dari akses yang gak diinginkan, misalnya user gak bisa akses halaman admin, dan sebaliknya
 require_once BASE_PATH . '/app/core/SecurityLogger.php';
 
 class Router
 {
     private $routes = [];
 
-    // REGISTER ROUTES
     public function get($path, $action)
     {
         $this->routes['GET'][$path] = $action;
@@ -18,14 +16,12 @@ class Router
         $this->routes['POST'][$path] = $action;
     }
 
-    // DISPATCH
     public function dispatch()
     {
         $method = $_SERVER['REQUEST_METHOD'];
 
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        // Hilangkan BASE_URL
         if (defined('BASE_URL') && BASE_URL !== '') {
             if (strpos($url, BASE_URL) === 0) {
                 $url = substr($url, strlen(BASE_URL));

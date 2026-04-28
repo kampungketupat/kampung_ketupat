@@ -11,7 +11,6 @@ $ksModel     = new KritikSaranModel($koneksi);
 $pesanPublik = $ksModel->getPublik();
 ?>
 
-<!-- ===== HERO ===== -->
 <section class="hero-kk" id="beranda">
     <div class="container position-relative" style="z-index:2;">
         <div class="row">
@@ -40,7 +39,6 @@ $pesanPublik = $ksModel->getPublik();
     </div>
 </section>
 
-<!-- ===== TENTANG ===== -->
 <section class="section-kk tentang-section" id="tentang">
     <div class="container">
         <div class="row align-items-center g-5">
@@ -99,7 +97,6 @@ $pesanPublik = $ksModel->getPublik();
     </div>
 </section>
 
-<!-- ===== HIGHLIGHTS ===== -->
 <section id="highlights" class="highlights-section">
     <div class="container">
         <div class="text-center mb-5 sr sr-up">
@@ -133,7 +130,6 @@ $pesanPublik = $ksModel->getPublik();
     </div>
 </section>
 
-<!-- ===== GALERI ===== -->
 <?php if (!empty($galeri_preview)): ?>
     <section class="kk-galeri" id="galeri">
         <div class="container">
@@ -168,7 +164,6 @@ $pesanPublik = $ksModel->getPublik();
     </section>
 <?php endif; ?>
 
-<!-- ===== EVENT ===== -->
 <?php if (!empty($event_preview)): ?>
     <section class="kk-event-section">
         <div class="container">
@@ -247,7 +242,6 @@ $pesanPublik = $ksModel->getPublik();
     </section>
 <?php endif; ?>
 
-<!-- ===== UMKM ===== -->
 <?php if (!empty($umkm_preview)): ?>
     <section class="section-kk">
         <div class="container">
@@ -286,7 +280,6 @@ $pesanPublik = $ksModel->getPublik();
     </section>
 <?php endif; ?>
 
-<!-- ===== SUARA PENGUNJUNG ===== -->
 <?php if (!empty($pesanPublik)): ?>
     <section class="section-kk" style="padding-top:20px;background:linear-gradient(180deg,#eef6f1 0%,#dfeee6 100%);">
         <div class="container">
@@ -328,7 +321,6 @@ $pesanPublik = $ksModel->getPublik();
     </section>
 <?php endif; ?>
 
-<!-- ===== CTA ===== -->
 <section class="cta-kk">
     <div class="container text-center">
         <h2 class="cta-title">Ingin Berkunjung?</h2>
@@ -340,17 +332,10 @@ $pesanPublik = $ksModel->getPublik();
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     SCROLL ANIMATION ENGINE — FINAL FIX
-     Pakai data-sr-delay bukan CSS var
-════════════════════════════════════════ -->
 <script>
     (function() {
-
-        /* ── 1. Ambil semua elemen .sr ── */
         var allEls = document.querySelectorAll('.sr');
 
-        /* ── 2. Observer — threshold rendah agar trigger lebih awal ── */
         var observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (!entry.isIntersecting) return;
@@ -362,21 +347,16 @@ $pesanPublik = $ksModel->getPublik();
                     el.classList.add('sr-done');
                 }, delay);
 
-                /* Unobserve supaya tidak re-trigger */
                 observer.unobserve(el);
             });
         }, {
             threshold: 0.08,
-            /* trigger saat 8% elemen terlihat */
-            rootMargin: '0px 0px -30px 0px' /* trigger 30px sebelum batas bawah viewport */
+            rootMargin: '0px 0px -30px 0px'
         });
 
-        /* ── 3. Observe semua .sr ── */
         allEls.forEach(function(el) {
             observer.observe(el);
         });
-
-        /* ── 4. reveal class lama (hero) tetap berjalan via main.js ── */
 
     })();
 </script>

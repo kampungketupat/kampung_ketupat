@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// WisataController (FINAL - MVC CLEAN)
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 

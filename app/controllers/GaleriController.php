@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// GaleriController (FINAL - CLEAN + SAFE)
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/GaleriModel.php';
@@ -16,15 +13,10 @@ class GaleriController extends Controller
         $this->galeriModel = new GaleriModel($koneksi);
     }
 
-    // =========================
-    // INDEX (USER VIEW)
-    // =========================
     public function index()
     {
-        // 🔥 Ambil hanya yang ditampilkan
         $galeri = $this->galeriModel->getAllPublished();
 
-        // 🔒 Safety: pastikan selalu array
         if (!is_array($galeri)) {
             $galeri = [];
         }

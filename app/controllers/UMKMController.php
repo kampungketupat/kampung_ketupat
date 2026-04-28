@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// UMKMController (FINAL - MVC CLEAN)
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/UMKMModel.php';
@@ -17,9 +14,6 @@ class UMKMController extends Controller
         $this->umkmModel = new UMKMModel($koneksi);
     }
 
-    // =========================
-    // INDEX (TAMPILKAN DATA)
-    // =========================
     public function index()
     {
         $data['semua_umkm'] = $this->umkmModel->getAll();
@@ -30,9 +24,6 @@ class UMKMController extends Controller
         $this->view('user/umkm/index', $data);
     }
 
-    // =========================
-    // STORE (TAMBAH DATA)
-    // =========================
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -72,9 +63,6 @@ class UMKMController extends Controller
         exit;
     }
 
-    // =========================
-    // UPLOAD FOTO
-    // =========================
     private function uploadFoto()
     {
         if (empty($_FILES['foto']['name'] ?? '')) {

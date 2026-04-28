@@ -1,9 +1,7 @@
-<!-- ===== FOOTER ===== -->
 <footer class="footer-kk mt-auto">
     <div class="container">
         <div class="row gy-4 py-5">
 
-            <!-- Kolom 1: Brand -->
             <div class="col-lg-4 col-md-6">
                 <h5 class="footer-brand mb-3">
                     Kampung Ketupat <span class="text-accent">Warna Warni</span>
@@ -24,7 +22,6 @@
                 </div>
             </div>
 
-            <!-- Kolom 2 -->
             <div class="col-lg-2 col-md-6 col-6">
                 <h6 class="footer-heading">Navigasi</h6>
                 <ul class="footer-links list-unstyled">
@@ -36,7 +33,6 @@
                 </ul>
             </div>
 
-            <!-- Kolom 3 -->
             <div class="col-lg-2 col-md-6 col-6">
                 <h6 class="footer-heading">Informasi</h6>
                 <ul class="footer-links list-unstyled">
@@ -47,7 +43,6 @@
                 </ul>
             </div>
 
-            <!-- Kolom 4 -->
             <div class="col-lg-4 col-md-6">
                 <h6 class="footer-heading">Info Kunjungan</h6>
                 <ul class="list-unstyled small text-muted-light">
@@ -83,7 +78,6 @@
 </footer>
 
 
-<!-- JS UTAMA -->
 <script src="<?= BASE_URL ?>/assets/js/app.js?v=<?= time() ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?= BASE_URL ?>/assets/js/swal-helper.js"></script>
@@ -95,5 +89,4 @@
 <?php unset($_SESSION['success']);
 endif; ?>
 
-<!-- Bootstrap JS (optional tapi bagus ada) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

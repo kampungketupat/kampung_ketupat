@@ -59,7 +59,6 @@ if (!defined('BASE_URL')) {
 }
 define('APP_DEBUG', env_bool('APP_DEBUG', false));
 
-// Load core
 require_once BASE_PATH . '/app/core/ErrorHandler.php';
 ErrorHandler::init(APP_DEBUG);
 require_once BASE_PATH . '/app/core/Csrf.php';
@@ -69,13 +68,10 @@ require_once BASE_PATH . '/config/database.php';
 require_once BASE_PATH . '/app/core/Router.php';
 require_once BASE_PATH . '/app/core/Controller.php';
 
-// Router
 $router = new Router();
 
-// Routes
 require_once BASE_PATH . '/routes/web.php';
 
-// Run
 try {
     $router->dispatch();
 } catch (Throwable $e) {

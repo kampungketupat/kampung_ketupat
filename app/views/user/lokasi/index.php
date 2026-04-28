@@ -3,7 +3,7 @@
 <section class="section-kk lokasi-section" style="padding-top:60px;">
     <div class="container">
 
-        <!-- TITLE -->
+        
         <div class="text-center mb-5 reveal">
             <span class="section-label">Peta</span>
             <h1 class="section-title">Lokasi Kampung Ketupat</h1>
@@ -12,10 +12,10 @@
             </p>
         </div>
 
-        <!-- LAYOUT BARU -->
+        
         <div class="row g-4 align-items-stretch">
 
-            <!-- MAP -->
+            
             <div class="col-lg-6 reveal">
                 <div class="map-wrapper h-100">
                     <iframe
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <!-- INFO -->
+            
             <div class="col-lg-6 reveal">
                 <div class="card-kk lokasi-card p-4 h-100 d-flex flex-column justify-content-between">
 
@@ -78,7 +78,7 @@
                         </div>
                     </div>
 
-                    <!-- BUTTON -->
+                    
                     <a href="https://maps.google.com/?q=Kampung+Ketupat+Samarinda"
                         target="_blank"
                         class="btn btn-kk mt-4 w-100">

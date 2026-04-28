@@ -1,7 +1,4 @@
 ﻿<?php
-// ============================================================
-// AdminUMKMController (HARDENED)
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/UMKMModel.php';

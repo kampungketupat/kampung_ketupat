@@ -1,15 +1,7 @@
-// ============================================================
-// main.js — FIXED VERSION (STABLE)
-// ============================================================
-
-// ===== BASE URL AUTO DETECT =====
 const BASE_URL = window.location.pathname.includes("kampung-ketupat")
   ? "/kampung-ketupat"
   : "";
 
-// ============================================================
-// NAVBAR SCROLL
-// ============================================================
 window.addEventListener("scroll", () => {
   const navbar = document.getElementById("mainNavbar");
   if (navbar) {
@@ -17,9 +9,6 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// ============================================================
-// SCROLL REVEAL
-// ============================================================
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -36,9 +25,6 @@ document.querySelectorAll(".reveal").forEach((el) => {
   revealObserver.observe(el);
 });
 
-// ============================================================
-// ACTIVE NAV SCROLL
-// ============================================================
 const sections = document.querySelectorAll("section[id]");
 const navLinks = document.querySelectorAll(".navbar-kk .nav-link");
 
@@ -80,9 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
   reveals.forEach((el) => observer.observe(el));
 });
 
-// ============================================================
-// GALERI (VUE) - WITH DESCRIPTION + LIGHTBOX
-// ============================================================
 if (document.getElementById("app-galeri")) {
   const { createApp } = Vue;
 
@@ -176,7 +159,6 @@ if (document.getElementById("app-galeri")) {
     template: `
     <div>
 
-      <!-- FILTER -->
       <div class="d-flex flex-wrap gap-2 mb-5 justify-content-center reveal">
         <button
           v-for="kat in ['semua','wisata','kuliner','budaya','fasilitas','umum']"
@@ -188,10 +170,8 @@ if (document.getElementById("app-galeri")) {
         </button>
       </div>
 
-      <!-- GRID -->
       <div class="row g-4">
 
-        <!-- EMPTY STATE -->
         <div
           v-if="galeriFiltered.length === 0"
           class="col-12 text-center py-5 text-muted">
@@ -199,7 +179,6 @@ if (document.getElementById("app-galeri")) {
           <h6 class="fw-bold">Belum ada foto di kategori ini</h6>
         </div>
 
-        <!-- CARD -->
         <div
           v-else
           v-for="(item, i) in galeriFiltered"
@@ -209,7 +188,6 @@ if (document.getElementById("app-galeri")) {
 
           <div class="gallery-card" @click="openImage(item)">
 
-            <!-- IMAGE -->
             <div class="gallery-img-wrap">
               <img :src="imgUrl(item.foto)" :alt="item.judul" />
               <div class="gallery-hover-overlay">
@@ -225,17 +203,14 @@ if (document.getElementById("app-galeri")) {
         </div>
       </div>
 
-      <!-- LIGHTBOX -->
       <transition name="fade">
         <div v-if="selectedImage" class="lightbox" @click.self="closeImage">
           <div class="lightbox-inner">
 
-            <!-- CLOSE -->
             <button class="lightbox-close" @click="closeImage">
               <i class="bi bi-x-lg"></i>
             </button>
 
-            <!-- ARROW PREV -->
             <button class="lightbox-arrow lightbox-prev"
               @click="prevImage"
               :disabled="selectedIndex === 0"
@@ -243,10 +218,8 @@ if (document.getElementById("app-galeri")) {
               <i class="bi bi-chevron-left"></i>
             </button>
 
-            <!-- IMAGE -->
             <img :src="imgUrl(selectedImage.foto)" :alt="selectedImage.judul" class="lightbox-img" />
 
-            <!-- ARROW NEXT -->
             <button class="lightbox-arrow lightbox-next"
               @click="nextImage"
               :disabled="selectedIndex === galeriFiltered.length - 1"
@@ -254,7 +227,7 @@ if (document.getElementById("app-galeri")) {
               <i class="bi bi-chevron-right"></i>
             </button>
 
-            <!-- CAPTION -->
+            
             <div class="lightbox-caption">
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="lightbox-badge">{{ selectedImage.kategori }}</span>
@@ -275,9 +248,6 @@ if (document.getElementById("app-galeri")) {
   }).mount("#app-galeri");
 }
 
-// ============================================================
-// KRITIK SARAN (VUE) - FINAL PREMIUM
-// ============================================================
 if (document.getElementById("app-kritik-saran")) {
   const { createApp } = Vue;
 
@@ -362,7 +332,6 @@ if (document.getElementById("app-kritik-saran")) {
     template: `
       <div class="form-kk">
 
-        <!-- NAMA -->
         <div class="mb-3">
           <label class="form-label fw-600">
             Nama Lengkap <span class="text-danger">*</span>
@@ -378,7 +347,6 @@ if (document.getElementById("app-kritik-saran")) {
           </div>
         </div>
 
-        <!-- EMAIL -->
         <div class="mb-3">
           <label class="form-label fw-600">
             Email <span class="text-muted">(opsional)</span>
@@ -394,7 +362,6 @@ if (document.getElementById("app-kritik-saran")) {
           </div>
         </div>
 
-        <!-- JENIS -->
         <div class="mb-3">
           <label class="form-label fw-600">
             Jenis Pesan <span class="text-danger">*</span>
@@ -408,7 +375,6 @@ if (document.getElementById("app-kritik-saran")) {
           </select>
         </div>
 
-        <!-- PESAN -->
         <div class="mb-4">
           <label class="form-label fw-600">
             Pesan <span class="text-danger">*</span>
@@ -435,7 +401,6 @@ if (document.getElementById("app-kritik-saran")) {
           </div>
         </div>
 
-        <!-- BUTTON -->
         <button @click="submit" type="button"
           class="btn btn-kk w-100 d-flex align-items-center justify-content-center gap-2">
 
@@ -455,9 +420,6 @@ if (document.getElementById("app-kritik-saran")) {
   }).mount("#app-kritik-saran");
 }
 
-// ============================================================
-// EVENT (VUE)
-// ============================================================
 if (document.getElementById("app-event")) {
   const { createApp } = Vue;
 
@@ -573,7 +535,6 @@ if (document.getElementById("app-event")) {
         reveals.forEach((el) => observer.observe(el));
       });
 
-      // Tutup modal dengan ESC
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") this.closeDetail();
       });
@@ -582,7 +543,6 @@ if (document.getElementById("app-event")) {
     template: `
     <div>
 
-      <!-- SEARCH + FILTER -->
       <div class="d-flex flex-wrap gap-2 mb-4 justify-content-between">
 
         <input type="text"
@@ -602,10 +562,8 @@ if (document.getElementById("app-event")) {
 
       </div>
 
-      <!-- GRID -->
       <div class="row g-4">
 
-        <!-- EMPTY -->
         <div v-if="filteredEvents.length === 0"
           class="col-12 text-center py-5 text-muted">
           <i class="bi bi-calendar-x fs-1 d-block mb-3"></i>
@@ -615,7 +573,6 @@ if (document.getElementById("app-event")) {
           </p>
         </div>
 
-        <!-- CARD -->
         <div v-else
           v-for="ev in filteredEvents"
           :key="ev.id"
@@ -624,7 +581,7 @@ if (document.getElementById("app-event")) {
 
           <div class="kk-event-card h-100">
 
-            <!-- FOTO -->
+            
             <div v-if="ev.foto" class="ev-foto-wrap">
               <img :src="fotoUrl(ev.foto)" :alt="ev.nama_event" />
               <span :class="['ev-foto-badge', statusClass(ev.status)]">
@@ -680,9 +637,6 @@ if (document.getElementById("app-event")) {
 
       </div>
 
-      <!-- ══════════════════════════════════
-           POPUP / MODAL DETAIL EVENT
-      ══════════════════════════════════ -->
       <transition name="ev-modal-fade">
         <div v-if="selectedEvent"
           class="ev-modal-overlay"
@@ -690,12 +644,10 @@ if (document.getElementById("app-event")) {
 
           <div class="ev-modal-box">
 
-            <!-- CLOSE -->
             <button class="ev-modal-close" @click="closeDetail">
               <i class="bi bi-x-lg"></i>
             </button>
 
-            <!-- FOTO -->
             <div v-if="selectedEvent.foto" class="ev-modal-img">
               <img :src="fotoUrl(selectedEvent.foto)" :alt="selectedEvent.nama_event" />
               <span :class="['ev-modal-status', statusClass(selectedEvent.status)]">
@@ -703,17 +655,17 @@ if (document.getElementById("app-event")) {
               </span>
             </div>
 
-            <!-- HEADER (jika tidak ada foto) -->
+            
             <div v-else class="ev-modal-header-nofoto">
               <span :class="['ev-modal-status-inline', statusClass(selectedEvent.status)]">
                 {{ formatStatus(selectedEvent.status) }}
               </span>
             </div>
 
-            <!-- CONTENT -->
+            
             <div class="ev-modal-content">
 
-              <!-- TANGGAL BOX -->
+              
               <div class="ev-modal-datebox">
                 <div class="ev-modal-day">{{ getDay(selectedEvent.tanggal_mulai) }}</div>
                 <div class="ev-modal-month">{{ getMonth(selectedEvent.tanggal_mulai) }}</div>
@@ -721,7 +673,7 @@ if (document.getElementById("app-event")) {
 
               <h4 class="ev-modal-title">{{ selectedEvent.nama_event }}</h4>
 
-              <!-- INFO LIST -->
+              
               <div class="ev-modal-info">
 
                 <div class="ev-modal-info-item">
@@ -765,13 +717,12 @@ if (document.getElementById("app-event")) {
 
               </div>
 
-              <!-- DESKRIPSI FULL -->
+              
               <div v-if="selectedEvent.deskripsi" class="ev-modal-desc">
                 <h6 class="ev-modal-desc-label">Tentang Event</h6>
                 <p>{{ selectedEvent.deskripsi }}</p>
               </div>
 
-              <!-- TOMBOL LINK INFO -->
               <a v-if="selectedEvent.link_info"
                 :href="selectedEvent.link_info"
                 target="_blank"
@@ -791,9 +742,6 @@ if (document.getElementById("app-event")) {
   }).mount("#app-event");
 }
 
-// ============================================================
-// UMKM (VUE)
-// ============================================================
 if (document.getElementById("app-umkm")) {
   const { createApp } = Vue;
 
@@ -856,7 +804,6 @@ if (document.getElementById("app-umkm")) {
     mounted() {
       this.resetAnimasi();
 
-      // Tutup modal dengan tombol ESC
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") this.closeDetail();
       });
@@ -865,7 +812,6 @@ if (document.getElementById("app-umkm")) {
     template: `
     <div>
 
-      <!-- SEARCH + FILTER -->
       <div class="d-flex flex-wrap gap-2 mb-4 justify-content-between">
 
         <input v-model="cari" @input="resetAnimasi" type="text"
@@ -884,10 +830,8 @@ if (document.getElementById("app-umkm")) {
 
       </div>
 
-      <!-- GRID -->
       <div class="row g-4">
 
-        <!-- EMPTY -->
         <div v-if="umkmFiltered.length === 0"
           class="col-12 text-center py-5 text-muted">
           <i class="bi bi-shop fs-1 d-block mb-3"></i>
@@ -895,7 +839,6 @@ if (document.getElementById("app-umkm")) {
           <p class="small mb-0">Tidak ada hasil untuk "<b>{{ cari }}</b>"</p>
         </div>
 
-        <!-- CARD -->
         <div v-else
           v-for="(u, i) in umkmFiltered"
           :key="u.id"
@@ -904,13 +847,11 @@ if (document.getElementById("app-umkm")) {
 
           <div class="umkm-card-v2" @click="openDetail(u)">
 
-            <!-- FOTO -->
             <div class="umkm-v2-img">
               <img :src="imgUrl(u.foto)" :alt="u.nama_umkm" />
               <span class="umkm-v2-kategori-badge">{{ u.kategori }}</span>
             </div>
 
-            <!-- BODY -->
             <div class="umkm-v2-body">
 
               <h6 class="umkm-v2-title">{{ u.nama_umkm }}</h6>
@@ -943,9 +884,6 @@ if (document.getElementById("app-umkm")) {
 
       </div>
 
-      <!-- ══════════════════════════════════
-           POPUP / MODAL DETAIL UMKM
-      ══════════════════════════════════ -->
       <transition name="umkm-fade">
         <div v-if="selectedUmkm"
           class="umkm-modal-overlay"
@@ -953,23 +891,19 @@ if (document.getElementById("app-umkm")) {
 
           <div class="umkm-modal-box">
 
-            <!-- CLOSE -->
             <button class="umkm-modal-close" @click="closeDetail">
               <i class="bi bi-x-lg"></i>
             </button>
 
-            <!-- FOTO -->
             <div class="umkm-modal-img">
               <img :src="imgUrl(selectedUmkm.foto)" :alt="selectedUmkm.nama_umkm" />
               <span class="umkm-modal-kategori">{{ selectedUmkm.kategori }}</span>
             </div>
 
-            <!-- CONTENT -->
             <div class="umkm-modal-content">
 
               <h4 class="umkm-modal-title">{{ selectedUmkm.nama_umkm }}</h4>
 
-              <!-- INFO LIST -->
               <div class="umkm-modal-info">
 
                 <div v-if="selectedUmkm.pemilik" class="umkm-modal-info-item">
@@ -1014,13 +948,13 @@ if (document.getElementById("app-umkm")) {
 
               </div>
 
-              <!-- DESKRIPSI FULL -->
+              
               <div v-if="selectedUmkm.deskripsi" class="umkm-modal-desc">
                 <h6 class="umkm-modal-desc-label">Tentang Usaha</h6>
                 <p>{{ selectedUmkm.deskripsi }}</p>
               </div>
 
-              <!-- TOMBOL HUBUNGI -->
+              
               <a v-if="selectedUmkm.kontak"
                 :href="'https://wa.me/' + selectedUmkm.kontak.replace(/[^0-9]/g,'')"
                 target="_blank"

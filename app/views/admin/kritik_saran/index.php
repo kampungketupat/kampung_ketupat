@@ -11,7 +11,7 @@ $tab_aktif = $tab_aktif ?? 'pending';
     <div class="alert-kk-error mb-3"><?= htmlspecialchars($pesan_error) ?></div>
 <?php endif; ?>
 
-<!-- PAGE HEADER -->
+
 <div class="page-header">
     <div class="page-title">
         <p>
@@ -39,7 +39,7 @@ $tab_aktif = $tab_aktif ?? 'pending';
     </div>
 </div>
 
-<!-- STAT CARDS -->
+
 <div class="stat-grid mb-4">
     <div class="stat-card">
         <div class="stat-icon ks-total"><i class="bi bi-chat-dots"></i></div>
@@ -67,7 +67,7 @@ $tab_aktif = $tab_aktif ?? 'pending';
     </div>
 </div>
 
-<!-- FILTER BAR -->
+
 <div class="search-filter-bar mb-4">
     <div class="filter-box">
         <i class="bi bi-funnel"></i>
@@ -100,7 +100,7 @@ $tab_aktif = $tab_aktif ?? 'pending';
     <?php endif; ?>
 </div>
 
-<!-- KARTU PESAN -->
+
 <?php if (empty($semua_pesan)): ?>
     <div class="empty-state">
         <i class="bi bi-<?= $tab_aktif === 'arsip' ? 'archive' : 'inbox' ?>"></i>
@@ -126,7 +126,7 @@ $tab_aktif = $tab_aktif ?? 'pending';
                 data-baca="<?= $isBaru ? 'baru' : 'dibaca' ?>"
                 data-status="<?= $p['status'] ?>">
 
-                <!-- HEADER -->
+                
                 <div class="ks-card-header">
                     <div class="ks-card-meta">
                         <span class="ks-badge <?= $cfg['class'] ?>">
@@ -142,29 +142,29 @@ $tab_aktif = $tab_aktif ?? 'pending';
                         <?php endif; ?>
                     </div>
 
-                    <!-- TOMBOL AKSI -->
+                    
                     <div class="ks-card-actions">
                         <?php if ($tab_aktif === 'pending'): ?>
-                            <!-- TERIMA → arsip -->
+                            
                             <button class="ks-btn-terima" title="Terima & simpan ke arsip"
                                 onclick="terima('<?= $p['id'] ?>')">
                                 <i class="bi bi-check-lg"></i>
                             </button>
                         <?php else: ?>
                             <?php if ($isPubik): ?>
-                                <!-- SEMBUNYIKAN -->
+                                
                                 <button class="ks-btn-sembunyikan" title="Sembunyikan dari publik"
                                     onclick="sembunyikan('<?= $p['id'] ?>')">
                                     <i class="bi bi-eye-slash"></i>
                                 </button>
                             <?php else: ?>
-                                <!-- TAMPILKAN KE PUBLIK -->
+                                
                                 <button class="ks-btn-tampilkan" title="Tampilkan ke publik"
                                     onclick="tampilkan('<?= $p['id'] ?>')">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             <?php endif; ?>
-                            <!-- KEMBALIKAN KE PENDING -->
+                            
                             <button class="ks-btn-kembali" title="Kembalikan ke kotak masuk"
                                 onclick="kembalikan('<?= $p['id'] ?>')">
                                 <i class="bi bi-arrow-counterclockwise"></i>
@@ -173,7 +173,7 @@ $tab_aktif = $tab_aktif ?? 'pending';
                     </div>
                 </div>
 
-                <!-- PENGIRIM -->
+                
                 <div class="ks-sender">
                     <div class="ks-avatar">
                         <?= mb_strtoupper(mb_substr($p['nama_pengunjung'], 0, 1)) ?>
@@ -188,10 +188,10 @@ $tab_aktif = $tab_aktif ?? 'pending';
                     </div>
                 </div>
 
-                <!-- ISI PESAN -->
+                
                 <p class="ks-pesan"><?= nl2br(htmlspecialchars($p['pesan'])) ?></p>
 
-                <!-- FOOTER -->
+                
                 <div class="ks-card-footer">
                     <span class="ks-time">
                         <i class="bi bi-clock me-1"></i>
@@ -217,7 +217,7 @@ $tab_aktif = $tab_aktif ?? 'pending';
 
 <?php endif; ?>
 
-<!-- SCRIPT -->
+
 <script>
     const filterJenis = document.getElementById('filterJenis');
     const filterBaca = document.getElementById('filterBaca');

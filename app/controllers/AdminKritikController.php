@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// AdminKritikController
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/KritikSaranModel.php';
@@ -20,12 +17,8 @@ class AdminKritikController extends Controller
         $this->model = new KritikSaranModel($koneksi);
     }
 
-    // =========================
-    // KOTAK MASUK (PENDING)
-    // =========================
     public function index()
     {
-        // Auto-expire pesan publik yang sudah lewat tanggal
         $this->model->expireOtomatis();
 
         $pesan = $this->model->getPending();
@@ -45,9 +38,6 @@ class AdminKritikController extends Controller
         $this->view('admin/kritik_saran/index', $data);
     }
 
-    // =========================
-    // ARSIP (DITERIMA + PUBLIK)
-    // =========================
     public function arsip()
     {
         $this->model->expireOtomatis();
@@ -65,9 +55,6 @@ class AdminKritikController extends Controller
         $this->view('admin/kritik_saran/index', $data);
     }
 
-    // =========================
-    // TERIMA (pending → arsip)
-    // =========================
     public function terima()
     {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
@@ -86,9 +73,6 @@ class AdminKritikController extends Controller
         $this->_redirect('/admin/kritik-saran', 'Pesan diterima dan dipindahkan ke arsip.');
     }
 
-    // =========================
-    // KEMBALIKAN KE PENDING
-    // =========================
     public function kembalikan()
     {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
@@ -107,9 +91,6 @@ class AdminKritikController extends Controller
         $this->_redirect('/admin/kritik-saran/arsip', 'Pesan dikembalikan ke kotak masuk.');
     }
 
-    // =========================
-    // TAMPILKAN KE PUBLIK
-    // =========================
     public function tampilkan()
     {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
@@ -131,9 +112,6 @@ class AdminKritikController extends Controller
         $this->_redirect('/admin/kritik-saran/arsip', 'Pesan berhasil ditampilkan ke publik.');
     }
 
-    // =========================
-    // SEMBUNYIKAN
-    // =========================
     public function sembunyikan()
     {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
@@ -152,9 +130,6 @@ class AdminKritikController extends Controller
         $this->_redirect('/admin/kritik-saran/arsip', 'Pesan disembunyikan dari publik.');
     }
 
-    // =========================
-    // HELPERS PRIVATE
-    // =========================
     private function _hitungStat(array $pesan): array
     {
         return [

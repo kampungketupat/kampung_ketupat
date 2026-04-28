@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// FILE: app/models/KritikSaranModel.php
-// ============================================================
 
 class KritikSaranModel
 {
@@ -12,7 +9,6 @@ class KritikSaranModel
         $this->db = $koneksi;
     }
 
-    // ===== GET PENDING (kotak masuk) =====
     public function getPending()
     {
         $result = $this->db->query("
@@ -23,7 +19,6 @@ class KritikSaranModel
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // ===== GET ARSIP (diterima, belum/sudah publik) =====
     public function getArsip()
     {
         $result = $this->db->query("
@@ -34,7 +29,6 @@ class KritikSaranModel
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // ===== GET PUBLIK (untuk halaman user, cek expired) =====
     public function getPublik()
     {
         $result = $this->db->query("
@@ -47,7 +41,6 @@ class KritikSaranModel
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // ===== GET BY ID =====
     public function getById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM kritik_saran WHERE id = ?");
@@ -59,7 +52,6 @@ class KritikSaranModel
         return $data;
     }
 
-    // ===== COUNT =====
     public function countPending()
     {
         $r = $this->db->query("SELECT COUNT(*) as t FROM kritik_saran WHERE status = 'pending'");
@@ -78,7 +70,6 @@ class KritikSaranModel
         return $r ? (int)$r->fetch_assoc()['t'] : 0;
     }
 
-    // ===== SIMPAN (dari form user, default pending) =====
     public function simpan($nama, $email, $jenis, $pesan)
     {
         $stmt = $this->db->prepare("
@@ -92,7 +83,6 @@ class KritikSaranModel
         return $result;
     }
 
-    // ===== TANDAI DIBACA =====
     public function tandaiDibaca($id)
     {
         $stmt = $this->db->prepare("UPDATE kritik_saran SET sudah_dibaca = 1 WHERE id = ?");
@@ -103,7 +93,6 @@ class KritikSaranModel
         return $result;
     }
 
-    // ===== TERIMA (pending → diterima/arsip) =====
     public function terima($id)
     {
         $stmt = $this->db->prepare("UPDATE kritik_saran SET status = 'diterima' WHERE id = ?");
@@ -114,7 +103,6 @@ class KritikSaranModel
         return $result;
     }
 
-    // ===== KEMBALIKAN KE PENDING =====
     public function kembalikanPending($id)
     {
         $stmt = $this->db->prepare("UPDATE kritik_saran SET status = 'pending' WHERE id = ?");
@@ -125,7 +113,6 @@ class KritikSaranModel
         return $result;
     }
 
-    // ===== TAMPILKAN KE PUBLIK =====
     public function tampilkan($id, $mulai, $selesai)
     {
         $stmt = $this->db->prepare("
@@ -140,7 +127,6 @@ class KritikSaranModel
         return $result;
     }
 
-    // ===== SEMBUNYIKAN (publik → diterima) =====
     public function sembunyikan($id)
     {
         $stmt = $this->db->prepare("
@@ -155,7 +141,6 @@ class KritikSaranModel
         return $result;
     }
 
-    // ===== AUTO-EXPIRE: jalankan tiap kali index dipanggil =====
     public function expireOtomatis()
     {
         $this->db->query("

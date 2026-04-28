@@ -1,13 +1,7 @@
 <?php
 
-// ============================================================
-// ROUTES WEB (FINAL - CLEAN MVC)
-// ============================================================
 
 
-// =========================
-// USER
-// =========================
 $router->get('/', 'BerandaController@index');
 
 $router->get('/wisata', 'WisataController@index');
@@ -26,23 +20,14 @@ $router->get('/kritik-saran', 'KritikSaranController@index');
 $router->post('/kritik-saran', 'KritikSaranController@index');
 
 
-// =========================
-// AUTH
-// =========================
 $router->get('/admin/login', 'AuthController@login');
 $router->post('/admin/login/proses', 'AuthController@proses');
 $router->post('/admin/logout', 'AuthController@logout');
 
 
-// =========================
-// ADMIN DASHBOARD
-// =========================
 $router->get('/admin/dashboard', 'AdminController@dashboard');
 
 
-// =========================
-// ADMIN GALERI
-// =========================
 $router->get('/admin/galeri', 'AdminGaleriController@index');
 $router->get('/admin/galeri/create', 'AdminGaleriController@create');
 $router->post('/admin/galeri/store', 'AdminGaleriController@store');
@@ -56,9 +41,6 @@ $router->post('/admin/galeri/togglePublish', 'AdminGaleriController@togglePublis
 $router->post('/admin/galeri/publishAll', 'AdminGaleriController@publishAll');
 
 
-// =========================
-// ADMIN EVENT
-// =========================
 $router->get('/admin/event', 'AdminEventController@index');
 $router->get('/admin/event/create', 'AdminEventController@create');
 $router->post('/admin/event/store', 'AdminEventController@store');
@@ -69,9 +51,6 @@ $router->post('/admin/event/update', 'AdminEventController@update');
 $router->post('/admin/event/delete', 'AdminEventController@delete');
 
 
-// =========================
-// ADMIN UMKM
-// =========================
 $router->get('/admin/umkm', 'AdminUMKMController@index');
 $router->get('/admin/umkm/create', 'AdminUMKMController@create');
 $router->post('/admin/umkm/store', 'AdminUMKMController@store');
@@ -82,9 +61,6 @@ $router->post('/admin/umkm/update', 'AdminUMKMController@update');
 $router->post('/admin/umkm/delete', 'AdminUMKMController@delete');
 
 
-// =========================
-// ADMIN KRITIK SARAN
-// =========================
 $router->get('/admin/kritik-saran',            'AdminKritikController@index');
 $router->get('/admin/kritik-saran/arsip',      'AdminKritikController@arsip');
 $router->post('/admin/kritik-saran/terima',     'AdminKritikController@terima');

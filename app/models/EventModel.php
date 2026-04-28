@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// FILE: app/models/EventModel.php
-// ============================================================
 
 class EventModel
 {
@@ -12,7 +9,6 @@ class EventModel
         $this->db = $koneksi;
     }
 
-    // ===== GET ALL =====
     public function getAll()
     {
         $result = $this->db->query("
@@ -23,7 +19,6 @@ class EventModel
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // ===== GET BY ID =====
     public function getById($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM event WHERE id = ?");
@@ -41,7 +36,6 @@ class EventModel
         return $data;
     }
 
-    // ===== EVENT AKAN DATANG =====
     public function getAkanDatang()
     {
         $result = $this->db->query("
@@ -54,7 +48,6 @@ class EventModel
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // ===== COUNT =====
     public function countAll()
     {
         $result = $this->db->query("
@@ -68,7 +61,6 @@ class EventModel
         return $data['total'];
     }
 
-    // ===== TAMBAH =====
     public function tambah(
         $nama,
         $deskripsi,
@@ -109,7 +101,6 @@ class EventModel
         return $result;
     }
 
-    // ===== UPDATE =====
     public function update(
         $id,
         $nama,
@@ -193,7 +184,6 @@ class EventModel
         return $result;
     }
 
-    // ===== DELETE =====
     public function hapus($id)
     {
         $stmt = $this->db->prepare("DELETE FROM event WHERE id=?");

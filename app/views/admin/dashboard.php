@@ -1,6 +1,5 @@
 <div id="dashboardApp">
 
-    <!-- ======= TOPBAR ======= -->
     <div class="dash-topbar mb-4">
         <div>
             <div class="dash-greet-title">
@@ -17,7 +16,6 @@
         </div>
     </div>
 
-    <!-- ======= STAT CARDS ======= -->
     <div class="row g-3 mb-4">
         <div class="col-sm-6 col-lg-3">
             <div class="dash-stat-card sc-green">
@@ -70,7 +68,6 @@
         </div>
     </div>
 
-    <!-- ======= CHARTS ROW ======= -->
     <div class="row g-3 mb-4">
         <div class="col-lg-7">
             <div class="dash-card h-100">
@@ -139,7 +136,6 @@
         </div>
     </div>
 
-    <!-- ======= BOTTOM ROW ======= -->
     <div class="row g-3 mb-4">
         <div class="col-lg-5">
             <div class="dash-card h-100">

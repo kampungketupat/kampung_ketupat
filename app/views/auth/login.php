@@ -1,5 +1,4 @@
 <?php
-// login tidak pakai layout admin
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -10,7 +9,7 @@
 
     <title><?= $judul_halaman ?? 'Login Admin' ?></title>
 
-    <!-- CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -31,7 +30,7 @@
                 Panel Admin — Masuk untuk mengelola konten
             </p>
 
-            <!-- ERROR -->
+            
             <?php if (!empty($pesan_error)): ?>
                 <div class="alert alert-danger small">
                     <i class="bi bi-exclamation-circle me-2"></i>
@@ -39,7 +38,7 @@
                 </div>
             <?php endif; ?>
 
-            <!-- FORM -->
+            
             <form action="<?= BASE_URL ?>/admin/login/proses" method="POST">
                 <?= csrf_field() ?>
 
@@ -70,7 +69,7 @@
 
             </form>
 
-            <!-- BACK -->
+            
             <div class="text-center mt-3">
                 <a href="<?= BASE_URL ?>/" class="text-muted small">
                     ← Kembali ke Website
@@ -80,7 +79,7 @@
         </div>
     </div>
 
-    <!-- JS -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="<?= BASE_URL ?>/assets/js/swal-helper.js"></script>

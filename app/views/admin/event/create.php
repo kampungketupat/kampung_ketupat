@@ -21,7 +21,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                     onsubmit="return submitForm(event)">
                     <?= csrf_field() ?>
 
-                    <!-- NAMA -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">
                             Nama Event <span class="text-danger">*</span>
@@ -30,14 +30,14 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                             placeholder="Contoh: Festival Ketupat 2025" required />
                     </div>
 
-                    <!-- DESKRIPSI -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">Deskripsi</label>
                         <textarea name="deskripsi" class="form-control" rows="3"
                             placeholder="Deskripsi singkat tentang event..."></textarea>
                     </div>
 
-                    <!-- TANGGAL -->
+                    
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label fw-500">
@@ -51,7 +51,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         </div>
                     </div>
 
-                    <!-- JAM -->
+                    
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label fw-500">Jam Mulai</label>
@@ -63,7 +63,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         </div>
                     </div>
 
-                    <!-- LINK -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">Link Info</label>
                         <input type="text" name="link_info" class="form-control"
@@ -71,14 +71,14 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         <small class="text-muted">Link media sosial atau info lebih lanjut (opsional)</small>
                     </div>
 
-                    <!-- LOKASI -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">Lokasi</label>
                         <input type="text" name="lokasi" class="form-control"
                             value="Kampung Ketupat Warna Warni, Samarinda" />
                     </div>
 
-                    <!-- STATUS -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">Status</label>
                         <select name="status" class="form-select">
@@ -88,7 +88,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         </select>
                     </div>
 
-                    <!-- FOTO -->
+                    
                     <div class="mb-4">
                         <label class="form-label fw-500">Foto Event</label>
                         <input type="file" name="foto" class="form-control"
@@ -96,7 +96,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         <small class="text-muted">Format: JPG, PNG, WEBP. Maks 5MB. (Opsional)</small>
                     </div>
 
-                    <!-- BUTTON -->
+                    
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-kk">
                             <i class="bi bi-save me-1"></i>Simpan

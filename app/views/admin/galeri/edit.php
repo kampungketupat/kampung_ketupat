@@ -18,7 +18,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 
                     <input type="hidden" name="id" value="<?= $galeri['id'] ?>" />
 
-                    <!-- JUDUL -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">
                             Judul Foto <span class="text-danger">*</span>
@@ -27,7 +27,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                             value="<?= htmlspecialchars($galeri['judul']) ?>" required />
                     </div>
 
-                    <!-- KATEGORI -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">Kategori</label>
                         <select name="kategori" class="form-select">
@@ -39,13 +39,13 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         </select>
                     </div>
 
-                    <!-- DESKRIPSI -->
+                    
                     <div class="mb-3">
                         <label class="form-label fw-500">Deskripsi</label>
                         <textarea name="deskripsi" class="form-control" rows="3"><?= htmlspecialchars($galeri['deskripsi'] ?? '') ?></textarea>
                     </div>
 
-                    <!-- FOTO SAAT INI -->
+                    
                     <div class="mb-3">
                         <?php
                         $src = str_starts_with($galeri['foto'], 'http')
@@ -59,7 +59,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         </div>
                     </div>
 
-                    <!-- GANTI FOTO -->
+                    
                     <div class="mb-4">
                         <label class="form-label fw-500">
                             Ganti Foto <small class="text-muted">(opsional)</small>
@@ -67,7 +67,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         <input type="file" name="foto" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
                     </div>
 
-                    <!-- BUTTON -->
+                    
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-kk">
                             <i class="bi bi-save me-1"></i>Perbarui

@@ -3,7 +3,7 @@
 <section class="section-kk" style="padding-top:50px;">
     <div class="container">
 
-        <!-- TITLE -->
+        
         <div class="text-center mb-5 reveal">
             <span class="section-label">Informasi Lengkap</span>
             <h1 class="section-title">Detail Wisata Kampung Ketupat</h1>
@@ -12,10 +12,10 @@
             </p>
         </div>
 
-        <!-- INFO UTAMA -->
+        
         <div class="row g-4 mb-5 align-items-stretch">
 
-            <!-- KIRI -->
+            
             <div class="col-lg-7 reveal">
                 <div class="card-kk tentang-card h-100 p-4">
 
@@ -44,7 +44,7 @@
                         dari daun nipah, menjadikan tempat ini unik dan kaya budaya lokal.
                     </p>
 
-                    <!-- LIST -->
+                    
                     <div class="tentang-list-v2 mt-3">
 
                         <div class="tentang-item">
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <!-- KANAN -->
+            
             <div class="col-lg-5 reveal">
                 <div class="card-kk h-100 p-4">
 
@@ -124,7 +124,7 @@
 
         </div>
 
-        <!-- FASILITAS -->
+        
         <div class="reveal mb-5">
 
             <div class="text-center mb-4">
@@ -161,7 +161,7 @@
 
         </div>
 
-        <!-- AKTIVITAS -->
+        
         <div class="aktivitas-section reveal">
 
             <div class="text-center mb-5">

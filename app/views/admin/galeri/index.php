@@ -3,9 +3,6 @@ $menu_aktif = 'galeri';
 require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 ?>
 
-<!-- ═══════════════════════════════════════
-     HEADER
-════════════════════════════════════════ -->
 <div class="page-header">
     <div class="page-title">
         <p>Kelola &amp; atur tampilan foto website</p>
@@ -22,9 +19,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     SEARCH & FILTER
-════════════════════════════════════════ -->
 <div class="search-filter-bar mb-4">
     <div class="search-box">
         <i class="bi bi-search"></i>
@@ -43,9 +37,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     STAT CARDS
-════════════════════════════════════════ -->
 <div class="stat-grid mb-4">
 
     <div class="stat-card">
@@ -80,9 +71,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 
 </div>
 
-<!-- ═══════════════════════════════════════
-     GALERI GRID
-════════════════════════════════════════ -->
 <?php if (empty($semua_galeri)): ?>
 
     <div class="empty-state">
@@ -109,7 +97,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 
                 <div class="galeri-card">
 
-                    <!-- IMAGE — klik untuk preview -->
+                    
                     <div class="img-wrap"
                         onclick="bukaPreview(_galeriAdmin, <?= $i ?>)"
                         title="Klik untuk lihat foto">
@@ -119,7 +107,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         </div>
                         <span class="overlay-badge"><?= ucfirst($g['kategori']) ?></span>
                     </div>
-                    <!-- BODY -->
+                    
                     <div class="galeri-body">
 
                         <h6 class="galeri-judul"><?= htmlspecialchars($g['judul']) ?></h6>
@@ -128,7 +116,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                             <p class="galeri-desc"><?= htmlspecialchars($g['deskripsi']) ?></p>
                         <?php endif; ?>
 
-                        <!-- TOGGLE -->
+                        
                         <div class="toggle-wrap">
                             <label class="switch">
                                 <input type="checkbox"
@@ -143,7 +131,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                             </span>
                         </div>
 
-                        <!-- ACTION -->
+                        
                         <div class="action-btns">
                             <a href="<?= BASE_URL ?>/admin/galeri/edit?id=<?= $g['id'] ?>"
                                 class="btn-edit" title="Edit">
@@ -163,7 +151,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
         <?php endforeach; ?>
     </div>
 
-    <!-- EMPTY FILTERED -->
+    
     <div id="emptyFiltered" class="empty-state d-none">
         <i class="bi bi-search"></i>
         <p>Tidak ada foto yang cocok dengan pencarian.</p>
@@ -171,30 +159,30 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 
 <?php endif; ?>
 
-<!-- LIGHTBOX PREVIEW ADMIN -->
+
 <div id="modalPreview" class="adm-lightbox" onclick="tutupPreview()">
-    <!-- PREV -->
+    
     <button class="adm-lb-arrow adm-lb-prev" id="btnPrev" onclick="event.stopPropagation(); prevPreview();">
         <i class="bi bi-chevron-left"></i>
     </button>
     <div class="adm-lb-inner" onclick="event.stopPropagation()">
 
-        <!-- IMAGE WRAPPER (close + arrow ada di sini) -->
+        
         <div class="adm-lb-img-wrap">
 
-            <!-- CLOSE -->
+            
             <button class="adm-lb-close" onclick="tutupPreview()">
                 <i class="bi bi-x-lg"></i>
             </button>
 
 
-            <!-- IMAGE -->
+            
             <img id="previewImg" src="" alt="" class="adm-lb-img" />
 
 
         </div>
 
-        <!-- CAPTION -->
+        
         <div class="adm-lb-caption">
             <div class="adm-lb-caption-top">
                 <span class="adm-lb-badge" id="previewKategori"></span>
@@ -205,19 +193,13 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
         </div>
 
     </div>
-    <!-- NEXT -->
+    
     <button class="adm-lb-arrow adm-lb-next" id="btnNext" onclick="event.stopPropagation(); nextPreview();">
         <i class="bi bi-chevron-right"></i>
     </button>
 </div>
 
-<!-- ═══════════════════════════════════════
-     SCRIPT
-════════════════════════════════════════ -->
 <script>
-    /* ════════════════════════════════
-   SEARCH & FILTER
-════════════════════════════════ */
     var searchInput = document.getElementById('searchInput');
     var filterKategori = document.getElementById('filterKategori');
     var items = document.querySelectorAll('.galeri-item');
@@ -253,12 +235,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
     if (searchInput) searchInput.addEventListener('input', filterGaleri);
     if (filterKategori) filterKategori.addEventListener('change', filterGaleri);
 
-    /* ════════════════════════════════
-       TOGGLE PUBLISH
-       - parse text dulu, baru coba JSON
-       - kalau gagal parse: reload halaman (fallback aman)
-       - TIDAK pakai alert() sama sekali
-    ════════════════════════════════ */
     var BASE = '<?= BASE_URL ?>';
     var CSRF = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
@@ -285,13 +261,11 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                         '&status=' + encodeURIComponent(checkbox.checked ? 1 : 0)
                 })
                 .then(function(res) {
-                    // Ambil sebagai text dulu — aman untuk semua format response
                     return res.text();
                 })
                 .then(function(text) {
                     checkbox.disabled = false;
 
-                    // Coba parse JSON
                     var data = null;
                     try {
                         data = JSON.parse(text);
@@ -300,31 +274,24 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
                     }
 
                     if (data !== null && typeof data.success !== 'undefined') {
-                        // ── Backend return JSON ──
                         if (data.success) {
                             var isPublish = (data.is_publish == true || data.is_publish == 1);
                             applyToggleUI(id, isPublish, labelEl, pubEl, hidEl, wasChecked);
                         } else {
-                            // Server tolak — revert
                             checkbox.checked = wasChecked;
                         }
                     } else {
-                        // ── Backend tidak return JSON (redirect/HTML) ──
-                        // Asumsikan berhasil, update UI lalu reload diam-diam
-                        var isPublish = checkbox.checked; // state checkbox sekarang = kondisi baru
+                        var isPublish = checkbox.checked;
                         applyToggleUI(id, isPublish, labelEl, pubEl, hidEl, wasChecked);
 
-                        // Reload setelah 600ms supaya animasi sempat kelihatan
                         setTimeout(function() {
                             window.location.reload();
                         }, 600);
                     }
                 })
                 .catch(function() {
-                    // Koneksi benar-benar gagal — revert checkbox, jangan tampilkan alert
                     checkbox.disabled = false;
                     checkbox.checked = wasChecked;
-                    // Coba reload sebagai fallback terakhir
                     setTimeout(function() {
                         window.location.reload();
                     }, 400);
@@ -333,15 +300,13 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
     });
 
     function applyToggleUI(id, isPublish, labelEl, pubEl, hidEl, wasChecked) {
-        // Update teks & warna label
         if (labelEl) {
             labelEl.textContent = isPublish ? 'Ditampilkan' : 'Disembunyikan';
             labelEl.className = 'toggle-label ' + (isPublish ? 'on' : 'off');
         }
 
-        // Update angka stat — hanya jika state benar-benar berubah
-        var berubahJadiPublish = isPublish && !wasChecked; // tadinya hidden → jadi publish
-        var berubahJadiHidden = !isPublish && wasChecked; // tadinya publish → jadi hidden
+        var berubahJadiPublish = isPublish && !wasChecked;
+        var berubahJadiHidden = !isPublish && wasChecked;
 
         if (pubEl && hidEl) {
             var pub = parseInt(pubEl.textContent) || 0;
@@ -386,10 +351,7 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
         <?php endforeach; ?>
     ];
 
-    // =============================================
-    // ADMIN LIGHTBOX PREVIEW
-    // =============================================
-    let _lbItems = []; // array semua item { src, judul, kategori, deskripsi }
+    let _lbItems = [];
     let _lbIndex = 0;
 
     function bukaPreview(items, startIndex) {
@@ -447,7 +409,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
         nextBtn.classList.toggle('arrow-disabled', _lbIndex === _lbItems.length - 1);
     }
 
-    // Keyboard navigation
     document.addEventListener('keydown', function(e) {
         const lb = document.getElementById('modalPreview');
         if (!lb.classList.contains('active')) return;

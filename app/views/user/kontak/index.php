@@ -3,7 +3,7 @@
 <section class="section-kk" style="padding-top:60px;">
     <div class="container">
 
-        <!-- TITLE -->
+        
         <div class="text-center mb-5 reveal">
             <span class="section-label">Hubungi Kami</span>
             <h1 class="section-title">Kontak & Informasi</h1>
@@ -17,7 +17,7 @@
             <div class="col-lg-8 reveal">
                 <div class="card-kk p-4 kontak-clean">
 
-                    <!-- ITEM -->
+                    
                     <div class="kontak-row">
                         <div class="kontak-icon"><i class="bi bi-geo-alt-fill"></i></div>
                         <div>
@@ -58,7 +58,7 @@
                         </div>
                     </div>
 
-                    <!-- CTA -->
+                    
                     <div class="text-center mt-4">
                         <a href="<?= BASE_URL ?>/kritik-saran" class="btn btn-kk px-4 py-2">
                             <i class="bi bi-chat-heart me-2"></i>Kirim Kritik & Saran

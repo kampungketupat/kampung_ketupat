@@ -1,9 +1,7 @@
-// ===== BASE URL AUTO DETECT =====
 const BASE_URL = window.location.pathname.includes("kampung-ketupat")
   ? "/kampung-ketupat"
   : "";
 
-// ===== NAVBAR SCROLL (AMAN) =====
 const navbar = document.getElementById("mainNavbar");
 if (navbar) {
   window.addEventListener("scroll", () => {
@@ -11,7 +9,6 @@ if (navbar) {
   });
 }
 
-// ===== SCROLL REVEAL (AMAN) =====
 const revealElements = document.querySelectorAll(".reveal");
 
 if (revealElements.length > 0) {
@@ -29,12 +26,10 @@ if (revealElements.length > 0) {
   revealElements.forEach((el) => observer.observe(el));
 }
 document.addEventListener("DOMContentLoaded", function () {
-  // ===== BASE URL =====
   const BASE_URL = window.location.pathname.includes("kampung-ketupat")
     ? "/kampung-ketupat"
     : "";
 
-  // ===== NAVBAR =====
   const navbar = document.getElementById("mainNavbar");
   if (navbar) {
     window.addEventListener("scroll", () => {
@@ -42,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ===== REVEAL =====
   const revealElements = document.querySelectorAll(".reveal");
   if (revealElements.length > 0) {
     const observer = new IntersectionObserver(
@@ -59,13 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
     revealElements.forEach((el) => observer.observe(el));
   }
 
-  // ===== ELEMENT =====
   const searchInput = document.getElementById("searchInput");
   const filterSelect = document.getElementById("filterKategori");
   const statPublish = document.getElementById("publish");
   const statHidden = document.getElementById("hidden");
 
-  // ===== SEARCH & FILTER =====
   function filterGaleri() {
     const keyword = (searchInput?.value || "").toLowerCase();
     const kategori = (filterSelect?.value || "").toLowerCase();
@@ -84,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
   searchInput?.addEventListener("input", filterGaleri);
   filterSelect?.addEventListener("change", filterGaleri);
 
-  // ===== UPDATE STATS =====
   function updateStats() {
     let publish = 0;
     let hidden = 0;
@@ -97,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (statHidden) statHidden.textContent = hidden;
   }
 
-  // ===== TOGGLE =====
   const csrfToken =
     document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
     "";

@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// EventController (FINAL - MVC CLEAN)
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/EventModel.php';
@@ -16,9 +13,6 @@ class EventController extends Controller
         $this->eventModel = new EventModel($koneksi);
     }
 
-    // =========================
-    // INDEX
-    // =========================
     public function index()
     {
         $data['semua_event'] = $this->eventModel->getAll();

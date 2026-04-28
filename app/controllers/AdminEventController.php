@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// AdminEventController (FINAL - WITH FOTO UPLOAD)
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/EventModel.php';
@@ -21,9 +18,6 @@ class AdminEventController extends Controller
         $this->eventModel = new EventModel($koneksi);
     }
 
-    // =========================
-    // INDEX
-    // =========================
     public function index()
     {
         $data['semua_event']   = $this->eventModel->getAll();
@@ -42,9 +36,6 @@ class AdminEventController extends Controller
         $this->view('admin/event/index', $data);
     }
 
-    // =========================
-    // CREATE FORM
-    // =========================
     public function create()
     {
         $data['judul_halaman'] = 'Tambah Event';
@@ -52,9 +43,6 @@ class AdminEventController extends Controller
         $this->view('admin/event/create', $data);
     }
 
-    // =========================
-    // STORE (INSERT)
-    // =========================
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -63,7 +51,6 @@ class AdminEventController extends Controller
         }
         csrf_require('/admin/event');
 
-        // UPLOAD FOTO
         $foto = null;
         if (!empty($_FILES['foto']['name'])) {
             $foto = $this->uploadFoto($_FILES['foto']);
@@ -101,9 +88,6 @@ class AdminEventController extends Controller
         exit;
     }
 
-    // =========================
-    // EDIT FORM
-    // =========================
     public function edit()
     {
         $id = $_GET['id'] ?? null;
@@ -127,9 +111,6 @@ class AdminEventController extends Controller
         $this->view('admin/event/edit', $data);
     }
 
-    // =========================
-    // UPDATE
-    // =========================
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -140,7 +121,6 @@ class AdminEventController extends Controller
 
         $id = $_POST['id'] ?? null;
 
-        // UPLOAD FOTO BARU (kalau ada)
         $foto = null;
         if (!empty($_FILES['foto']['name'])) {
             $foto = $this->uploadFoto($_FILES['foto']);
@@ -179,9 +159,6 @@ class AdminEventController extends Controller
         exit;
     }
 
-    // =========================
-    // DELETE
-    // =========================
     public function delete()
     {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
@@ -212,9 +189,6 @@ class AdminEventController extends Controller
         exit;
     }
 
-    // =========================
-    // HELPER: UPLOAD FOTO
-    // =========================
     private function uploadFoto(array $file): ?string
     {
         $allowedTypes = [
@@ -224,7 +198,6 @@ class AdminEventController extends Controller
         ];
         $maxSize      = 5 * 1024 * 1024; // 5MB
 
-        // Validasi tipe & ukuran
         if (empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
             SecurityLogger::log('upload.event.rejected', ['reason' => 'tmp_file_invalid']);
             return null;
@@ -255,7 +228,6 @@ class AdminEventController extends Controller
             return null;
         }
 
-        // Nama file unik
         $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         if (!in_array($ext, $allowedTypes[$detectedMime], true)) {
             SecurityLogger::log('upload.event.rejected', ['reason' => 'extension_mismatch', 'ext' => $ext, 'mime' => $detectedMime]);
@@ -268,15 +240,12 @@ class AdminEventController extends Controller
         }
         $namaFile = time() . '_' . $suffix . '.' . $ext;
 
-        // Folder tujuan
         $uploadDir = BASE_PATH . '/public/assets/uploads/event/';
 
-        // Buat folder kalau belum ada
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
 
-        // Pindahkan file
         if (move_uploaded_file($file['tmp_name'], $uploadDir . $namaFile)) {
             SecurityLogger::log('upload.event.accepted', ['file' => $namaFile], 'info');
             return $namaFile;

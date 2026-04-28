@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// BerandaController (FINAL - MVC CLEAN)
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/GaleriModel.php';
@@ -26,9 +23,6 @@ class BerandaController extends Controller
 
     public function index()
     {
-        // =========================
-        // AMBIL DATA
-        // =========================
         $data['galeri_preview'] = array_slice(
             $this->galeriModel->getAllPublished(),
             0,
@@ -43,15 +37,9 @@ class BerandaController extends Controller
             4
         );
 
-        // =========================
-        // DATA TAMBAHAN
-        // =========================
         $data['judul_halaman'] = 'Beranda — Kampung Ketupat Warna Warni Samarinda';
         $data['halaman_aktif'] = 'beranda';
 
-        // =========================
-        // LOAD VIEW
-        // =========================
         $this->view('user/beranda/index', $data);
     }
 }

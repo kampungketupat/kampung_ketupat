@@ -11,9 +11,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
     <div class="alert-kk-error mb-3"><?= htmlspecialchars($pesan_error) ?></div>
 <?php endif; ?>
 
-<!-- ═══════════════════════════════════════
-     HEADER
-════════════════════════════════════════ -->
 <div class="page-header">
     <div class="page-title">
         <p>Kelola &amp; atur jadwal event Kampung Ketupat</p>
@@ -26,9 +23,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     SEARCH & FILTER
-════════════════════════════════════════ -->
 <div class="search-filter-bar mb-4">
 
     <div class="search-box">
@@ -48,9 +42,6 @@ require_once BASE_PATH . '/app/views/admin/layouts/header.php';
 
 </div>
 
-<!-- ═══════════════════════════════════════
-     STAT CARDS
-════════════════════════════════════════ -->
 <?php
 $total       = count($semua_event);
 $akan_datang = count(array_filter($semua_event, fn($e) => $e['status'] === 'akan_datang'));
@@ -102,9 +93,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
 
 </div>
 
-<!-- ═══════════════════════════════════════
-     TABLE
-════════════════════════════════════════ -->
 <?php if (empty($semua_event)): ?>
 
     <div class="empty-state">
@@ -137,7 +125,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
                         data-nama="<?= strtolower(htmlspecialchars($e['nama_event'])) ?>"
                         data-status="<?= $e['status'] ?>">
 
-                        <!-- NAMA + DESKRIPSI -->
                         <td>
                             <div class="event-nama">
                                 <?= htmlspecialchars($e['nama_event']) ?>
@@ -149,7 +136,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
                             <?php endif; ?>
                         </td>
 
-                        <!-- TANGGAL -->
                         <td>
                             <div class="event-date-main">
                                 <?= date('d M Y', strtotime($e['tanggal_mulai'])) ?>
@@ -161,7 +147,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
                             <?php endif; ?>
                         </td>
 
-                        <!-- JAM -->
                         <td>
                             <?php if (!empty($e['jam_mulai'])): ?>
                                 <div class="event-jam">
@@ -173,7 +158,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
                             <?php endif; ?>
                         </td>
 
-                        <!-- LOKASI -->
                         <td>
                             <div class="event-lokasi" title="<?= htmlspecialchars($e['lokasi']) ?>">
                                 <i class="bi bi-geo-alt-fill me-1" style="color:#9ca3af; font-size:11px;"></i>
@@ -181,7 +165,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
                             </div>
                         </td>
 
-                        <!-- STATUS -->
                         <td>
                             <?php
                             $statusMap = [
@@ -196,7 +179,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
                             </span>
                         </td>
 
-                        <!-- AKSI -->
                         <td>
                             <div class="action-btns">
                                 <a href="<?= BASE_URL ?>/admin/event/edit?id=<?= $e['id'] ?>"
@@ -218,7 +200,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
 
         </table>
 
-        <!-- EMPTY FILTERED -->
         <div id="emptyFiltered" class="empty-state d-none" style="padding: 40px 16px;">
             <i class="bi bi-search"></i>
             <p>Tidak ada event yang cocok dengan pencarian.</p>
@@ -227,10 +208,6 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
     </div>
 
 <?php endif; ?>
-
-<!-- ═══════════════════════════════════════
-     SCRIPT
-════════════════════════════════════════ -->
 <script>
     const searchInput = document.getElementById('searchInput');
     const filterStatus = document.getElementById('filterStatus');

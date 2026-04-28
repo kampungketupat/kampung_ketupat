@@ -1,7 +1,4 @@
 <?php
-// ============================================================
-// DATABASE CONFIG (PRODUCTION-SAFE + SHARED HOSTING READY)
-// ============================================================
 
 if (!function_exists('cfg_env')) {
     function cfg_env(string $key, string $default = ''): string
@@ -36,8 +33,6 @@ define('DB_PASS', cfg_env('DB_PASS', 'CHANGE_ME_IN_HOSTING_ENV'));
 define('DB_NAME', cfg_env('DB_NAME', 'if0_41772900_kampung_ketupat'));
 define('DB_CHARSET', cfg_env('DB_CHARSET', 'utf8mb4'));
 
-// In production/shared-hosting, this should stay OFF by default.
-// Default auto-init only for local root-based setups.
 $autoInit = cfg_env_bool('DB_AUTO_INIT', !$isProduction && DB_USER === 'root');
 $autoSeed = cfg_env_bool('DB_AUTO_SEED', !$isProduction);
 
@@ -47,7 +42,6 @@ $koneksi = null;
 try {
     $koneksi = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 } catch (mysqli_sql_exception $e) {
-    // 1049 = Unknown database
     if ($autoInit && (int)$e->getCode() === 1049) {
         $koneksi = new mysqli(DB_HOST, DB_USER, DB_PASS);
         $koneksi->query(
@@ -144,7 +138,6 @@ if ($autoInit) {
          WHERE last_attempt_at < DATE_SUB(NOW(), INTERVAL 2 DAY)"
     );
 
-    // Migrasi ringan agar tetap kompatibel dengan DB lama
     ensureColumn($koneksi, 'galeri', 'is_publish', "TINYINT(1) NOT NULL DEFAULT 1");
     ensureColumn($koneksi, 'event', 'link_info', "VARCHAR(255) NULL");
     ensureColumn($koneksi, 'event', 'jam_mulai', "TIME NULL");
@@ -155,7 +148,6 @@ if ($autoInit) {
 }
 
 if ($autoSeed) {
-    // Seed admin
     $cek = $koneksi->query("SELECT COUNT(*) as total FROM admin")->fetch_assoc();
     if ((int)($cek['total'] ?? 0) === 0) {
         $password = password_hash('admin123', PASSWORD_DEFAULT);
@@ -169,7 +161,6 @@ if ($autoSeed) {
         $stmt->close();
     }
 
-    // Seed galeri
     $cek = $koneksi->query("SELECT COUNT(*) as total FROM galeri")->fetch_assoc();
     if ((int)($cek['total'] ?? 0) === 0) {
         $koneksi->query(
@@ -179,7 +170,6 @@ if ($autoSeed) {
         );
     }
 
-    // Seed event
     $cek = $koneksi->query("SELECT COUNT(*) as total FROM event")->fetch_assoc();
     if ((int)($cek['total'] ?? 0) === 0) {
         $koneksi->query(
@@ -188,7 +178,6 @@ if ($autoSeed) {
         );
     }
 
-    // Seed UMKM
     $cek = $koneksi->query("SELECT COUNT(*) as total FROM umkm")->fetch_assoc();
     if ((int)($cek['total'] ?? 0) === 0) {
         $koneksi->query(

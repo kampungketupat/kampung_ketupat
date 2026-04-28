@@ -1,7 +1,4 @@
 ﻿<?php
-// ============================================================
-// FILE: controller/AdminController.php
-// ============================================================
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/AdminModel.php';
@@ -34,7 +31,6 @@ class AdminController extends Controller
 
     public function login()
     {
-        // Rute auth dipusatkan di AuthController agar hardening tetap konsisten.
         header('Location: ' . BASE_URL . '/admin/login');
         exit;
     }
@@ -101,7 +97,6 @@ class AdminController extends Controller
 
     public function logout()
     {
-        // Logout valid hanya melalui AuthController (POST + CSRF).
         header('Location: ' . BASE_URL . '/admin/login');
         exit;
     }

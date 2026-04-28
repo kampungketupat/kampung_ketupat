@@ -13,7 +13,7 @@ $semua_event = $semua_event ?? [];
         <div id="app-event"></div>
     </div>
 </section>
-<!-- SCRIPT -->
+
 <script>
     window.__EVENT_DATA__ = <?= json_encode($semua_event) ?>;
 </script>

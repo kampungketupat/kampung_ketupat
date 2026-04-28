@@ -1,5 +1,4 @@
 <?php
-// header admin
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -11,19 +10,15 @@
 
     <title><?= $judul_halaman ?? 'Admin' ?> — Kampung Ketupat</title>
 
-    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- CUSTOM -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/admin.css" />
 
-    <!-- CHART JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
 
@@ -35,7 +30,6 @@
     <div class="admin-mobile-title">Menu Admin</div>
     <div class="admin-sidebar-overlay" id="adminSidebarOverlay"></div>
 
-    <!-- SIDEBAR -->
     <nav class="sidebar-admin">
         <div class="sidebar-brand">
             Kampung Ketupat<br>
@@ -44,7 +38,7 @@
 
         <ul class="sidebar-nav nav flex-column">
 
-            <!-- DASHBOARD -->
+            
             <li class="nav-item">
                 <a class="nav-link <?= ($menu_aktif ?? '') === 'dashboard' ? 'active' : '' ?>"
                     href="/admin/dashboard">
@@ -53,12 +47,12 @@
                 </a>
             </li>
 
-            <!-- SECTION -->
+            
             <li class="nav-item mt-3">
                 <small class="sidebar-label">Kelola Konten</small>
             </li>
 
-            <!-- MENU -->
+            
             <li class="nav-item">
                 <a class="nav-link <?= ($menu_aktif ?? '') === 'galeri' ? 'active' : '' ?>"
                     href="/admin/galeri">
@@ -91,10 +85,10 @@
                 </a>
             </li>
 
-            <!-- DIVIDER -->
+            
             <hr class="sidebar-divider">
 
-            <!-- WEBSITE -->
+            
             <li class="nav-item">
                 <a class="nav-link" href="/" target="_blank">
                     <i class="bi bi-globe"></i>
@@ -102,7 +96,7 @@
                 </a>
             </li>
 
-            <!-- LOGOUT -->
+            
             <li class="nav-item">
                 <button type="button" onclick="logout()" class="nav-link text-danger">
                     <i class="bi bi-box-arrow-left"></i>
@@ -113,19 +107,19 @@
         </ul>
     </nav>
 
-    <!-- MAIN -->
+    
     <div class="admin-main">
         <div class="admin-container">
 
-            <!-- TOPBAR -->
+            
             <div class="d-flex justify-content-between align-items-center mb-4">
 
-                <!-- TITLE -->
+                
                 <h5 class="fw-bold mb-0">
                     <?= $judul_halaman ?? 'Dashboard' ?>
                 </h5>
 
-                <!-- USER -->
+                
                 <div class="text-muted small d-flex align-items-center gap-2">
                     <i class="bi bi-person-circle fs-5"></i>
                     <span>
