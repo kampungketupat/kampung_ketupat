@@ -487,6 +487,14 @@ if (document.getElementById("app-event")) {
         return time ? time.substring(0, 5) : "";
       },
 
+      timeRange(start, end) {
+        const s = this.formatTime(start);
+        const e = this.formatTime(end);
+        if (!s) return "";
+        if (!e) return s;
+        return e < s ? `${e} - ${s}` : `${s} - ${e}`;
+      },
+
       fotoUrl(foto) {
         if (!foto) return "";
         return foto.startsWith("http")
@@ -543,15 +551,14 @@ if (document.getElementById("app-event")) {
     template: `
     <div>
 
-      <div class="d-flex flex-wrap gap-2 mb-4 justify-content-between">
+      <div class="d-flex flex-wrap gap-2 mb-4 justify-content-between kk-toolbar">
 
         <input type="text"
           v-model="search"
           class="form-control kk-search"
-          placeholder="Cari event..."
-          style="max-width:250px;">
+          placeholder="Cari event...">
 
-        <div class="d-flex gap-2">
+        <div class="d-flex flex-wrap gap-2 kk-filter-wrap">
           <button v-for="s in ['all','akan_datang','berlangsung','selesai']"
             :key="s"
             @click="setFilter(s)"
@@ -615,8 +622,7 @@ if (document.getElementById("app-event")) {
 
                 <div v-if="ev.jam_mulai" class="small text-muted mb-1">
                   <i class="bi bi-clock me-1"></i>
-                  {{ formatTime(ev.jam_mulai) }}
-                  <span v-if="ev.jam_selesai">- {{ formatTime(ev.jam_selesai) }}</span>
+                  {{ timeRange(ev.jam_mulai, ev.jam_selesai) }}
                   WITA
                 </div>
 
@@ -698,8 +704,7 @@ if (document.getElementById("app-event")) {
                   <div>
                     <span class="ev-modal-info-label">Waktu</span>
                     <p class="ev-modal-info-val">
-                      {{ formatTime(selectedEvent.jam_mulai) }}
-                      <span v-if="selectedEvent.jam_selesai">&ndash; {{ formatTime(selectedEvent.jam_selesai) }}</span>
+                      {{ timeRange(selectedEvent.jam_mulai, selectedEvent.jam_selesai) }}
                       WITA
                     </p>
                   </div>
@@ -812,14 +817,14 @@ if (document.getElementById("app-umkm")) {
     template: `
     <div>
 
-      <div class="d-flex flex-wrap gap-2 mb-4 justify-content-between">
+      <div class="d-flex flex-wrap gap-2 mb-4 justify-content-between kk-toolbar">
 
         <input v-model="cari" @input="resetAnimasi" type="text"
           class="form-control kk-search"
           placeholder="Cari UMKM..."
-          style="max-width:250px;">
+          >
 
-        <div class="d-flex gap-2">
+        <div class="d-flex flex-wrap gap-2 kk-filter-wrap">
           <button v-for="kat in ['semua','kuliner','kerajinan','souvenir','jasa']"
             :key="kat"
             @click="kategori = kat; resetAnimasi()"

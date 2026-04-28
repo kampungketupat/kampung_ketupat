@@ -20,6 +20,16 @@ body {
   padding-top:80px;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 576px) {
+  body {
+    padding-top: 72px;
+  }
+}
+
 a {
   text-decoration:none;
   transition:.25s;
@@ -134,6 +144,13 @@ a {
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .hero-kk {
+    background-attachment: scroll;
+    background-position: center;
+  }
+}
+
 .hero-tag {
   display: inline-block;
   background: rgba(255,255,255,0.08); 
@@ -188,6 +205,14 @@ a {
   border-radius: 999px;
 
   transition: 0.25s;
+}
+
+@media (max-width: 576px) {
+  .hero-badge {
+    max-width: 100%;
+    white-space: normal;
+    text-align: left;
+  }
 }
 
 .hero-badge:hover {
@@ -377,9 +402,6 @@ a {
   font-size: 0.95rem;
   color: #6b7c6e;
   line-height: 1.8;
-}
-
-  all: unset !important;
 }
 
 .section-label {
@@ -1456,7 +1478,8 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 24px;
+    overflow-y: auto;
     backdrop-filter: blur(4px);
 }
 
@@ -1466,8 +1489,8 @@ a {
     border-radius: 24px;
     overflow: hidden;
     width: 100%;
-    max-width: 520px;
-    max-height: 90vh;
+    max-width: 700px;
+    max-height: calc(100vh - 48px);
     overflow-y: auto;
     position: relative;
     box-shadow: 0 30px 70px rgba(0,0,0,0.25);
@@ -1505,7 +1528,7 @@ a {
 
 .umkm-modal-img img {
     width: 100%;
-    height: 240px;
+    height: 300px;
     object-fit: cover;
     display: block;
 }
@@ -1526,7 +1549,7 @@ a {
 
 
 .umkm-modal-content {
-    padding: 22px 24px 28px;
+    padding: 24px 26px 30px;
 }
 
 
@@ -1667,15 +1690,23 @@ a {
 
 
 @media (max-width: 576px) {
+    .umkm-modal-overlay {
+        align-items: flex-start;
+        padding: 12px;
+    }
     .umkm-modal-box {
-        border-radius: 20px;
-        max-height: 95vh;
+        border-radius: 18px;
+        max-height: calc(100vh - 24px);
+        max-width: 100%;
     }
     .umkm-modal-img img {
-        height: 200px;
+        height: 190px;
     }
     .umkm-modal-title {
-        font-size: 1.2rem;
+        font-size: 1.08rem;
+    }
+    .umkm-modal-content {
+        padding: 18px 16px 22px;
     }
 }
 
@@ -2025,6 +2056,36 @@ a {
 .filter-btn.active {
   background:var(--kk-primary);
   color:#fff;
+}
+
+.kk-toolbar .kk-search {
+  max-width: 320px;
+}
+
+.kk-filter-wrap {
+  justify-content: flex-end;
+}
+
+@media (max-width: 576px) {
+  .kk-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kk-toolbar .kk-search {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .kk-filter-wrap {
+    justify-content: flex-start;
+  }
+
+  .kk-filter-wrap .btn {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
 }
 
 .section-soft {
@@ -3107,7 +3168,8 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 24px;
+    overflow-y: auto;
     backdrop-filter: blur(4px);
 }
 
@@ -3116,8 +3178,8 @@ a {
     border-radius: 24px;
     overflow: hidden;
     width: 100%;
-    max-width: 520px;
-    max-height: 90vh;
+    max-width: 700px;
+    max-height: calc(100vh - 48px);
     overflow-y: auto;
     position: relative;
     box-shadow: 0 30px 70px rgba(0,0,0,0.25);
@@ -3154,7 +3216,7 @@ a {
 
 .ev-modal-img img {
     width: 100%;
-    height: 240px;
+    height: 300px;
     object-fit: cover;
     display: block;
 }
@@ -3187,7 +3249,7 @@ a {
 
 
 .ev-modal-content {
-    padding: 20px 24px 28px;
+    padding: 24px 26px 30px;
 }
 
 
@@ -3354,15 +3416,23 @@ a {
 
 
 @media (max-width: 576px) {
+    .ev-modal-overlay {
+        align-items: flex-start;
+        padding: 12px;
+    }
     .ev-modal-box {
-        border-radius: 20px;
-        max-height: 95vh;
+        border-radius: 18px;
+        max-height: calc(100vh - 24px);
+        max-width: 100%;
     }
     .ev-modal-img img {
-        height: 200px;
+        height: 190px;
     }
     .ev-modal-title {
-        font-size: 1.2rem;
+        font-size: 1.08rem;
+    }
+    .ev-modal-content {
+        padding: 18px 16px 22px;
     }
 }
 

@@ -149,9 +149,16 @@ $selesai     = count(array_filter($semua_event, fn($e) => $e['status'] === 'sele
 
                         <td>
                             <?php if (!empty($e['jam_mulai'])): ?>
+                                <?php
+                                $jm = substr((string)$e['jam_mulai'], 0, 5);
+                                $js = !empty($e['jam_selesai']) ? substr((string)$e['jam_selesai'], 0, 5) : '';
+                                if ($js !== '' && $js < $jm) {
+                                    [$jm, $js] = [$js, $jm];
+                                }
+                                ?>
                                 <div class="event-jam">
-                                    <?= substr($e['jam_mulai'], 0, 5) ?>
-                                    <?= !empty($e['jam_selesai']) ? ' – ' . substr($e['jam_selesai'], 0, 5) : '' ?>
+                                    <?= $jm ?>
+                                    <?= $js !== '' ? ' – ' . $js : '' ?>
                                 </div>
                             <?php else: ?>
                                 <span class="text-muted">—</span>

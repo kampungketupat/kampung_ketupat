@@ -4,6 +4,7 @@
 
             <div class="col-lg-4 col-md-6">
                 <h5 class="footer-brand mb-3">
+                    <i class="bi bi-diamond-fill text-accent me-1"></i>
                     Kampung Ketupat <span class="text-accent">Warna Warni</span>
                 </h5>
 
@@ -70,7 +71,6 @@
 
         <div class="footer-bottom">
             <p>© <?= date('Y') ?> Kampung Ketupat Warna Warni Samarinda</p>
-            <p>Dibuat oleh <strong>Kelompok 2</strong> — SI Unmul</p>
         </div>
 
     </div>

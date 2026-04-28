@@ -4,6 +4,25 @@ class EventModel
 {
     private $db;
 
+    private function normalizeJam(?string $mulai, ?string $selesai): array
+    {
+        $mulai = $mulai !== '' ? $mulai : null;
+        $selesai = $selesai !== '' ? $selesai : null;
+
+        if (!$mulai || !$selesai) {
+            return [$mulai, $selesai];
+        }
+
+        $tMulai = strtotime('1970-01-01 ' . substr($mulai, 0, 5));
+        $tSelesai = strtotime('1970-01-01 ' . substr($selesai, 0, 5));
+
+        if ($tMulai !== false && $tSelesai !== false && $tSelesai < $tMulai) {
+            return [$selesai, $mulai];
+        }
+
+        return [$mulai, $selesai];
+    }
+
     public function __construct($koneksi)
     {
         $this->db = $koneksi;
@@ -73,6 +92,8 @@ class EventModel
         $jam_mulai,
         $jam_selesai
     ) {
+        [$jam_mulai, $jam_selesai] = $this->normalizeJam($jam_mulai, $jam_selesai);
+
         $stmt = $this->db->prepare("
             INSERT INTO event 
             (nama_event, deskripsi, tanggal_mulai, tanggal_selesai, lokasi, foto, status, link_info, jam_mulai, jam_selesai) 
@@ -114,6 +135,8 @@ class EventModel
         $jam_selesai,
         $foto = null
     ) {
+        [$jam_mulai, $jam_selesai] = $this->normalizeJam($jam_mulai, $jam_selesai);
+
         if ($foto) {
             $stmt = $this->db->prepare("
                 UPDATE event SET 

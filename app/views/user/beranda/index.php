@@ -209,8 +209,15 @@ $pesanPublik = $ksModel->getPublik();
                                 <div class="ev-meta-item">
                                     <i class="bi bi-clock"></i>
                                     <?php if (!empty($ev['jam_mulai'])): ?>
-                                        <?= date('H:i', strtotime($ev['jam_mulai'])) ?>
-                                        <?= !empty($ev['jam_selesai']) ? '– ' . date('H:i', strtotime($ev['jam_selesai'])) : '' ?> WITA
+                                        <?php
+                                        $jm = date('H:i', strtotime($ev['jam_mulai']));
+                                        $js = !empty($ev['jam_selesai']) ? date('H:i', strtotime($ev['jam_selesai'])) : '';
+                                        if ($js !== '' && $js < $jm) {
+                                            [$jm, $js] = [$js, $jm];
+                                        }
+                                        ?>
+                                        <?= $jm ?>
+                                        <?= $js !== '' ? '– ' . $js : '' ?> WITA
                                     <?php else: ?>
                                         Waktu menyusul
                                     <?php endif; ?>

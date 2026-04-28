@@ -17,6 +17,9 @@ $halaman_aktif = $halaman_aktif ?? '';
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+    <link rel="icon" href="<?= BASE_URL ?>/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="shortcut icon" href="<?= BASE_URL ?>/assets/favicon.svg" type="image/svg+xml" />
+
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css?v=<?= time() ?>" />
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -27,7 +30,7 @@ $halaman_aktif = $halaman_aktif ?? '';
     <nav class="navbar navbar-expand-lg navbar-kk fixed-top" id="mainNavbar">
         <div class="container">
 
-            <a class="navbar-brand d-flex align-items-center gap-2" href="<?= BASE_URL ?>">
+            <a class="navbar-brand d-flex align-items-center" href="<?= BASE_URL ?>">
                 <span class="logo-text">Kampung <span class="text-accent">Ketupat</span></span>
             </a>
 
@@ -39,7 +42,9 @@ $halaman_aktif = $halaman_aktif ?? '';
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
 
                     <li class="nav-item">
-                        <a class="nav-link <?= $halaman_aktif === 'beranda' ? 'active' : '' ?>" href="<?= BASE_URL ?>/">Beranda</a>
+                        <a class="nav-link <?= $halaman_aktif === 'beranda' ? 'active' : '' ?>" href="<?= BASE_URL ?>/">
+                            Beranda
+                        </a>
                     </li>
 
                     <li class="nav-item">
