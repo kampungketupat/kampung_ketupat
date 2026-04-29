@@ -774,6 +774,8 @@ server {
 
 ## 📊 Sumber Daya Proyek
 
+---
+
 ### 🌍 Website Live
 
 <img width="1919" height="1078" alt="Image" src="https://github.com/user-attachments/assets/dd0b5889-e21a-4fde-abed-afee17c75eaa" />
@@ -781,6 +783,8 @@ server {
 Aplikasi telah di-deploy dan dapat diakses publik di:
 
 **[https://kampung-ketupat.infinityfree.me/](https://kampung-ketupat.infinityfree.me/)**
+
+---
 
 ### 📊 Slide Presentasi (PPT / Canva)
 
@@ -790,17 +794,23 @@ Slide deck untuk presentasi proyek — berisi overview, arsitektur, fitur utama,
 
 **[https://canva.link/54cr2ep7p6ouwdr](https://canva.link/54cr2ep7p6ouwdr)**
 
+---
+
 ### 📄 Laporan Proyek
 
 Dokumen laporan lengkap — latar belakang, analisis kebutuhan, perancangan sistem, implementasi, pengujian, dan kesimpulan:
 
 **[Google Drive – Laporan](https://drive.google.com/drive/folders/1NnE_3vCfHOyXmjiId5lK8Y-TGkFcHNcU?usp=sharing)**
 
+---
+
 ### 🎙️ Dokumentasi Wawancara
 
 Rekaman dan transkrip wawancara dengan stakeholder/pengelola kampung sebagai dasar analisis kebutuhan pengguna:
 
 **[Google Drive – Wawancara](https://drive.google.com/drive/folders/1nMXrLRJ-9rJV7JU9HYuCDG_3R1cVz6eg?usp=sharing)**
+
+---
 
 ### 🗺️ Flowchart Sistem (Draw.io)
 
@@ -825,7 +835,7 @@ Diagram alur sistem mencakup user flow, admin flow, alur autentikasi, dan arsite
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&height=120&color=0:0d9488,100:0f172a&section=footer)
 
-**Kampung Ketupat Web** &nbsp;·&nbsp; Dibangun dengan ❤️ menggunakan PHP Native MVC
+**Kampung Ketupat Web** &nbsp;·&nbsp; Dibangun oleh Sidang Berapi🔥
 
 [![Live](https://img.shields.io/badge/Website_Live-kampung--ketupat.infinityfree.me-0d9488?style=flat-square)](https://kampung-ketupat.infinityfree.me/)
 [![PPT](https://img.shields.io/badge/Slide_Presentasi-Canva-7952B3?style=flat-square)](https://canva.link/54cr2ep7p6ouwdr)
