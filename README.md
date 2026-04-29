@@ -825,7 +825,7 @@ Diagram alur sistem mencakup user flow, admin flow, alur autentikasi, dan arsite
 | Nama | NIM | Role |
 |---|---|---|
 | Sayid Rafi A'thaya | 2409116036 | Project Manager 💡 |
-| Mochammad Rezky Ramadhan | 2409116029 | Backend / Supabase ⚙️ |
+| Mochammad Rezky Ramadhan | 2409116029 | Backend / Database ⚙️ |
 | Adella Putri | 2409116006 | Frontend / UI 🎨 |
 | Dhita Olivia Ramadhayanti Kusuma | 2409116040 | Documentation / Report 🧾 |
 
