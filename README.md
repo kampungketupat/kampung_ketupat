@@ -4,7 +4,6 @@
 [![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Bootstrap Icons](https://img.shields.io/badge/Bootstrap_Icons-1.x-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://icons.getbootstrap.com/)
 [![SweetAlert2](https://img.shields.io/badge/SweetAlert2-latest-FF6B6B?style=for-the-badge)](https://sweetalert2.github.io/)
-[![License](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Status](https://img.shields.io/badge/Status-Live-0d9488?style=for-the-badge)](https://kampung-ketupat.infinityfree.me/)
 
 ---
@@ -38,7 +37,7 @@
 - [🧪 Testing & Smoke Test](#-testing--smoke-test)
 - [📌 Catatan Deployment](#-catatan-deployment)
 - [📊 Sumber Daya Proyek](#-sumber-daya-proyek)
-- [👥 Tim & Kontribusi](#-tim--kontribusi)
+- [Anggota Tim Sidang Berapi🔥](#-anggota--tim-sidang-berapi)
 
 ---
 
