@@ -163,9 +163,33 @@ if ($autoSeed) {
     $cek = $koneksi->query("SELECT COUNT(*) as total FROM galeri")->fetch_assoc();
     if ((int)($cek['total'] ?? 0) === 0) {
         $koneksi->query(
-            "INSERT INTO galeri (judul, foto, kategori, is_publish) VALUES
-            ('Monumen Ketupat', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'wisata', 1),
-            ('Rumah Warna Warni', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'wisata', 1)"
+            "INSERT INTO galeri (judul, foto, kategori, is_publish, created_at) VALUES
+            -- Januari (3 foto)
+            ('Suasana Pagi Kampung', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'wisata', 1, '2026-01-05 08:00:00'),
+            ('Jembatan Kampung', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'wisata', 1, '2026-01-12 10:30:00'),
+            ('Dermaga Ketupat', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'wisata', 1, '2026-01-20 14:00:00'),
+            -- Februari (5 foto)
+            ('Rumah Warna Warni', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'wisata', 1, '2026-02-02 09:00:00'),
+            ('Gang Sempit Kampung', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'wisata', 1, '2026-02-08 11:00:00'),
+            ('Warung Tradisional', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'kuliner', 1, '2026-02-14 13:00:00'),
+            ('Perahu Nelayan', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'wisata', 1, '2026-02-20 15:00:00'),
+            ('Sunset Kampung', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'wisata', 1, '2026-02-26 17:00:00'),
+            -- Maret (8 foto)
+            ('Festival Ketupat 1', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'budaya', 1, '2026-03-01 08:00:00'),
+            ('Festival Ketupat 2', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'budaya', 1, '2026-03-04 09:00:00'),
+            ('Festival Ketupat 3', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'budaya', 1, '2026-03-07 10:00:00'),
+            ('Mural Kampung', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'wisata', 1, '2026-03-10 11:00:00'),
+            ('Anak Bermain', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'umum', 1, '2026-03-15 12:00:00'),
+            ('Taman Kampung', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'fasilitas', 1, '2026-03-18 13:00:00'),
+            ('Pasar Pagi', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'kuliner', 1, '2026-03-22 14:00:00'),
+            ('Kerajinan Lokal', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'budaya', 1, '2026-03-28 15:00:00'),
+            -- April (6 foto - bulan ini)
+            ('Monumen Ketupat', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'wisata', 1, '2026-04-02 08:00:00'),
+            ('Gerbang Kampung', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'wisata', 1, '2026-04-08 10:00:00'),
+            ('Kuliner Ketupat', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'kuliner', 1, '2026-04-12 12:00:00'),
+            ('Wisata Air', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'wisata', 1, '2026-04-18 14:00:00'),
+            ('Seni Budaya', 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090', 'budaya', 1, '2026-04-22 16:00:00'),
+            ('Kampung Malam Hari', 'https://images.unsplash.com/photo-1566552881560-0be862a7c445', 'wisata', 1, '2026-04-28 18:00:00')"
         );
     }
 

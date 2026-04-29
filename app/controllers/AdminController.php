@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 require_once BASE_PATH . '/app/core/Controller.php';
 require_once BASE_PATH . '/app/models/AdminModel.php';
@@ -55,6 +55,7 @@ class AdminController extends Controller
             5
         );
 
+        // Query upload foto per bulan (real data)
         $query = "
             SELECT MONTH(created_at) AS bulan, COUNT(*) AS total
             FROM galeri
@@ -62,25 +63,32 @@ class AdminController extends Controller
             ORDER BY MONTH(created_at)
         ";
 
-        $labelBulan = [];
-        $dataBulanan = [];
+        // Inisialisasi 12 bulan (Jan-Des) dengan 0
+        $uploadPerBulan = array_fill(1, 12, 0);
 
         $result = $this->db->query($query);
         if ($result) {
             while ($row = $result->fetch_assoc()) {
                 $bulan = (int)($row['bulan'] ?? 0);
-                if ($bulan < 1 || $bulan > 12) {
-                    continue;
+                if ($bulan >= 1 && $bulan <= 12) {
+                    $uploadPerBulan[$bulan] = (int)($row['total'] ?? 0);
                 }
-
-                $namaBulan = date('M', mktime(0, 0, 0, $bulan, 10));
-                $labelBulan[] = $namaBulan;
-                $dataBulanan[] = (int)($row['total'] ?? 0);
             }
+        }
+
+        // Build labels & data array untuk 12 bulan
+        $labelBulan = [];
+        $dataBulanan = [];
+        $bulanSekarang = (int)date('n'); // bulan saat ini (1-12)
+
+        for ($i = 1; $i <= 12; $i++) {
+            $labelBulan[] = date('M', mktime(0, 0, 0, $i, 10));
+            $dataBulanan[] = $uploadPerBulan[$i];
         }
 
         $data['labelBulan'] = $labelBulan;
         $data['dataBulanan'] = $dataBulanan;
+        $data['bulanSekarang'] = $bulanSekarang;
 
         $nama = trim($_SESSION['admin']['nama'] ?? $_SESSION['admin']['nama_lengkap'] ?? 'Admin');
         $parts = array_values(array_filter(explode(' ', $nama)));

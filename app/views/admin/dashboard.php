@@ -18,7 +18,7 @@
 
     <div class="row g-3 mb-4">
         <div class="col-sm-6 col-lg-3">
-            <div class="dash-stat-card sc-green">
+            <a class="dash-stat-card sc-green dash-stat-card-link" href="<?= BASE_URL ?>/admin/galeri">
                 <div class="sc-icon i-green"><i class="bi bi-images"></i></div>
                 <div class="sc-label">Total Foto Galeri</div>
                 <div class="sc-num"><?= htmlspecialchars($stats['galeri']) ?></div>
@@ -26,10 +26,10 @@
                     <i class="bi bi-arrow-up-short sc-up"></i>
                     <span class="sc-up">Foto terpublikasi</span>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-sm-6 col-lg-3">
-            <div class="dash-stat-card sc-amber">
+            <a class="dash-stat-card sc-amber dash-stat-card-link" href="<?= BASE_URL ?>/admin/event">
                 <div class="sc-icon i-amber"><i class="bi bi-calendar-event"></i></div>
                 <div class="sc-label">Event Aktif</div>
                 <div class="sc-num"><?= htmlspecialchars($stats['event']) ?></div>
@@ -37,10 +37,10 @@
                     <i class="bi bi-arrow-up-short sc-up"></i>
                     <span class="sc-up">Event berjalan</span>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-sm-6 col-lg-3">
-            <div class="dash-stat-card sc-orange">
+            <a class="dash-stat-card sc-orange dash-stat-card-link" href="<?= BASE_URL ?>/admin/umkm">
                 <div class="sc-icon i-orange"><i class="bi bi-shop"></i></div>
                 <div class="sc-label">UMKM Terdaftar</div>
                 <div class="sc-num"><?= htmlspecialchars($stats['umkm']) ?></div>
@@ -48,10 +48,10 @@
                     <i class="bi bi-arrow-up-short sc-up"></i>
                     <span class="sc-up">Mitra terdaftar</span>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-sm-6 col-lg-3">
-            <div class="dash-stat-card sc-blue">
+            <a class="dash-stat-card sc-blue dash-stat-card-link" href="<?= BASE_URL ?>/admin/kritik-saran">
                 <div class="sc-icon i-blue"><i class="bi bi-chat-heart"></i></div>
                 <div class="sc-label">Pesan Belum Dibaca</div>
                 <div class="sc-num"><?= htmlspecialchars($stats['kritik']) ?></div>
@@ -64,7 +64,7 @@
                         <span class="sc-up">Semua telah dibaca</span>
                     <?php endif; ?>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -79,7 +79,7 @@
                         <div class="dash-card-sub">Jumlah foto diunggah per bulan</div>
                     </div>
                     <span class="dash-period-badge">
-                        <i class="bi bi-clock me-1"></i>7 Bulan
+                        <i class="bi bi-clock me-1"></i>12 Bulan
                     </span>
                 </div>
 
@@ -88,11 +88,11 @@
                     <span class="dl-item"><span class="dl-sq" style="background:var(--kk-secondary);"></span>Bulan Ini</span>
                 </div>
 
-                <div style="position:relative;width:100%;height:180px;">
+                <div style="position:relative;width:100%;height:240px;">
                     <canvas id="chartGaleri"
                         role="img"
                         aria-label="Bar chart jumlah upload foto galeri per bulan">
-                        Data upload foto galeri 7 bulan terakhir.
+                        Data upload foto galeri 12 bulan.
                     </canvas>
                 </div>
             </div>
@@ -233,9 +233,7 @@
 <script>
     const labels = <?= json_encode($labelBulan ?? []); ?>;
     const dataUpload = <?= json_encode($dataBulanan ?? []); ?>;
-
-    console.log('LABELS:', labels);
-    console.log('DATA:', dataUpload);
+    const bulanSekarang = <?= json_encode($bulanSekarang ?? 0); ?>;
 </script>
 
 <script>
@@ -253,7 +251,7 @@
                     label: 'Foto',
                     data: dataUpload,
                     backgroundColor: labels.map((_, i) =>
-                        i === labels.length - 1 ? amber : primary
+                        (i + 1) === bulanSekarang ? amber : primary
                     ),
                     borderRadius: 6,
                     borderSkipped: false
