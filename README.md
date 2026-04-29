@@ -838,6 +838,5 @@ Diagram alur sistem mencakup user flow, admin flow, alur autentikasi, dan arsite
 
 [![Live](https://img.shields.io/badge/Website_Live-kampung--ketupat.infinityfree.me-0d9488?style=flat-square)](https://kampung-ketupat.infinityfree.me/)
 [![PPT](https://img.shields.io/badge/Slide_Presentasi-Canva-7952B3?style=flat-square)](https://canva.link/54cr2ep7p6ouwdr)
-[![License](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
