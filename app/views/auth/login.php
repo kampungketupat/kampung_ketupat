@@ -14,6 +14,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 
+    <link rel="icon" href="<?= BASE_URL ?>/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="shortcut icon" href="<?= BASE_URL ?>/assets/favicon.svg" type="image/svg+xml" />
+
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/admin.css" />
 </head>
 
@@ -23,7 +26,7 @@
         <div class="login-card">
 
             <div class="login-logo">
-                Kampung Ketupat
+                LOGIN
             </div>
 
             <p class="text-center text-muted small mb-4">

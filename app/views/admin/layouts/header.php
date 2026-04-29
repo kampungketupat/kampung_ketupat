@@ -17,6 +17,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+    <link rel="icon" href="<?= BASE_URL ?>/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="shortcut icon" href="<?= BASE_URL ?>/assets/favicon.svg" type="image/svg+xml" />
+
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/admin.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
